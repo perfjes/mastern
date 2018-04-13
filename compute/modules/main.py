@@ -1,13 +1,22 @@
-from compute.modules import dataSet
+from compute.modules import dataset
 from sklearn.tree import DecisionTreeClassifier, export_graphviz
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+from sklearn import tree
 
-dataPath = r'../data/'
 
-df = dataSet.createDataFrame(dataPath, 'db.csv')
+df = dataset.loaddataframe('df.csv')
 
-print("* Person ID", '\n', df["id"].unique())
+print(list(df))
 
-dataSet.saveDataFrame(dataPath, df)
+X = df.drop('Case', axis=1)
+y = df['Case']
 
-df2 = dataSet.loadDataFrame(dataPath, 'df.csv')
-#print(df2)
+# TODO implement gini index function instead of using sklearn?
+
+Xtrain, Xtest, ytrain, ytest = train_test_split(X, y, test_size=0.30) #this can't be passed with NaN, but how solve?
+classifier = DecisionTreeClassifier()
+classifier.fit(Xtrain, ytrain)
+
+ypred = classifier.predict(Xtest)
+print(ypred)
