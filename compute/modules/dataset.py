@@ -16,6 +16,17 @@ def savedataframe(data):
     data.to_csv(os.path.join(path, r'df.csv'), encoding='utf-8', index=False)
 
 
+def saveasnew(data):
+    counter = 0
+    save = 'df.csv'
+    while os.path.isfile(path + save):
+        counter += 1
+        if counter > 0:
+            save = 'df' + str(counter) + '.csv'
+            print('Dataframe saved as new file, named: ', save)
+    data.to_csv(os.path.join(path, save))
+
+
 def loaddataframe(filename):
     file = "%s%s" % (path, filename)
     dataframe = pd.read_csv(file, sep=',')
