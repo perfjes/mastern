@@ -5,14 +5,10 @@ import pandas as pd
 from sklearn import metrics
 
 
-df = dataset.loaddataframe('df.csv')
-
 # AND NOW FOR SOME REGRESSION
 
-def maketraintestsplit(column, testsize):
-
-
-    # Drop the feature called "Case" which I assume is whether or not the implant had to be removed - 0 for no, 1 for yes
+def maketraintestsplit(df, column, testsize):
+    # Drop the feature called "Case" which I assume is whether or not the implant had to be removed, 0 for no, 1 for yes
     # Classifies the test cases into whether or not they have removed their implants
     X = df.drop(column, axis=1)
     y = df[column]
@@ -33,8 +29,10 @@ def maketraintestsplit(column, testsize):
 
     return x1, x2, y1, y2
 
-def regress():
-    xtrain, xtest, ytrain, ytest = maketraintestsplit('years in vivo', 0.25)
+
+def regress(file):
+    df = dataset.loaddataframe(file)
+    xtrain, xtest, ytrain, ytest = maketraintestsplit(df, 'years in vivo', 0.25)
     regressor = DecisionTreeRegressor()
 
     print(xtrain.shape)

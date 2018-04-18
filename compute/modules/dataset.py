@@ -1,9 +1,12 @@
+from os.path import dirname, abspath
+from pathlib import Path
 import pandas as pd
 import os
 
 # TODO add comparison between load and previously saved, in order to reduce redundancy on larger sets
 
-path = r'../data/'
+pathe = dirname(__file__)
+path = os.path.join(pathe, '/')
 
 
 def createdataframe(filename):
