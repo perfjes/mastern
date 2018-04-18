@@ -46,3 +46,5 @@ def regress():
     meanlist = df['years in vivo'].tolist()
     print(sum(meanlist) / float(len(meanlist)), '\n')
     print('Mean Absolute Error:', metrics.mean_absolute_error(ytest, ypred))
+
+    return result
