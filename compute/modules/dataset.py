@@ -5,8 +5,9 @@ import os
 
 # TODO add comparison between load and previously saved, in order to reduce redundancy on larger sets
 
-pathe = dirname(__file__)
-path = os.path.join(pathe, '/')
+directory = dirname(os.getcwd())
+datapath = "/data/"
+path = directory + datapath
 
 
 def createdataframe(filename):
