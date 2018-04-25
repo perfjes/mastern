@@ -15,16 +15,9 @@ def maketraintestsplit(df, testsize):
     # Xtrain and ytrain are training sets - X have all data except case, y contains only case
     # Xtest and ytest are test sets - X have all data except case, y contains only case
     # Test size is 30% (meaning training set is 70%), random_state is a pseudo-rng for random sampling
-    x1, x2, y1, y2 = train_test_split(X, y, test_size=testsize)
+    xtrain, xtest, ytrain, ytest = train_test_split(X, y, test_size=testsize)
 
-    # TODO find better way to solve empty features
-    # This replaces all empty fields with -1
-    x1 = x1.fillna(-1)
-    x2 = x2.fillna(-1)
-    y1 = y1.fillna(-1)
-    y2 = y2.fillna(-1)
-
-    return x1, x2, y1, y2
+    return xtrain, xtest, ytrain, ytest
 
 
 def classify(file):

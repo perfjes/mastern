@@ -1,0 +1,28 @@
+body {
+    background-color: lavender;
+}
+
+#title {
+    width: 30%;
+    height: auto;
+    margin: 50px auto;
+    background-color: white;
+    border-radius: 5px;
+    padding: 50px;
+    font-family: sans-serif;
+    font-size: 40pt;
+}
+
+#data {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    width: fit-content;
+    height: fit-content;
+    margin: auto;
+}
+
+#data thead th, td {
+    padding: 3px;
+    background-color: white;
+}

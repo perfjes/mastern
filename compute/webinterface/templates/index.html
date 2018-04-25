@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+        <title>Master</title>
+    </head>
+    <body>
+        <section id="title">
+            <h1>Machine learning in progress</h1>
+            <p>This is the web framework for my master thesis project.</p>
+        </section>
+        <section id="data">
+            {{ data | safe }}
+        </section>
+    </body>
+</html>

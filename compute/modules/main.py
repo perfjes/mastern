@@ -77,7 +77,7 @@ classifierBTN.grid(column=0, row=2)
 
 
 clearoutputBTN = Button(app, text='Clear output field', command=clearoutput)
-clearoutputBTN.grid(column=2, row=2)
+clearoutputBTN.grid(column=2, row=3)
 
 
 loadfileBTN = Button(app, text='Load dataset CSV', command=loadfile)
