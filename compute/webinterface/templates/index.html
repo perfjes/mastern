@@ -10,6 +10,15 @@
             <h1>Machine learning in progress</h1>
             <p>This is the web framework for my master thesis project.</p>
         </section>
+
+        <!-- Currently does nothing -->
+        <section id="buttons">
+            <button type="button" value="loaddata" name="loaddata"> {{ loaddata }} </button>
+            <button type="button" value="savedata" name="savedata"> {{ savedata }} </button>
+            <button type="button" value="regress" name="regress"> {{ regress }} </button>
+            <button type="button" value="classify" name="classify"> {{ classify }} </button>
+            <button type="button" value="clearoutput" name="clearoutput"> {{ clearoutput }} </button>
+        </section>
         <section id="data">
             {{ data | safe }}
         </section>

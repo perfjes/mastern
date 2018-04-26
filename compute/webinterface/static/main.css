@@ -3,7 +3,7 @@ body {
 }
 
 #title {
-    width: 30%;
+    width: 50%;
     height: auto;
     margin: 50px auto;
     background-color: white;
@@ -11,6 +11,18 @@ body {
     padding: 50px;
     font-family: sans-serif;
     font-size: 40pt;
+}
+
+#title p {
+    font-size: 20pt;
+}
+
+#buttons {
+    width: fit-content;
+    height: auto;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: white;
 }
 
 #data {
