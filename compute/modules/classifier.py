@@ -1,4 +1,5 @@
 from compute.modules import dataset
+from sklearn import tree
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report, confusion_matrix
@@ -22,14 +23,14 @@ def maketraintestsplit(df, testsize):
 
 def classify(file):
     df = dataset.loaddataframe(file)
-    xtrain, xtest, ytrain, ytest = maketraintestsplit(df, 0.35)
+    xtrain, xtest, ytrain, ytest = maketraintestsplit(df, 0.5)
 
     classifier = DecisionTreeClassifier()
-    classifier.fit(xtrain, ytrain)
+    classifier = classifier.fit(xtrain, ytrain)
 
     ypred = classifier.predict(xtest)
     report = classification_report(ytest, ypred)
 
-    print(confusion_matrix(ytest, ypred))
+    # print(confusion_matrix(ytest, ypred))
     print(report)
     return report

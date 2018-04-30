@@ -7,7 +7,8 @@ import os
 from compute.modules import classifier, regressor, dataset
 
 # GUI class for users to interact with the program
-file = ['df.csv'] #file variable as list to enable mutation
+# file variable as list to enable mutation
+file = ['df.csv']
 dtc = classifier
 dtr = regressor
 
@@ -41,7 +42,7 @@ def loadfile():
                                     title="Please select a file:",
                                     filetypes=(('CSV files', '.csv'), ('All files', '*.*')))
     pathlist = path.split("/")
-    if(pathlist[(len(pathlist)-1)].lower().endswith('.csv')):
+    if pathlist[(len(pathlist) - 1)].lower().endswith('.csv'):
         file[0] = pathlist[(len(pathlist)-1)]
         output.insert(INSERT, 'File ' + file[0] + ' loaded', '\n', '\n')
     else:
@@ -58,38 +59,58 @@ def saveasnew():
     output.insert(INSERT, 'Saved file as: ' + message)
 
 
+# Test methods for quick testing
+def mregtest():
+    mean = list()
+    for i in range(20):
+        regclicked()
+        
+
+def mclastest():
+    for i in range(20):
+        clasclicked()
+
+
 # ---------- LABELS ----------
-welcomelabel = Label(app, text='Which function do you want to perform')
-welcomelabel.grid(column=0, row=0)
+# welcomelabel = Label(app, text='I\'m afraid I can\'t do that, Dave')
+# welcomelabel.grid(column=0, row=0)
 
 # ---------- OUTPUT -----------
 output = scrolledtext.ScrolledText(app, width=110, height=50)
-output.grid(column=3, row=5)
+output.grid(column=3, row=0)
 
 
 # ---------- BUTTONS ----------
-regressionBTN = Button(app, text='Regression', command=regclicked)
-regressionBTN.grid(column=0, row=1)
+buttonframe = Frame(app)
+massiveregtest = Button(buttonframe, text="Regress 20", command=mregtest)
+massiveregtest.pack(padx=10, pady=10)
+
+massiveclastest = Button(buttonframe, text="Classify 20", command=mclastest)
+massiveclastest.pack(padx=10, pady=10)
+
+regressionBTN = Button(buttonframe, text='Regression', command=regclicked)
+regressionBTN.pack(padx=5, pady=5)
 
 
-classifierBTN = Button(app, text='Classification', command=clasclicked)
-classifierBTN.grid(column=0, row=2)
+classifierBTN = Button(buttonframe, text='Classification', command=clasclicked)
+classifierBTN.pack(padx=5, pady=15)
 
 
-clearoutputBTN = Button(app, text='Clear output field', command=clearoutput)
-clearoutputBTN.grid(column=2, row=3)
+clearoutputBTN = Button(buttonframe, text='Clear output field', command=clearoutput)
+clearoutputBTN.pack(padx=5, pady=15)
 
 
-loadfileBTN = Button(app, text='Load dataset CSV', command=loadfile)
-loadfileBTN.grid(column=2, row=1)
+loadfileBTN = Button(buttonframe, text='Load dataset CSV', command=loadfile)
+loadfileBTN.pack(padx=5, pady=5)
 
 
-savenewfileBTN = Button(app, text='Save dataset as new', command=saveasnew)
-savenewfileBTN.grid(column=2, row=2)
+savenewfileBTN = Button(buttonframe, text='Save dataset as new', command=saveasnew)
+savenewfileBTN.pack(padx=5, pady=15)
 
 
-printdataBTN = Button(app, text='Print dataset', command=printdataset)
-printdataBTN.grid(column=1, row=1)
+printdataBTN = Button(buttonframe, text='Print dataset', command=printdataset)
+printdataBTN.pack(padx=5, pady=5)
 
+buttonframe.grid(column='0', row='0')
 
 app.mainloop()

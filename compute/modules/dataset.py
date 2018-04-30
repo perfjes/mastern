@@ -1,5 +1,4 @@
 from os.path import dirname
-from sklearn.preprocessing import Imputer
 import pandas as pd
 import os
 
@@ -35,7 +34,7 @@ def saveasnew(data):
 def loaddataframe(filename):
     file = "%s%s" % (path, filename)
     data = pd.read_csv(file, sep=',')
-    if(data.isnull().values.any()):
+    if data.isnull().values.any():
         filled = data.fillna(data.mean(skipna=True))
         return filled
     else:
