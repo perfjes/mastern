@@ -31,8 +31,13 @@ def saveasnew(data):
 
 # Loads file from path, reads it as CSV and returns the result as a pandas dataframe (or series).
 # This will also automatically fill all missing data with the mean value of each column.
+# TODO implement optional filling of missing data (remove rows where data is missing)
+# TODO cont. this has been avoided due to tiny dataset with no affordance to remove rows available.
 def loaddataframe(filename):
-    file = "%s%s" % (path, filename)
+    if filename.endswith('.csv'):
+        file = "%s%s" % (path, filename)
+    else:
+        file = "%s%s%s" % (path, filename, '.csv')
     data = pd.read_csv(file, sep=',')
     if data.isnull().values.any():
         filled = data.fillna(data.mean(skipna=True))

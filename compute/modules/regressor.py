@@ -22,10 +22,9 @@ def maketraintestsplit(df, column, testsize):
     return train_test_split(X, y, test_size=testsize)
 
 
-def regress(file):
-    df = dataset.loaddataframe(file)
-    xtrain, xtest, ytrain, ytest = maketraintestsplit(df, 'years in vivo', 0.25)
-    regressor = DecisionTreeRegressor(max_depth=1)
+def regress(df, split):
+    xtrain, xtest, ytrain, ytest = maketraintestsplit(df, 'years in vivo', split)
+    regressor = DecisionTreeRegressor(max_depth=4)
 
     print(xtrain.shape)
     regressor.fit(xtrain, ytrain)

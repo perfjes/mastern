@@ -21,9 +21,9 @@ def maketraintestsplit(df, testsize):
     return xtrain, xtest, ytrain, ytest
 
 
-def classify(file):
+def classify(file, testsize):
     df = dataset.loaddataframe(file)
-    xtrain, xtest, ytrain, ytest = maketraintestsplit(df, 0.5)
+    xtrain, xtest, ytrain, ytest = maketraintestsplit(df, testsize)
 
     classifier = DecisionTreeClassifier()
     classifier = classifier.fit(xtrain, ytrain)
