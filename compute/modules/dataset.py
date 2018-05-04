@@ -39,6 +39,7 @@ def loaddataframe(filename):
     else:
         file = "%s%s%s" % (path, filename, '.csv')
     data = pd.read_csv(file, sep=',')
+
     if data.isnull().values.any():
         filled = data.fillna(data.mean(skipna=True))
         return filled

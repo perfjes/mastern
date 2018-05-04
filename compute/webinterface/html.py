@@ -1,6 +1,5 @@
-import os
-from flask import Flask, render_template, url_for, request
-from compute.modules import dataset, regressor, classifier
+from flask import Flask, render_template, request
+from compute.modules import dataset
 
 app = Flask(__name__, template_folder='templates')
 file = ['df.csv']

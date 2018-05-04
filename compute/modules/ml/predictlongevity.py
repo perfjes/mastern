@@ -1,5 +1,5 @@
-from compute.modules import dataset, regressor
-
+from compute.modules import dataset
+from compute.modules.ml import regressor
 
 file = ['df.csv']
 df = dataset.loaddataframe(file[0])

@@ -1,6 +1,4 @@
-from sklearn.metrics import r2_score
 from sklearn.tree import DecisionTreeRegressor
-from compute.modules import dataset
 from sklearn.model_selection import train_test_split
 import pandas as pd
 from sklearn import metrics
@@ -25,16 +23,13 @@ def maketraintestsplit(df, column, testsize):
 def regress(df, split):
     xtrain, xtest, ytrain, ytest = maketraintestsplit(df, 'years in vivo', split)
     regressor = DecisionTreeRegressor(max_depth=4)
-
-    print(xtrain.shape)
     regressor.fit(xtrain, ytrain)
     ypred = regressor.predict(xtest)
     result = pd.DataFrame({'Actual':ytest, 'Predicted':ypred})
+    meanlist = df['years in vivo'].tolist()
+    mae = metrics.mean_absolute_error(ytest, ypred)
 
     print(result, '\n')
-    meanlist = df['years in vivo'].tolist()
     print(sum(meanlist) / float(len(meanlist)), '\n')
-    mae = metrics.mean_absolute_error(ytest, ypred)
-    print('Mean Absolute Error:', mae)
-    r2 = r2_score(ytest, ypred)
-    return mae, r2
+    print('Mean Absolute Error: ', mae)
+    return mae

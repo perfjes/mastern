@@ -1,7 +1,8 @@
 from tkinter import *
 from tkinter import scrolledtext, simpledialog
 from tkinter import filedialog
-from compute.modules import classifier, regressor, dataset, predictlongevity
+from compute.modules import dataset
+from compute.modules.ml import classifier, predictlongevity, regressor
 import os
 
 
