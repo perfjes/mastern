@@ -2,15 +2,22 @@ from tkinter import *
 from tkinter import scrolledtext, simpledialog
 from tkinter import filedialog
 from compute.modules import dataset
+from compute.modules.gui import datahandler
 from compute.modules.ml import classifier, predictlongevity, regressor
 import os
 
 
-# file variable as list to enable mutation
-file = ['df.csv']
-split = [0.5]
+# module references
 dtc = classifier
 dtr = regressor
+dth = datahandler
+
+
+# Class for references - enables mutability of variables (MOVE SOME OF THIS INTO DATA HANDLER PERHAPS?
+class Ref:
+    split = 0.5
+    name = 'df.csv'
+    df = dth.loaddataframe(name)
 
 
 # GUI-related variables
@@ -26,25 +33,25 @@ def askforsplit():
                                             "Please input a value \n greater than 0.0 and \n less than 1.0",
                                    parent=app, minvalue=0, maxvalue=0.999)
     if answer is not None:
-        split[0] = answer
+        Ref.split = answer
         return True
     else:
-        output.insert(INSERT, 'Operation cancelled', '\n', '\n')
+        output.insert(INSERT, 'Operation cancelled', spacing())
         return False
 
 
 # Runs the regression function on the currently loaded dataset, outputs the results in the GUI
 def regclicked():
-    res = dtr.regress(file[0], split[0])
+    res = dtr.regress(Ref.name, Ref.split)
     output.insert(INSERT, res)
     n = '\n' '\n'
     output.insert(INSERT, n, n)
-    print(file)
+    print(Ref.name)
 
 
 # Runs the classification function on the currently loaded dataset, outputs the results in the GUI
 def clasclicked():
-    res = dtc.classify(file[0], split[0])
+    res = dtc.classify(Ref.name, Ref.split)
     output.insert(INSERT, res)
     n = '\n' '\n'
     output.insert(INSERT, n, n)
@@ -63,45 +70,59 @@ def loadfile():
                                       filetypes=(('CSV files', '.csv'), ('All files', '*.*')))
     pathlist = path.split("/")
     if pathlist[(len(pathlist) - 1)].lower().endswith('.csv'):
-        file[0] = pathlist[(len(pathlist) - 1)]
-        output.insert(INSERT, 'File ' + file[0] + ' loaded', '\n', '\n')
+        Ref.name = pathlist[(len(pathlist) - 1)]
+        output.insert(INSERT, 'File ' + Ref.name + ' loaded', spacing())
     else:
-        output.insert(INSERT, 'Wrong filetype - Please select a CSV file', '\n', '\n')
+        output.insert(INSERT, 'Wrong filetype - Please select a CSV file', spacing())
 
 
 # Prints the entire dataset to the output window of the GUI
 def printdataset():
-    output.insert(INSERT, dataset.loaddataframe(file[0]).to_string())
+    output.insert(INSERT, dataset.loaddataframe(Ref.name).to_string())
 
 
 # Saves the currently loaded dataset as a new file (to allow mutation without deletion
 def saveasnew():
-    data = dataset.loaddataframe(file[0])
+    data = dataset.loaddataframe(Ref.name)
     message = dataset.saveasnew(data)
     output.insert(INSERT, 'Saved file as: ' + message)
 
 
 # Test methods for quick testing - work in progress for creating better methods and stuff
 def mregtest():
-    mean = list()
+    meanmale = list()
+    meanfemale = list()
     # for i in range(20):
     #    regclicked()
 
-    # Implemented input for custom splits with option to cancel, hence the if statement
+    # Implemented input for custom splits with option to cancel, hence the if statement.
     if askforsplit():
-        output.insert(INSERT, predictlongevity.mpredlongevity(split[0]), '\n', '\n')
-        output.insert(INSERT, predictlongevity.fpredlongevity(split[0]), '\n', '\n')
-        prettypercent = "%s%s%s" % ('Split value is: ', split[0] * 100, '%')
+        for i in range(20):
+            mresult, malemae = predictlongevity.mpredlongevity(Ref.split)
+            output.insert(INSERT, mresult, spacing(), malemae)
 
-        output.insert(INSERT, prettypercent, '\n', '\n')
-        print(split[0])
-        print(split[0]*100)
+            fresult, femalemae = predictlongevity.fpredlongevity(Ref.split)
+            output.insert(INSERT, fresult, spacing(), femalemae)
+            prettypercent = "%s%s%s" % ('Split value is: ', Ref.split * 100, '%')
+            output.insert(INSERT, prettypercent, spacing())
+
+            meanmale.append(malemae)
+            meanfemale.append(femalemae)
+        output.insert(INSERT, sum(meanmale)/len(meanmale), spacing(), sum(meanfemale)/len(meanfemale))
 
 
 # Same as above, test method.
 def mclastest():
-    for i in range(20):
-        clasclicked()
+    # for i in range(20):
+    #    clasclicked()
+    females = dth.filtercriterion(Ref.df, 'sex', 2)
+    result, mae = dtr.regress(females, Ref.split)
+    output.insert(INSERT, result, spacing(), mae)
+    output.insert(INSERT, females)
+
+
+def spacing():
+    output.insert(INSERT, '\n', '\n', '\n')
 
 
 # ---------- LABELS ----------

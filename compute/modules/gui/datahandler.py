@@ -2,11 +2,7 @@ from os.path import dirname
 import pandas as pd
 import os
 
-# TODO add comparison between load and previously saved, in order to reduce redundancy on larger sets
-
-# TODO maybe make this a datahandler class - incorporate functions for splitting dataset based on user input /
-# prediction criteria?
-
+# Datahandler module is a restructured dataset.py
 
 directory = dirname(os.getcwd())
 datapath = "/data/"
@@ -49,12 +45,3 @@ def loaddataframe(filename):
         return filled
     else:
         return data
-
-
-def filtercriterion(df, column, value):
-    filtered = df.loc[df[column] == value]
-    return filtered
-
-
-class Dataset:
-    dataframe = loaddataframe()

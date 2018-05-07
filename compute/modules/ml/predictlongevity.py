@@ -6,7 +6,7 @@ df = dataset.loaddataframe(file[0])
 allpositivecases = df.loc[df['Case'] == 1]
 
 
-# Working under the asssumption that 1 is male and 2 is female
+# Sex describes the gender of the patient, where 1 equals male and 2 equals female.
 malecase = allpositivecases.loc[allpositivecases['sex'] == 1]
 femalecase = allpositivecases.loc[allpositivecases['sex'] == 2]
 

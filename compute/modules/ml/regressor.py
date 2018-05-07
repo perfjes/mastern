@@ -32,4 +32,4 @@ def regress(df, split):
     print(result, '\n')
     print(sum(meanlist) / float(len(meanlist)), '\n')
     print('Mean Absolute Error: ', mae)
-    return mae
+    return result, mae
