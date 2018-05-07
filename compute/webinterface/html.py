@@ -1,9 +1,9 @@
 from flask import Flask, render_template, request
-from compute.modules import dataset
+from compute.modules import datahandler
 
 app = Flask(__name__, template_folder='templates')
 file = ['df.csv']
-defaultdata = dataset.loaddataframe(file[0])
+defaultdata = datahandler.loaddataframe(file[0])
 
 
 # Doesn't work with buttons...yet

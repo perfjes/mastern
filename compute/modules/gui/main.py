@@ -1,8 +1,7 @@
 from tkinter import *
 from tkinter import scrolledtext, simpledialog
 from tkinter import filedialog
-from compute.modules import dataset
-from compute.modules.gui import datahandler
+from compute.modules import datahandler
 from compute.modules.ml import classifier, predictlongevity, regressor
 import os
 
@@ -13,11 +12,10 @@ dtr = regressor
 dth = datahandler
 
 
-# Class for references - enables mutability of variables (MOVE SOME OF THIS INTO DATA HANDLER PERHAPS?
+# Class for references - enables mutability of variables
 class Ref:
     split = 0.5
     name = 'df.csv'
-    df = dth.loaddataframe(name)
 
 
 # GUI-related variables
@@ -42,16 +40,14 @@ def askforsplit():
 
 # Runs the regression function on the currently loaded dataset, outputs the results in the GUI
 def regclicked():
-    res = dtr.regress(Ref.name, Ref.split)
-    output.insert(INSERT, res)
-    n = '\n' '\n'
-    output.insert(INSERT, n, n)
-    print(Ref.name)
+    result, mae = dtr.regress(dth.Dataset.dataframe, Ref.split)
+    output.insert(INSERT, result, spacing())
+    output.insert(INSERT, mae, spacing())
 
 
 # Runs the classification function on the currently loaded dataset, outputs the results in the GUI
 def clasclicked():
-    res = dtc.classify(Ref.name, Ref.split)
+    res = dtc.classify(dth.Dataset.dataframe, Ref.split)
     output.insert(INSERT, res)
     n = '\n' '\n'
     output.insert(INSERT, n, n)
@@ -78,13 +74,13 @@ def loadfile():
 
 # Prints the entire dataset to the output window of the GUI
 def printdataset():
-    output.insert(INSERT, dataset.loaddataframe(Ref.name).to_string())
+    output.insert(INSERT, dth.Dataset.dataframe.to_string())
 
 
 # Saves the currently loaded dataset as a new file (to allow mutation without deletion
 def saveasnew():
-    data = dataset.loaddataframe(Ref.name)
-    message = dataset.saveasnew(data)
+    data = dth.Dataset.dataframe
+    message = dth.saveasnew(data)
     output.insert(INSERT, 'Saved file as: ' + message)
 
 
@@ -108,17 +104,19 @@ def mregtest():
 
             meanmale.append(malemae)
             meanfemale.append(femalemae)
-        output.insert(INSERT, sum(meanmale)/len(meanmale), spacing(), sum(meanfemale)/len(meanfemale))
+        output.insert(INSERT, sum(meanmale)/len(meanmale), spacing())
+        output.insert(INSERT, sum(meanfemale)/len(meanfemale), spacing())
 
 
 # Same as above, test method.
 def mclastest():
     # for i in range(20):
     #    clasclicked()
-    females = dth.filtercriterion(Ref.df, 'sex', 2)
+    females = dth.filtercriterion('sex', 2)
     result, mae = dtr.regress(females, Ref.split)
-    output.insert(INSERT, result, spacing(), mae)
-    output.insert(INSERT, females)
+    output.insert(INSERT, result, spacing())
+    output.insert(INSERT, mae, spacing())
+    output.insert(INSERT, females, spacing())
 
 
 def spacing():

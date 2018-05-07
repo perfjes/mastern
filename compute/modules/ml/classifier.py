@@ -1,4 +1,4 @@
-from compute.modules import dataset
+from compute.modules import datahandler
 from sklearn import tree
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import train_test_split
@@ -21,8 +21,7 @@ def maketraintestsplit(df, testsize):
     return xtrain, xtest, ytrain, ytest
 
 
-def classify(file, testsize):
-    df = dataset.loaddataframe(file)
+def classify(df, testsize):
     xtrain, xtest, ytrain, ytest = maketraintestsplit(df, testsize)
 
     classifier = DecisionTreeClassifier()

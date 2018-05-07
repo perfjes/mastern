@@ -2,11 +2,17 @@ from os.path import dirname
 import pandas as pd
 import os
 
-# Datahandler module is a restructured dataset.py
+# TODO add comparison between load and previously saved, in order to reduce redundancy on larger sets
 
-directory = dirname(os.getcwd())
-datapath = "/data/"
-path = directory + datapath
+# TODO maybe make this a datahandler class - incorporate functions for splitting dataset based on user input /
+# prediction criteria?
+
+path = '%s%s' % (dirname(os.getcwd()), r'/data/')
+
+
+class Dataset:
+    # filename = 'df.csv'
+    dataframe = pd.DataFrame()
 
 
 # Overwrite default df.csv file.
@@ -42,6 +48,15 @@ def loaddataframe(filename):
 
     if data.isnull().values.any():
         filled = data.fillna(data.mean(skipna=True))
+        Dataset.dataframe = filled
         return filled
     else:
+        Dataset.dataframe = data
         return data
+
+
+def filtercriterion(column, value):
+    filtered = Dataset.dataframe.loc[Dataset.dataframe[column] == value]
+    return filtered
+
+

@@ -25,7 +25,7 @@ def regress(df, split):
     regressor = DecisionTreeRegressor(max_depth=4)
     regressor.fit(xtrain, ytrain)
     ypred = regressor.predict(xtest)
-    result = pd.DataFrame({'Actual':ytest, 'Predicted':ypred})
+    result = pd.DataFrame({'Actual': ytest, 'Predicted': ypred})
     meanlist = df['years in vivo'].tolist()
     mae = metrics.mean_absolute_error(ytest, ypred)
 
