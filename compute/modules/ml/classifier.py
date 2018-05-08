@@ -1,8 +1,13 @@
 from compute.modules import datahandler
 from sklearn import tree
+import pandas as pd
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report, confusion_matrix
+
+
+class Classdata:
+    df = pd.DataFrame()
 
 
 def maketraintestsplit(df, testsize):

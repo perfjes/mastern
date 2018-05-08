@@ -1,18 +1,11 @@
 from os.path import dirname
+from compute.modules.ml import regressor, classifier
 import pandas as pd
 import os
 
 # TODO add comparison between load and previously saved, in order to reduce redundancy on larger sets
 
-# TODO maybe make this a datahandler class - incorporate functions for splitting dataset based on user input /
-# prediction criteria?
-
-path = '%s%s' % (dirname(os.getcwd()), r'/data/')
-
-
-class Dataset:
-    # filename = 'df.csv'
-    dataframe = pd.DataFrame()
+path = '%s%s' % (dirname(dirname(os.getcwd())), r'/data/')
 
 
 # Overwrite default df.csv file.
@@ -48,15 +41,17 @@ def loaddataframe(filename):
 
     if data.isnull().values.any():
         filled = data.fillna(data.mean(skipna=True))
-        Dataset.dataframe = filled
+        regressor.Regressdata.df = filled
+        classifier.Classdata.df = filled
         return filled
     else:
-        Dataset.dataframe = data
+        regressor.Regressdata.df = data
+        classifier.Classdata.df = data
         return data
 
 
-def filtercriterion(column, value):
-    filtered = Dataset.dataframe.loc[Dataset.dataframe[column] == value]
-    return filtered
+def filtercriterion(df, column, value):
+    return df.loc[df[column] == value]
+
 
 

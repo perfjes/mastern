@@ -16,6 +16,7 @@ dth = datahandler
 class Ref:
     split = 0.5
     name = 'df.csv'
+    df = dth.loaddataframe(name)
 
 
 # GUI-related variables
@@ -40,17 +41,15 @@ def askforsplit():
 
 # Runs the regression function on the currently loaded dataset, outputs the results in the GUI
 def regclicked():
-    result, mae = dtr.regress(dth.Dataset.dataframe, Ref.split)
+    result, mae = dtr.regress(Ref.df, Ref.split)
     output.insert(INSERT, result, spacing())
     output.insert(INSERT, mae, spacing())
 
 
 # Runs the classification function on the currently loaded dataset, outputs the results in the GUI
 def clasclicked():
-    res = dtc.classify(dth.Dataset.dataframe, Ref.split)
-    output.insert(INSERT, res)
-    n = '\n' '\n'
-    output.insert(INSERT, n, n)
+    res = dtc.classify(Ref.df, Ref.split)
+    output.insert(INSERT, res, spacing())
 
 
 # Clears the output field of the GUI for a fresh start
@@ -74,13 +73,12 @@ def loadfile():
 
 # Prints the entire dataset to the output window of the GUI
 def printdataset():
-    output.insert(INSERT, dth.Dataset.dataframe.to_string())
+    output.insert(INSERT, Ref.df.to_string())
 
 
 # Saves the currently loaded dataset as a new file (to allow mutation without deletion
 def saveasnew():
-    data = dth.Dataset.dataframe
-    message = dth.saveasnew(data)
+    message = dth.saveasnew(Ref.df)
     output.insert(INSERT, 'Saved file as: ' + message)
 
 
@@ -112,13 +110,14 @@ def mregtest():
 def mclastest():
     # for i in range(20):
     #    clasclicked()
-    females = dth.filtercriterion('sex', 2)
+    females = dth.filtercriterion(Ref.df, 'sex', 2)
     result, mae = dtr.regress(females, Ref.split)
     output.insert(INSERT, result, spacing())
     output.insert(INSERT, mae, spacing())
     output.insert(INSERT, females, spacing())
 
 
+# Adds some breaklines to the output text field to increase readability by seven thousand percent
 def spacing():
     output.insert(INSERT, '\n', '\n', '\n')
 
@@ -131,13 +130,18 @@ def spacing():
 output = scrolledtext.ScrolledText(app, width=110, height=50)
 output.grid(column=3, row=0)
 
-# ---------- BUTTONS ----------
 buttonframe = Frame(app)
+# ---------- TEMP BUTTONS ----------
 massiveregtest = Button(buttonframe, text="Regress 20", command=mregtest)
 massiveregtest.pack(padx=10, pady=10)
 
 massiveclastest = Button(buttonframe, text="Classify 20", command=mclastest)
 massiveclastest.pack(padx=10, pady=10)
+
+inputsplitBTN = Button(buttonframe, text="Change split value", command=askforsplit)
+inputsplitBTN.pack(padx=15, pady=15)
+
+# ---------- BUTTONS ----------
 
 regressionBTN = Button(buttonframe, text='Regression', command=regclicked)
 regressionBTN.pack(padx=5, pady=5)

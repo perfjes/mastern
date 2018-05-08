@@ -1,8 +1,8 @@
 from compute.modules import datahandler
 from compute.modules.ml import regressor
 
-file = ['df.csv']
-df = datahandler.loaddataframe(file[0])
+dth = datahandler
+df = regressor.Regressdata.df
 allpositivecases = df.loc[df['Case'] == 1]
 
 
