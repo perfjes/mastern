@@ -6,10 +6,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report, confusion_matrix
 
 
-class Classdata:
-    df = pd.DataFrame()
-
-
 def maketraintestsplit(df, testsize):
     # Drop the feature called "Case" which I assume is whether or not the implant had to be removed, 0 for no, 1 for yes
     # Classifies the test cases into whether or not they have removed their implants

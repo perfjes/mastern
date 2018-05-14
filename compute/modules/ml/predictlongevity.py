@@ -2,13 +2,13 @@ from compute.modules import datahandler
 from compute.modules.ml import regressor
 
 dth = datahandler
-df = regressor.Regressdata.df
-allpositivecases = df.loc[df['Case'] == 1]
-
+df = dth.loaddataframe('df')
+all_positive_cases = df.loc[df['Case'] == 1]
+all_negative_cases = df.loc[df['Case'] == 0]
 
 # Sex describes the gender of the patient, where 1 equals male and 2 equals female.
-malecase = allpositivecases.loc[allpositivecases['sex'] == 1]
-femalecase = allpositivecases.loc[allpositivecases['sex'] == 2]
+malecase = all_positive_cases.loc[all_positive_cases['sex'] == 1]
+femalecase = all_positive_cases.loc[all_positive_cases['sex'] == 2]
 
 
 def mpredlongevity(split):

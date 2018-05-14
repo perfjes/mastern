@@ -1,5 +1,4 @@
 from os.path import dirname
-from compute.modules.ml import regressor, classifier
 import pandas as pd
 import os
 
@@ -41,17 +40,10 @@ def loaddataframe(filename):
 
     if data.isnull().values.any():
         filled = data.fillna(data.mean(skipna=True))
-        regressor.Regressdata.df = filled
-        classifier.Classdata.df = filled
         return filled
     else:
-        regressor.Regressdata.df = data
-        classifier.Classdata.df = data
         return data
 
 
 def filtercriterion(df, column, value):
     return df.loc[df[column] == value]
-
-
-
