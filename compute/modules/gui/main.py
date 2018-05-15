@@ -1,57 +1,15 @@
 from tkinter import *
 from tkinter import scrolledtext, simpledialog
 from tkinter import filedialog
-import pandas as pd
 from compute.modules import datahandler
-from compute.modules.ml import classifier, predictlongevity, regressor
-import _pickle as pickle
+from compute.modules.ml import classifier, regressor
 import os
 
 
-# module references
-from os.path import dirname
-
+# System modules abbreviated for simplicity
 dtc = classifier
 dtr = regressor
 dth = datahandler
-pickle_data = '%s%s' % (dirname(dirname(os.getcwd())), r'/data/data.pkl')
-pickle_split = '%s%s' % (dirname(dirname(os.getcwd())), r'/data/split.pkl')
-
-# ---------- OBJECT SAVING AND LOADING ----------
-# autosave is used internally withing the module to automatically save the data being used in the program,
-# such as which dataset is loaded, parameters changed by user input etc.
-def autosave(df, split):
-    with open(pickle_data, 'wb') as output_data:
-        pickle.dump(df, output_data)
-    with open(pickle_split, 'wb') as output_split:
-        pickle.dump(split, output_split)
-
-
-# loads the autosaved dataframe from cPickle.
-# TODO - fix this fucking mess
-def load():
-    try:
-        with open(pickle_data, 'rb') as input_data:
-            return pickle.load(input_data)
-        with open(pickle_split, 'rb') as input_split:
-            return pickle.load(input_split)
-    except:
-        data = dth.loaddataframe('df')
-        split = 0.35
-        autosave(data, split)
-        return data, split
-
-
-# Class for references - enables mutability of variables
-class Ref:
-    split = 0.5
-    name = 'df.csv'
-    # df = dth.loaddataframe(name)
-
-
-class Data:
-    df = load()
-
 
 # GUI-related variables
 app = Tk()
@@ -66,8 +24,8 @@ def askforsplit():
                                             "Please input a value \n greater than 0.0 and \n less than 1.0",
                                    parent=app, minvalue=0, maxvalue=0.999)
     if answer is not None:
-        Ref.split = answer
-        splitstring = '%s%s' % (Ref.split * 100, '% of the dataset will be used for testing.')
+        dth.Data.split = answer
+        splitstring = '%s%s' % (dth.Data.split * 100, '% of the dataset will be used for testing.')
         output.insert(INSERT, splitstring)
         return True
     else:
@@ -77,14 +35,14 @@ def askforsplit():
 
 # Runs the regression function on the currently loaded dataset, outputs the results in the GUI
 def regclicked():
-    result, mae = dtr.regress(Data.df, Ref.split)
+    result, mae = dtr.regress(dth.Data.dataframe, dth.Data.split)
     output.insert(INSERT, result, spacing())
     output.insert(INSERT, mae, spacing())
 
 
 # Runs the classification function on the currently loaded dataset, outputs the results in the GUI
 def clasclicked():
-    res = dtc.classify(Data.df, Ref.split)
+    res = dtc.classify(dth.Data.dataframe, dth.Data.split)
     output.insert(INSERT, res, spacing())
 
 
@@ -101,10 +59,10 @@ def loadfile():
                                       filetypes=(('CSV files', '.csv'), ('All files', '*.*')))
     pathlist = path.split("/")
     if pathlist[(len(pathlist) - 1)].lower().endswith('.csv'):
-        Ref.name = pathlist[(len(pathlist) - 1)]
-        Data.df = dth.loaddataframe(Ref.name)
-        autosave(Data.df)
-        output.insert(INSERT, 'File ' + Ref.name + ' loaded', spacing())
+        pathend = pathlist[(len(pathlist) - 1)]
+        dth.Data.dataframe = dth.load_dataframe(pathend)
+        dth.autosave_dataframe_to_pickle(dth.Data.dataframe)
+        output.insert(INSERT, 'File ' + pathend + ' loaded', spacing())
 
     else:
         output.insert(INSERT, 'Wrong filetype - Please select a CSV file', spacing())
@@ -112,12 +70,12 @@ def loadfile():
 
 # Prints the entire dataset to the output window of the GUI
 def printdataset():
-    output.insert(INSERT, Data.df.to_string())
+    output.insert(INSERT, dth.Data.dataframe.to_string())
 
 
 # Saves the currently loaded dataset as a new file (to allow mutation without deletion
 def saveasnew():
-    message = dth.saveasnew(Data.df)
+    message = dth.save_as_new(dth.Data.dataframe)
     output.insert(INSERT, 'Saved file as: ' + message)
 
 
@@ -129,19 +87,19 @@ def mregtest():
 
     # Implemented input for custom splits with option to cancel, hence the if statement.
     for i in range(20):
-        result, mae = regressor.regress(Data.df, Ref.split)
+        result, mae = regressor.regress(dth.Data.dataframe, dth.Data.split)
         mean_absolute_error.append(mae)
         output.insert(INSERT, result, spacing())
     output.insert(INSERT, sum(mean_absolute_error)/len(mean_absolute_error), spacing())
-    output.insert(INSERT, Ref.split)
+    output.insert(INSERT, dth.Data.split)
 
 
 # Same as above, test method.
 def mclastest():
     # for i in range(20):
     #    clasclicked()
-    females = dth.filtercriterion(Data.df, 'sex', 2)
-    result, mae = dtr.regress(females, Ref.split)
+    females = dth.filter_criterion(dth.Data.dataframe, 'sex', 2)
+    result, mae = dtr.regress(females, dth.Data.split)
     output.insert(INSERT, result, spacing())
     output.insert(INSERT, mae, spacing())
     output.insert(INSERT, females, spacing())

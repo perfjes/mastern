@@ -6,7 +6,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report, confusion_matrix
 
 
-def maketraintestsplit(df, testsize):
+def split_dataset_into_train_test(df, testsize):
     # Drop the feature called "Case" which I assume is whether or not the implant had to be removed, 0 for no, 1 for yes
     # Classifies the test cases into whether or not they have removed their implants
     X = df.drop('Case', axis=1)
@@ -23,7 +23,7 @@ def maketraintestsplit(df, testsize):
 
 
 def classify(df, testsize):
-    xtrain, xtest, ytrain, ytest = maketraintestsplit(df, testsize)
+    xtrain, xtest, ytrain, ytest = split_dataset_into_train_test(df, testsize)
 
     classifier = DecisionTreeClassifier()
     classifier = classifier.fit(xtrain, ytrain)

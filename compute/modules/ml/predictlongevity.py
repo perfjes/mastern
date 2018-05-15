@@ -1,10 +1,14 @@
 from compute.modules import datahandler
 from compute.modules.ml import regressor
 
+
 dth = datahandler
-df = dth.loaddataframe('df')
+df = dth.Data.dataframe
+
+
 all_positive_cases = df.loc[df['Case'] == 1]
 all_negative_cases = df.loc[df['Case'] == 0]
+
 
 # Sex describes the gender of the patient, where 1 equals male and 2 equals female.
 malecase = all_positive_cases.loc[all_positive_cases['sex'] == 1]
