@@ -1,6 +1,9 @@
 from tkinter import *
 from tkinter import scrolledtext, simpledialog
 from tkinter import filedialog
+
+from os.path import dirname
+
 from compute.modules import datahandler
 from compute.modules.ml import classifier, regressor
 import os
@@ -15,6 +18,9 @@ dth = datahandler
 app = Tk()
 app.title('Bongo')
 app.geometry('1200x900')
+
+if dth.Data.dataframe.empty:
+    dth.Data.dataframe = dth.load_dataframe(dth.Path.path)
 
 
 # Ask for the user to input their desired split, where the input defines the test set size.
@@ -53,14 +59,15 @@ def clearoutput():
 
 # Lets the user choose a file from their computer to use with the system
 def loadfile():
+    dialogpath = '%s%s' % (dirname(dirname(os.getcwd())), '/data/')
     path = filedialog.askopenfilename(parent=app,
-                                      initialdir=os.getcwd(),
+                                      initialdir=dialogpath,
                                       title="Please select a file:",
                                       filetypes=(('CSV files', '.csv'), ('All files', '*.*')))
     pathlist = path.split("/")
     if pathlist[(len(pathlist) - 1)].lower().endswith('.csv'):
         pathend = pathlist[(len(pathlist) - 1)]
-        dth.Data.dataframe = dth.load_dataframe(pathend)
+        dth.Data.dataframe = dth.load_dataframe(path)
         dth.autosave_dataframe_to_pickle(dth.Data.dataframe)
         output.insert(INSERT, 'File ' + pathend + ' loaded', spacing())
 

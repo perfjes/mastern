@@ -5,9 +5,13 @@ import _pickle as pickle
 
 # TODO add comparison between load and previously saved, in order to reduce redundancy on larger sets
 
-path = '%s%s' % (dirname(dirname(os.getcwd())), r'/data/')
-pickle_data = '%s%s' % (path, r'data.pkl')
-pickle_split = '%s%s' % (path, r'split.pkl')
+
+class Path:
+    path = '%s%s' % (dirname(dirname(os.getcwd())), r'/data/df.csv')
+
+
+pickle_data = '%s%s' % (Path.path, r'data.pkl')
+pickle_split = '%s%s' % (Path.path, r'split.pkl')
 
 
 # ---------- OBJECT SAVING AND LOADING ----------
@@ -20,7 +24,7 @@ def autosave_dataframe_to_pickle(objects):
 
 # Autosaves the split value to pickle
 def autosave_split_to_pickle(objects):
-    with open(pickle_data, 'wb') as output_data:
+    with open(pickle_split, 'wb') as output_data:
         pickle.dump(objects, output_data)
 
 
@@ -30,8 +34,8 @@ def load_dataframe_from_pickle():
         with open(pickle_data, 'rb') as input_data:
             return pickle.load(input_data)
     except:
-        data = load_dataframe('df')
-        autosave_dataframe_to_pickle(data)
+        data = pd.DataFrame()
+        # autosave_dataframe_to_pickle(data)
         return data
 
 
@@ -53,7 +57,7 @@ class Data:
 
 # Overwrite default df.csv file.
 def save_data_frame(data):
-    data.to_csv(os.path.join(path, r'df.csv'), encoding='utf-8', index=False)
+    data.to_csv(os.path.join(Path.path, r'df.csv'), encoding='utf-8', index=False)
 
 
 # In case the system should be able to mutate the data, then it should be able to not overwrite the existing
@@ -61,12 +65,12 @@ def save_data_frame(data):
 def save_as_new(data):
     counter = 0
     save = 'df.csv'
-    while os.path.isfile(path + save):
+    while os.path.isfile(Path.path + save):
         counter += 1
         if counter > 0:
             save = 'df' + str(counter) + '.csv'
             print('Dataframe saved as new file, named: ', save)
-    data.to_csv(os.path.join(path, save))
+    data.to_csv(os.path.join(Path.path, save))
     return save
 
 
@@ -75,11 +79,14 @@ def save_as_new(data):
 # TODO implement optional filling of missing data (remove rows where data is missing)
 # TODO cont. this has been avoided due to tiny dataset with no affordance to remove rows available.
 # TODO cont. Implement error handling on file not found / wrong file type
-def load_dataframe(filename):
-    if filename.endswith('.csv'):
-        file = "%s%s" % (path, filename)
+def load_dataframe(path):
+    if len(path.split('/')) <= 1:
+        if path.endswith('.csv'):
+            file = "%s%s" % (Path.path, path)
+        else:
+            file = "%s%s%s" % (Path.path, path, '.csv')
     else:
-        file = "%s%s%s" % (path, filename, '.csv')
+        file = path
     data = pd.read_csv(file, sep=',')
 
     if data.isnull().values.any():
