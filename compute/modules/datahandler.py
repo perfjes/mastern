@@ -10,8 +10,8 @@ class Path:
     path = '%s%s' % (dirname(dirname(os.getcwd())), r'/data/df.csv')
 
 
-pickle_data = '%s%s' % (Path.path, r'data.pkl')
-pickle_split = '%s%s' % (Path.path, r'split.pkl')
+pickle_data = '%s%s' % (dirname(dirname(os.getcwd())), r'/data/data.pkl')
+pickle_split = '%s%s' % (dirname(dirname(os.getcwd())), r'/data/split.pkl')
 
 
 # ---------- OBJECT SAVING AND LOADING ----------

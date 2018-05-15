@@ -1,9 +1,7 @@
 from tkinter import *
 from tkinter import scrolledtext, simpledialog
 from tkinter import filedialog
-
 from os.path import dirname
-
 from compute.modules import datahandler
 from compute.modules.ml import classifier, regressor
 import os
@@ -18,6 +16,7 @@ dth = datahandler
 app = Tk()
 app.title('Bongo')
 app.geometry('1200x900')
+stree = StringVar()
 
 if dth.Data.dataframe.empty:
     dth.Data.dataframe = dth.load_dataframe(dth.Path.path)
@@ -32,7 +31,9 @@ def askforsplit():
     if answer is not None:
         dth.Data.split = answer
         splitstring = '%s%s' % (dth.Data.split * 100, '% of the dataset will be used for testing.')
+        stree.set('%s%s' % ('Split value is: ', dth.Data.split))
         output.insert(INSERT, splitstring)
+        app.update_idletasks()
         return True
     else:
         output.insert(INSERT, 'Operation cancelled', spacing())
@@ -91,10 +92,10 @@ def mregtest():
     mean_absolute_error = list()
     # for i in range(20):
     #    regclicked()
-
+    ladies = dth.filter_criterion(dth.Data.dataframe, 'sex', 2)
     # Implemented input for custom splits with option to cancel, hence the if statement.
     for i in range(20):
-        result, mae = regressor.regress(dth.Data.dataframe, dth.Data.split)
+        result, mae = regressor.regress(ladies, dth.Data.split)
         mean_absolute_error.append(mae)
         output.insert(INSERT, result, spacing())
     output.insert(INSERT, sum(mean_absolute_error)/len(mean_absolute_error), spacing())
@@ -120,6 +121,10 @@ def spacing():
 # ---------- LABELS ----------
 # welcomelabel = Label(app, text='I\'m afraid I can\'t do that, Dave')
 # welcomelabel.grid(column=0, row=0)
+
+stree.set('%s%s' % ('Split value is: ', dth.Data.split))
+split_value_label = Label(app, textvariable=stree.get())
+split_value_label.grid(column=0, row=2)
 
 # ---------- OUTPUT -----------
 output = scrolledtext.ScrolledText(app, width=110, height=50)
@@ -158,5 +163,6 @@ inputsplitBTN = Button(buttonframe, text="Change split value", command=askforspl
 inputsplitBTN.pack(padx=15, pady=15)
 
 buttonframe.grid(column='0', row='0')
+
 
 app.mainloop()

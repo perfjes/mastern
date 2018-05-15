@@ -2,8 +2,7 @@ from flask import Flask, render_template, request
 from compute.modules import datahandler
 
 app = Flask(__name__, template_folder='templates')
-file = ['df.csv']
-defaultdata = datahandler.loaddataframe(file[0])
+defaultdata = datahandler.Data.dataframe
 
 
 # Doesn't work with buttons...yet
