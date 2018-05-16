@@ -1,50 +1,60 @@
-from os.path import dirname
+from os.path import dirname, abspath
 import pandas as pd
 import os
 import _pickle as pickle
 
 # TODO add comparison between load and previously saved, in order to reduce redundancy on larger sets
 
+ROOT_DIRECTORY = dirname(dirname(abspath(__file__)))
+
 
 class Path:
-    path = '%s%s' % (dirname(dirname(os.getcwd())), r'/data/df.csv')
-
-
-pickle_data = '%s%s' % (dirname(dirname(os.getcwd())), r'/data/data.pkl')
-pickle_split = '%s%s' % (dirname(dirname(os.getcwd())), r'/data/split.pkl')
+    path = '%s%s' % (ROOT_DIRECTORY, r'/data/df.csv')
+    pickle_data = '%s%s' % (ROOT_DIRECTORY, r'/data/data.pkl')
+    pickle_split = '%s%s' % (ROOT_DIRECTORY, r'/data/split.pkl')
 
 
 # ---------- OBJECT SAVING AND LOADING ----------
 # TODO - implement error handling on save/load, make sure values are correct etc
 # Autosaves the dataframe to pickle
 def autosave_dataframe_to_pickle(objects):
-    with open(pickle_data, 'wb') as output_data:
+    with open(Path.pickle_data, 'wb') as output_data:
         pickle.dump(objects, output_data)
 
 
 # Autosaves the split value to pickle
 def autosave_split_to_pickle(objects):
-    with open(pickle_split, 'wb') as output_data:
+    with open(Path.pickle_split, 'wb') as output_data:
         pickle.dump(objects, output_data)
 
 
 # Loads the autosaved dataframe from cPickle
 def load_dataframe_from_pickle():
-    try:
-        with open(pickle_data, 'rb') as input_data:
-            return pickle.load(input_data)
-    except:
+    if os.path.isfile(Path.pickle_data):
+        try:
+            with open(Path.pickle_data, 'rb') as input_data:
+                return pickle.load(input_data)
+        except:
+            data = pd.DataFrame()
+            autosave_dataframe_to_pickle(data)
+            return data
+    else:
         data = pd.DataFrame()
-        # autosave_dataframe_to_pickle(data)
+        autosave_dataframe_to_pickle(data)
         return data
 
 
 # Loads the split value from cPickle
 def load_split_value_from_pickle():
-    try:
-        with open(pickle_split, 'rb') as input_data:
-            return pickle.load(input_data)
-    except:
+    if os.path.isfile(Path.pickle_split):
+        try:
+            with open(Path.pickle_split, 'rb') as input_data:
+                return pickle.load(input_data)
+        except:
+            split = 0.35
+            autosave_split_to_pickle(split)
+            return split
+    else:
         split = 0.35
         autosave_split_to_pickle(split)
         return split
@@ -63,15 +73,24 @@ def save_data_frame(data):
 # In case the system should be able to mutate the data, then it should be able to not overwrite the existing
 # datasets.
 def save_as_new(data):
-    counter = 0
+    counter = 1
     save = 'df.csv'
-    while os.path.isfile(Path.path + save):
-        counter += 1
-        if counter > 0:
+    data_directory = dirname(Path.path) + '/'
+
+    if not os.path.isfile(data_directory + save):
+        data.to_csv(os.path.join(data_directory + save))
+        return save
+    if os.path.isfile(data_directory + save):
+        save = 'df' + str(counter) + '.csv'
+        while os.path.isfile(data_directory + save):
+            counter += 1
             save = 'df' + str(counter) + '.csv'
-            print('Dataframe saved as new file, named: ', save)
-    data.to_csv(os.path.join(Path.path, save))
-    return save
+    if not os.path.isfile(data_directory + save):
+        data.to_csv(os.path.join(data_directory + save))
+        print(os.path.join(data_directory + save))
+        return save
+    else:
+        return 'Saving as new file did not work'
 
 
 # Loads file from path, reads it as CSV and returns the result as a pandas dataframe (or series).
@@ -98,3 +117,10 @@ def load_dataframe(path):
 
 def filter_criterion(df, column, value):
     return df.loc[df[column] == value]
+
+
+def update_pickle(data, split):
+    Data.dataframe = data
+    Data.split = split
+    autosave_dataframe_to_pickle(data)
+    autosave_split_to_pickle(split)

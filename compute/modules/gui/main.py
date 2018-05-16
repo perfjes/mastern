@@ -12,6 +12,13 @@ dtc = classifier
 dtr = regressor
 dth = datahandler
 
+
+# Fix for different paths - html.py / main.py
+# TODO make it better
+dth.Path.pickle_data = '%s%s' % (dirname(dirname(os.getcwd())), r'/data/data.pkl')
+dth.Path.pickle_data = '%s%s' % (dirname(dirname(os.getcwd())), r'/data/split.pkl')
+
+
 # GUI-related variables
 app = Tk()
 app.title('Bongo')
@@ -29,11 +36,12 @@ def askforsplit():
                                             "Please input a value \n greater than 0.0 and \n less than 1.0",
                                    parent=app, minvalue=0, maxvalue=0.999)
     if answer is not None:
-        dth.Data.split = answer
+        dth.update_pickle(dth.Data.dataframe, answer)
         splitstring = '%s%s' % (dth.Data.split * 100, '% of the dataset will be used for testing.')
         stree.set('%s%s' % ('Split value is: ', dth.Data.split))
         output.insert(INSERT, splitstring)
         app.update_idletasks()
+
         return True
     else:
         output.insert(INSERT, 'Operation cancelled', spacing())
@@ -48,18 +56,18 @@ def regclicked():
 
 
 # Runs the classification function on the currently loaded dataset, outputs the results in the GUI
-def clasclicked():
+def classify_clicked():
     res = dtc.classify(dth.Data.dataframe, dth.Data.split)
     output.insert(INSERT, res, spacing())
 
 
 # Clears the output field of the GUI for a fresh start
-def clearoutput():
+def clear_output():
     output.delete(1.0, END)
 
 
 # Lets the user choose a file from their computer to use with the system
-def loadfile():
+def load_file():
     dialogpath = '%s%s' % (dirname(dirname(os.getcwd())), '/data/')
     path = filedialog.askopenfilename(parent=app,
                                       initialdir=dialogpath,
@@ -77,18 +85,18 @@ def loadfile():
 
 
 # Prints the entire dataset to the output window of the GUI
-def printdataset():
+def print_dataset():
     output.insert(INSERT, dth.Data.dataframe.to_string())
 
 
 # Saves the currently loaded dataset as a new file (to allow mutation without deletion
-def saveasnew():
+def save_as_new():
     message = dth.save_as_new(dth.Data.dataframe)
-    output.insert(INSERT, 'Saved file as: ' + message)
+    output.insert(INSERT, 'Saved file as: ' + message, spacing())
 
 
 # Test methods for quick testing - work in progress for creating better methods and stuff
-def mregtest():
+def mass_regression_test():
     mean_absolute_error = list()
     # for i in range(20):
     #    regclicked()
@@ -103,7 +111,7 @@ def mregtest():
 
 
 # Same as above, test method.
-def mclastest():
+def mass_classification_test():
     # for i in range(20):
     #    clasclicked()
     females = dth.filter_criterion(dth.Data.dataframe, 'sex', 2)
@@ -131,11 +139,13 @@ output = scrolledtext.ScrolledText(app, width=110, height=50)
 output.grid(column=3, row=0)
 
 buttonframe = Frame(app)
+
+
 # ---------- TEMP BUTTONS ----------
-massiveregtest = Button(buttonframe, text="Regress 20", command=mregtest)
+massiveregtest = Button(buttonframe, text="Regress 20", command=mass_regression_test)
 massiveregtest.pack(padx=10, pady=10)
 
-massiveclastest = Button(buttonframe, text="Classify 20", command=mclastest)
+massiveclastest = Button(buttonframe, text="Classify 20", command=mass_classification_test)
 massiveclastest.pack(padx=10, pady=10)
 
 
@@ -144,19 +154,19 @@ massiveclastest.pack(padx=10, pady=10)
 regressionBTN = Button(buttonframe, text='Regression', command=regclicked)
 regressionBTN.pack(padx=5, pady=5)
 
-classifierBTN = Button(buttonframe, text='Classification', command=clasclicked)
+classifierBTN = Button(buttonframe, text='Classification', command=classify_clicked)
 classifierBTN.pack(padx=5, pady=15)
 
-clearoutputBTN = Button(buttonframe, text='Clear output field', command=clearoutput)
+clearoutputBTN = Button(buttonframe, text='Clear output field', command=clear_output)
 clearoutputBTN.pack(padx=5, pady=15)
 
-loadfileBTN = Button(buttonframe, text='Load dataset CSV', command=loadfile)
+loadfileBTN = Button(buttonframe, text='Load dataset CSV', command=load_file)
 loadfileBTN.pack(padx=5, pady=5)
 
-savenewfileBTN = Button(buttonframe, text='Save dataset as new', command=saveasnew)
+savenewfileBTN = Button(buttonframe, text='Save dataset as new', command=save_as_new)
 savenewfileBTN.pack(padx=5, pady=15)
 
-printdataBTN = Button(buttonframe, text='Print dataset', command=printdataset)
+printdataBTN = Button(buttonframe, text='Print dataset', command=print_dataset)
 printdataBTN.pack(padx=5, pady=5)
 
 inputsplitBTN = Button(buttonframe, text="Change split value", command=askforsplit)
