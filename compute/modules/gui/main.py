@@ -4,6 +4,7 @@ from tkinter import filedialog
 from os.path import dirname
 from compute.modules import datahandler
 from compute.modules.ml import classifier, regressor
+from PIL import Image, ImageTk
 import os
 
 
@@ -22,9 +23,14 @@ temp = dth.load_dataframe('%s%s' % (dirname(dirname(os.getcwd())), r'/data/test.
 
 # GUI-related variables
 app = Tk()
-app.title('Bongo')
+app.title('Mastern')
 app.geometry('1200x900')
 stree = StringVar()
+
+
+class Img:
+    display = None
+
 
 if dth.Data.dataframe.empty:
     dth.Data.dataframe = dth.load_dataframe(dth.Path.path)
@@ -58,8 +64,10 @@ def regclicked():
 
 # Runs the classification function on the currently loaded dataset, outputs the results in the GUI
 def classify_clicked():
-    res = dtc.classify(dth.Data.dataframe, dth.Data.split)
-    output.insert(INSERT, res, spacing())
+    result, graph = dtc.classify(dth.Data.dataframe, dth.Data.split)
+    image = Image(graph.create_png())
+    Img.display = ImageTk.PhotoImage(image)
+    output.insert(INSERT, result, spacing())
 
 
 # Clears the output field of the GUI for a fresh start
@@ -98,6 +106,7 @@ def save_as_new():
 
 # Test methods for quick testing - work in progress for creating better methods and stuff
 def mass_regression_test():
+    """
     mean_absolute_error = list()
     # for i in range(20):
     #    regclicked()
@@ -109,13 +118,17 @@ def mass_regression_test():
         output.insert(INSERT, result, spacing())
     output.insert(INSERT, sum(mean_absolute_error)/len(mean_absolute_error), spacing())
     output.insert(INSERT, dth.Data.split)
+    """
+    result = classifier.target_classify(dth.Data.dataframe, temp, dth.Data.split)
+    output.insert(INSERT, result, spacing())
 
 
 # Same as above, test method.
 def mass_classification_test():
     # dth.Data.dataframe = dth.Data.dataframe.append(temp, ignore_index=True)
-    result = regressor.target_regress(dth.Data.dataframe, temp, dth.Data.split)
+    result, img = regressor.target_regress(dth.Data.dataframe, temp, dth.Data.split)
     output.insert(INSERT, result, spacing())
+
     # output.insert(INSERT, temp, spacing())
 
 
@@ -133,8 +146,11 @@ split_value_label = Label(app, textvariable=stree.get())
 split_value_label.grid(column=0, row=2)
 
 # ---------- OUTPUT -----------
-output = scrolledtext.ScrolledText(app, width=110, height=50)
+output = scrolledtext.ScrolledText(app, width=110, height=25)
 output.grid(column=3, row=0)
+
+output_png = Label(app, image=Img.display)
+output_png.grid(column=3, row=1)
 
 buttonframe = Frame(app)
 
