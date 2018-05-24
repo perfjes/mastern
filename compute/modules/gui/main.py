@@ -17,6 +17,7 @@ dth = datahandler
 # TODO make it better
 dth.Path.pickle_data = '%s%s' % (dirname(dirname(os.getcwd())), r'/data/data.pkl')
 dth.Path.pickle_data = '%s%s' % (dirname(dirname(os.getcwd())), r'/data/split.pkl')
+temp = dth.load_dataframe('%s%s' % (dirname(dirname(os.getcwd())), r'/data/test.csv'))
 
 
 # GUI-related variables
@@ -112,13 +113,10 @@ def mass_regression_test():
 
 # Same as above, test method.
 def mass_classification_test():
-    # for i in range(20):
-    #    clasclicked()
-    females = dth.filter_criterion(dth.Data.dataframe, 'sex', 2)
-    result, mae = dtr.regress(females, dth.Data.split)
+    # dth.Data.dataframe = dth.Data.dataframe.append(temp, ignore_index=True)
+    result = regressor.target_regress(dth.Data.dataframe, temp, dth.Data.split)
     output.insert(INSERT, result, spacing())
-    output.insert(INSERT, mae, spacing())
-    output.insert(INSERT, females, spacing())
+    # output.insert(INSERT, temp, spacing())
 
 
 # Adds some breaklines to the output text field to increase readability by seven thousand percent

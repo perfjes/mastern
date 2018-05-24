@@ -33,3 +33,13 @@ def regress(df, split):
     print(sum(meanlist) / float(len(meanlist)), '\n')
     print('Mean Absolute Error: ', mae)
     return result, mae
+
+
+def target_regress(df, target, split):
+    xtrain, xtest, ytrain, ytest = split_dataset_into_train_test(df, 'years in vivo', split)
+    reg = DecisionTreeRegressor()
+    reg.fit(xtrain, ytrain)
+    targetpred = target.drop('years in vivo', axis=1)
+    result = reg.predict(targetpred)
+    ret = pd.DataFrame({'Actual': target['years in vivo'], 'Predicted': result})
+    return ret

@@ -9,7 +9,7 @@ ROOT_DIRECTORY = dirname(dirname(abspath(__file__)))
 
 
 class Path:
-    path = '%s%s' % (ROOT_DIRECTORY, r'/data/df.csv')
+    path = '%s%s' % (ROOT_DIRECTORY, r'/data/db.csv')
     pickle_data = '%s%s' % (ROOT_DIRECTORY, r'/data/data.pkl')
     pickle_split = '%s%s' % (ROOT_DIRECTORY, r'/data/split.pkl')
 
@@ -78,7 +78,7 @@ def save_as_new(data):
     data_directory = dirname(Path.path) + '/'
 
     if not os.path.isfile(data_directory + save):
-        data.to_csv(os.path.join(data_directory + save))
+        data.to_csv(os.path.join(data_directory + save), encoding='utf-8', index=False)
         return save
     if os.path.isfile(data_directory + save):
         save = 'df' + str(counter) + '.csv'
@@ -86,7 +86,7 @@ def save_as_new(data):
             counter += 1
             save = 'df' + str(counter) + '.csv'
     if not os.path.isfile(data_directory + save):
-        data.to_csv(os.path.join(data_directory + save))
+        data.to_csv(os.path.join(data_directory + save), encoding='utf-8', index=False)
         print(os.path.join(data_directory + save))
         return save
     else:
@@ -125,5 +125,3 @@ def update_pickle(data, split):
     autosave_dataframe_to_pickle(data)
     autosave_split_to_pickle(split)
 
-
-def
