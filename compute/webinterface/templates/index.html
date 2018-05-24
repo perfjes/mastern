@@ -12,12 +12,12 @@
         </section>
 
         <!-- Currently does nothing -->
-        <section id="buttons">
+        <form action="/reload" method="post"> {{ loading }}
             <button type="button" value="Load data" name="loaddata"></button>
             <button type="button" value="Save as new" name="saveasnew"></button>
             <button type="button" value="Regress" name="regress"></button>
             <button type="button" value="Classify" name="classify"></button>
-        </section>
+        </form>
         <section id="data">
             {{ data | safe }}
         </section>

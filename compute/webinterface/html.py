@@ -1,6 +1,7 @@
 import os
 from flask import Flask, render_template, request
 from compute.modules import datahandler
+from compute.modules.ml import regressor
 from compute.webinterface.nocache import nocache
 
 dth = datahandler
@@ -32,19 +33,15 @@ def index():
         return render_template('index.html', data=dataframe.to_html())
 
 
+@app.route('/reload', methods=["POST"])
+def load():
+    result = regressor.regress(dataframe, dth.Data.split)
+    loading_message = 'Loading...'
+    return render_template('index.html', message=loading_message, data=result.to_html())
+
+
 def display_dataset():
     return render_template('index.html', data=dataframe.to_html())
-
-
-@app.after_request
-def add_header(response):
-    """
-    Add headers to both force latest IE rendering engine or Chrome Frame,
-    and also to cache the rendered page for 10 minutes.
-    """
-    response.headers['X-UA-Compatible'] = 'IE=Edge,chrome=1'
-    response.headers['Cache-Control'] = 'public, max-age=0'
-    return response
 
 
 app.run()
