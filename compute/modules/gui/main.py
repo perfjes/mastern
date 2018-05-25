@@ -2,8 +2,12 @@ from tkinter import *
 from tkinter import scrolledtext, simpledialog
 from tkinter import filedialog
 from os.path import dirname
+
+import pandas as pd
+
 from compute.modules import datahandler
 from compute.modules.ml import classifier, regressor
+import matplotlib.pyplot as plt
 from PIL import Image, ImageTk
 import os
 
@@ -18,7 +22,7 @@ dth = datahandler
 # TODO make it better
 dth.Path.pickle_data = '%s%s' % (dirname(dirname(os.getcwd())), r'/data/data.pkl')
 dth.Path.pickle_data = '%s%s' % (dirname(dirname(os.getcwd())), r'/data/split.pkl')
-temp = dth.load_dataframe('%s%s' % (dirname(dirname(os.getcwd())), r'/data/test.csv'))
+temp = dth.load_dataframe('%s%s' % ((dirname(os.getcwd())), r'/data/test.csv'))
 
 
 # GUI-related variables
@@ -34,6 +38,22 @@ class Img:
 
 if dth.Data.dataframe.empty:
     dth.Data.dataframe = dth.load_dataframe(dth.Path.path)
+
+
+def classifaction_report_csv(report):
+    report_data = []
+    lines = report.split('\n')
+    for line in lines[2:-3]:
+        row = {}
+        row_data = line.split('      ')
+        row['class'] = row_data[0]
+        row['precision'] = float(row_data[1])
+        row['recall'] = float(row_data[2])
+        row['f1_score'] = float(row_data[3])
+        row['support'] = float(row_data[4])
+        report_data.append(row)
+    dataframe = pd.DataFrame.from_dict(report_data)
+    return dataframe.to_csv('classification_report.csv', index = False)
 
 
 # Ask for the user to input their desired split, where the input defines the test set size.
@@ -64,9 +84,14 @@ def regclicked():
 
 # Runs the classification function on the currently loaded dataset, outputs the results in the GUI
 def classify_clicked():
-    result, graph = dtc.classify(dth.Data.dataframe, dth.Data.split)
-    image = Image(graph.create_png())
-    Img.display = ImageTk.PhotoImage(image)
+    result = dtc.classify(dth.Data.dataframe, dth.Data.split)
+    #image = Image(graph.create_png())
+    #Img.display = ImageTk.PhotoImage(image)
+
+    plot = classifaction_report_csv(result)
+
+    plt.plot('x', 'y', data=plot, linestyle='none', marker='o')
+    plt.show()
     output.insert(INSERT, result, spacing())
 
 

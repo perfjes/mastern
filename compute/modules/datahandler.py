@@ -98,6 +98,7 @@ def save_as_new(data):
 # TODO implement optional filling of missing data (remove rows where data is missing)
 # TODO cont. this has been avoided due to tiny dataset with no affordance to remove rows available.
 # TODO cont. Implement error handling on file not found / wrong file type
+# TODO - This has become quite messy, but the error handling has improved significantly. Maybe clean it up later.
 def load_dataframe(path):
     if len(path.split('/')) <= 1:
         if path.endswith('.csv'):
@@ -106,6 +107,16 @@ def load_dataframe(path):
             file = "%s%s%s" % (Path.path, path, '.csv')
     else:
         file = path
+    if not os.path.isfile(file):
+        for root, dirs, files in os.walk(path):
+            if file in files:
+                data = pd.read_csv(file, sep=',')
+                if data.isnull().values.any():
+                    filled = data.fillna(data.mean(skipna=True))
+                    return filled
+                else:
+                    return data
+
     data = pd.read_csv(file, sep=',')
 
     if data.isnull().values.any():
