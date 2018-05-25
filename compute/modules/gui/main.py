@@ -20,8 +20,8 @@ dth = datahandler
 
 # Fix for different paths - html.py / main.py
 # TODO make it better
-dth.Path.pickle_data = '%s%s' % (dirname(dirname(os.getcwd())), r'/data/data.pkl')
-dth.Path.pickle_data = '%s%s' % (dirname(dirname(os.getcwd())), r'/data/split.pkl')
+dth.Path.pickle_data = '%s%s' % (dirname(os.getcwd()), r'/data/data.pkl')
+dth.Path.pickle_data = '%s%s' % (dirname(os.getcwd()), r'/data/split.pkl')
 temp = dth.load_dataframe('%s%s' % ((dirname(os.getcwd())), r'/data/test.csv'))
 
 
@@ -29,7 +29,7 @@ temp = dth.load_dataframe('%s%s' % ((dirname(os.getcwd())), r'/data/test.csv'))
 app = Tk()
 app.title('Mastern')
 app.geometry('1200x900')
-stree = StringVar()
+split_value_string = StringVar()
 
 
 class Img:
@@ -64,11 +64,11 @@ def askforsplit():
                                    parent=app, minvalue=0, maxvalue=0.999)
     if answer is not None:
         dth.update_pickle(dth.Data.dataframe, answer)
-        splitstring = '%s%s' % (dth.Data.split * 100, '% of the dataset will be used for testing.')
-        stree.set('%s%s' % ('Split value is: ', dth.Data.split))
-        output.insert(INSERT, splitstring)
+        split_string = '%s%s' % (dth.Data.split * 100, '% of the dataset will be used for testing.')
+        split_value_string.set('%s%s' % ('Split value is: ', dth.Data.split))
+        output.insert(INSERT, split_string)
+        dtc.update_model(dth.Data.dataframe)
         app.update_idletasks()
-
         return True
     else:
         output.insert(INSERT, 'Operation cancelled', spacing())
@@ -84,14 +84,11 @@ def regclicked():
 
 # Runs the classification function on the currently loaded dataset, outputs the results in the GUI
 def classify_clicked():
-    result = dtc.classify(dth.Data.dataframe, dth.Data.split)
+    result, graph = dtc.classify(dth.Data.dataframe)
+    print(dth.ROOT_DIRECTORY)
     #image = Image(graph.create_png())
     #Img.display = ImageTk.PhotoImage(image)
 
-    plot = classifaction_report_csv(result)
-
-    plt.plot('x', 'y', data=plot, linestyle='none', marker='o')
-    plt.show()
     output.insert(INSERT, result, spacing())
 
 
@@ -144,8 +141,8 @@ def mass_regression_test():
     output.insert(INSERT, sum(mean_absolute_error)/len(mean_absolute_error), spacing())
     output.insert(INSERT, dth.Data.split)
     """
-    result = classifier.target_classify(dth.Data.dataframe, temp, dth.Data.split)
-    output.insert(INSERT, result, spacing())
+    #result = classifier.target_classify(dth.Data.dataframe, temp, dth.Data.split)
+    #output.insert(INSERT, result, spacing())
 
 
 # Same as above, test method.
@@ -166,8 +163,8 @@ def spacing():
 # welcomelabel = Label(app, text='I\'m afraid I can\'t do that, Dave')
 # welcomelabel.grid(column=0, row=0)
 
-stree.set('%s%s' % ('Split value is: ', dth.Data.split))
-split_value_label = Label(app, textvariable=stree.get())
+split_value_string.set('%s%s' % ('Split value is: ', dth.Data.split))
+split_value_label = Label(app, textvariable=split_value_string.get())
 split_value_label.grid(column=0, row=2)
 
 # ---------- OUTPUT -----------

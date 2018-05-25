@@ -9,7 +9,7 @@ ROOT_DIRECTORY = dirname(dirname(abspath(__file__)))
 
 
 class Path:
-    path = '%s%s' % (ROOT_DIRECTORY, r'/data/db.csv')
+    path = '%s%s' % (ROOT_DIRECTORY, r'/data/')
     pickle_data = '%s%s' % (ROOT_DIRECTORY, r'/data/data.pkl')
     pickle_split = '%s%s' % (ROOT_DIRECTORY, r'/data/split.pkl')
 
@@ -65,11 +65,6 @@ class Data:
     split = load_split_value_from_pickle()
 
 
-# Overwrite default df.csv file.
-def save_data_frame(data):
-    data.to_csv(os.path.join(Path.path, r'df.csv'), encoding='utf-8', index=False)
-
-
 # In case the system should be able to mutate the data, then it should be able to not overwrite the existing
 # datasets.
 def save_as_new(data):
@@ -100,13 +95,19 @@ def save_as_new(data):
 # TODO cont. Implement error handling on file not found / wrong file type
 # TODO - This has become quite messy, but the error handling has improved significantly. Maybe clean it up later.
 def load_dataframe(path):
-    if len(path.split('/')) <= 1:
-        if path.endswith('.csv'):
-            file = "%s%s" % (Path.path, path)
+    default = 'db.csv'
+    if not path == Path.path:
+        if len(path.split('/')) <= 1:
+            if path.endswith('.csv'):
+                file = "%s%s" % (Path.path, path)
+            elif path.endswith('/'):
+                file = '%s%s' % (Path.path, default)
+            else:
+                file = "%s%s%s" % (Path.path, path, '.csv')
         else:
-            file = "%s%s%s" % (Path.path, path, '.csv')
+            file = path
     else:
-        file = path
+        file = '%s%s' % (path, default)
     if not os.path.isfile(file):
         for root, dirs, files in os.walk(path):
             if file in files:
@@ -117,7 +118,7 @@ def load_dataframe(path):
                 else:
                     return data
 
-    data = pd.read_csv(file, sep=',')
+    data = pd.read_csv(file, sep=',', encoding='utf-8')
 
     if data.isnull().values.any():
         filled = data.fillna(data.mean(skipna=True))
@@ -136,3 +137,18 @@ def update_pickle(data, split):
     autosave_dataframe_to_pickle(data)
     autosave_split_to_pickle(split)
 
+
+def save_file(file, item):
+    file = '%s%s' % (Path.path, file)
+    with open(file, 'wb') as output_data:
+        pickle.dump(item, output_data)
+
+
+def load_file(file):
+    file = '%s%s' % (Path.path, file)
+    if os.path.isfile(file):
+        with open(file, 'rb') as input_data:
+            return pickle.load(input_data)
+    else:
+        print('no')
+        return None
