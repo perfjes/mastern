@@ -7,8 +7,6 @@ import pandas as pd
 
 from compute.modules import datahandler
 from compute.modules.ml import classifier, regressor
-import matplotlib.pyplot as plt
-from PIL import Image, ImageTk
 import os
 
 
@@ -18,8 +16,8 @@ dtr = regressor
 dth = datahandler
 
 
-# Fix for different paths - html.py / main.py
-# TODO make it better
+# Fix for different paths - web_gui.py / main.py
+# TODO figure out why the paths are saved in memory instead of loaded in (maybe IDE issue)
 dth.Path.pickle_data = '%s%s' % (dirname(os.getcwd()), r'/data/data.pkl')
 dth.Path.pickle_data = '%s%s' % (dirname(os.getcwd()), r'/data/split.pkl')
 temp = dth.load_dataframe('%s%s' % ((dirname(os.getcwd())), r'/data/test.csv'))
@@ -52,6 +50,7 @@ def classifaction_report_csv(report):
         row['f1_score'] = float(row_data[3])
         row['support'] = float(row_data[4])
         report_data.append(row)
+    # noinspection PyTypeChecker
     dataframe = pd.DataFrame.from_dict(report_data)
     return dataframe.to_csv('classification_report.csv', index = False)
 
@@ -76,7 +75,7 @@ def askforsplit():
 
 
 # Runs the regression function on the currently loaded dataset, outputs the results in the GUI
-def regclicked():
+def reg_clicked():
     result, mae = dtr.regress(dth.Data.dataframe, dth.Data.split)
     output.insert(INSERT, result, spacing())
     output.insert(INSERT, mae, spacing())
@@ -187,7 +186,7 @@ massiveclastest.pack(padx=10, pady=10)
 
 # ---------- BUTTONS ----------
 
-regressionBTN = Button(buttonframe, text='Regression', command=regclicked)
+regressionBTN = Button(buttonframe, text='Regression', command=reg_clicked)
 regressionBTN.pack(padx=5, pady=5)
 
 classifierBTN = Button(buttonframe, text='Classification', command=classify_clicked)
