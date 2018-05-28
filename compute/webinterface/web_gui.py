@@ -2,53 +2,45 @@ import os
 from flask import Flask, render_template, request
 from compute.modules import datahandler
 from compute.modules.ml import regressor
-from compute.webinterface.nocache import nocache
 
 dth = datahandler
+dth.Data.dataframe = dth.load_dataframe_from_pickle()
+dth.Data.split = dth.load_split_value_from_pickle()
 
-app = Flask(__name__, template_folder='templates')
+app = Flask(__name__)
 
 # Fix for different paths - web_gui.py / main.py
 # TODO make it better
-dth.Path.pickle_data = '%s%s' % (os.getcwd(), r'/compute/data')
-dth.Path.pickle_data = '%s%s' % (os.getcwd(), r'/compute/data')
-dataframe = dth.Data.dataframe
+
+path = dth.ROOT_DIRECTORY + r'/data/'
 
 
-app.config['CACHE_TYPE'] = 'null'
+def test_regression():
+    dth.Data.dataframe = dth.load_dataframe(path)
+    ohno, nope = regressor.regress(dth.Data.dataframe, dth.Data.split)
+    return render_template('index.html', data=ohno.sort_index().to_html())
 
 
 # Doesn't work with buttons...yet
-@app.route('/', methods=['GET', 'POST'])
-@nocache
+@app.route('/')
 def index():
-    if request.method == 'POST':
-        if request.form.get('loaddata') == 'loaddata':
-            print('load data')
-            return render_dataset()
-        elif request.form.get('savedata') == 'savedata':
-            print('save data')
-            return render_dataset()
-        elif request.form.get('regress') == 'regress':
-            print('regress')
-            return render_dataset()
-        elif request.form.get('classify') == 'classify':
-            print('classify')
-            return render_dataset()
-    elif request.method == 'GET':
-        return render_template('index.html', data=dataframe.to_html())
+
+    return test_regression()
+    # return render_template('index.html', data=dth.load_dataframe(path).to_html())
 
 
-def render_dataset():
-    return render_template('index.html', data=dataframe.to_html())
+@app.after_request
+def add_header(r):
+    """
+    Add headers to both force latest IE rendering engine or Chrome Frame,
+    and also to cache the rendered page for 10 minutes.
+    """
+    r.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    r.headers["Pragma"] = "no-cache"
+    r.headers["Expires"] = "0"
+    r.headers['Cache-Control'] = 'public, max-age=0'
+    return r
 
 
-@app.route('/reload', methods=["POST"])
-@nocache
-def load():
-    result = regressor.regress(dataframe, dth.Data.split)
-    loading_message = 'Loading...'
-    return render_template('index.html', message=loading_message, data=result.to_html())
-
-
-app.run()
+if __name__ == "__main__":
+    app.run(debug=True)

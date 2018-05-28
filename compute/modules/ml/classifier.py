@@ -21,7 +21,7 @@ def classify(df):
         dth.save_file('classifier.sav', classifier)
 
     y_prediction = classifier.predict(x_test)
-    graph = g_factory.graph_factory(y_prediction)
+    graph = g_factory.graph_factory(df)
     return classification_report(y_test, y_prediction), graph
 
 

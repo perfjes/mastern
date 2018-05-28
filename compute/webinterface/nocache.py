@@ -5,8 +5,6 @@ from flask import make_response
 
 # Module for disabling cache in browsers (workaround for issues where changes aren't updated unless cache is cleared)
 # Will probably not be relevant for the final ... prototype.
-
-
 def nocache(view):
     @wraps(view)
     def no_cache(*args, **kwargs):

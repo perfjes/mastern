@@ -20,7 +20,7 @@ dth = datahandler
 # TODO figure out why the paths are saved in memory instead of loaded in (maybe IDE issue)
 dth.Path.pickle_data = '%s%s' % (dirname(os.getcwd()), r'/data/data.pkl')
 dth.Path.pickle_data = '%s%s' % (dirname(os.getcwd()), r'/data/split.pkl')
-temp = dth.load_dataframe('%s%s' % ((dirname(os.getcwd())), r'/data/test.csv'))
+temp = dth.load_dataframe('%s%s' % (dirname((dirname(os.getcwd()))), r'/data/test.csv'))
 
 
 # GUI-related variables
