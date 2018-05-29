@@ -9,12 +9,13 @@ body {
     background-color: white;
     border-radius: 5px;
     padding: 50px;
-    font-family: sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-size: 40pt;
 }
 
 #title p {
     font-size: 20pt;
+    font-family: 'Roboto Condensed', sans-serif;
 }
 
 #buttons {
@@ -23,18 +24,63 @@ body {
     margin: 20px auto;
     padding: 20px;
     background-color: white;
+    border: 0;
+    font-family: inherit;
+}
+
+#buttons button {
+    -webkit-border-radius: 9px;
+    -moz-border-radius: 9px;
+    border-radius: 9px;
+    font-family: 'Roboto Condensed', sans-serif;
+    color: white;
+    font-size: 20px;
+    background: #734f96;
+    padding: 10px 20px 10px 20px;
+    text-decoration: none;
+    transition: 0.4s ease;
+}
+
+#buttons button:hover {
+    background: #2a5925;
+    text-decoration: none;
+    transition: 0.4s ease;
+}
+
+button:focus {
+    outline:0;
+}
+
+.dataframe {
+    width: fit-content;
+    height: fit-content;
+    margin: auto;
+    border: none;
+}
+
+.dataframe thead tr th {
+    text-align: center;
+    margin: 50px;
+    border: none;
+}
+
+.dataframe tbody tr td, th {
+    padding: 10px;
+    border: none;
+    border-top: 2px solid #734f96;
 }
 
 #data {
     background-color: white;
-    padding: 20px;
     border-radius: 5px;
     width: fit-content;
     height: fit-content;
     margin: auto;
+    font-family: 'Roboto', sans-serif;
 }
 
 #data thead th, td {
     padding: 3px;
     background-color: white;
+    font-family: 'Roboto', sans-serif;
 }
