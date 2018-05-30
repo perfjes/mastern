@@ -4,6 +4,7 @@ import os
 import _pickle as pickle
 
 # TODO add comparison between load and previously saved, in order to reduce redundancy on larger sets
+from flask_restful import Resource
 
 ROOT_DIRECTORY = dirname(dirname(abspath(__file__)))
 
@@ -60,7 +61,7 @@ def load_split_value_from_pickle():
         return split
 
 
-class Data:
+class Data(Resource):
     dataframe = load_dataframe_from_pickle()
     split = load_split_value_from_pickle()
 

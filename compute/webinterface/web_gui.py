@@ -1,14 +1,21 @@
 import os
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, Blueprint
 from compute.modules import datahandler
 from compute.modules.ml import regressor
+from flask_rest import Api
 
-
+# Module related variables
 dth = datahandler
 dth.Data.dataframe = dth.load_dataframe_from_pickle()
 dth.Data.split = dth.load_split_value_from_pickle()
-app = Flask(__name__)
 path = dth.ROOT_DIRECTORY + r'/data/'
+dth.Data.dataframe = dth.load_dataframe(path)
+
+# Web app
+app = Flask(__name__)
+api_blueprint = Blueprint('api', __name__)
+web_api = Api(api_blueprint)
+web_api.add_resource(dth.Data.dataframe, '/api/data/<string:file>', endpoint='data')
 
 
 @app.route('/getjson')
@@ -43,4 +50,5 @@ def add_header(r):
 
 
 if __name__ == "__main__":
+    app.register_blueprint(api_blueprint, url_prefix='/api')
     app.run(debug=True)

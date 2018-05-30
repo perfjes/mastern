@@ -38,7 +38,7 @@ if dth.Data.dataframe.empty:
     dth.Data.dataframe = dth.load_dataframe(dth.Path.path)
 
 
-def classifaction_report_csv(report):
+def classification_report_csv(report):
     report_data = []
     lines = report.split('\n')
     for line in lines[2:-3]:
@@ -48,7 +48,7 @@ def classifaction_report_csv(report):
         row['precision'] = float(row_data[1])
         row['recall'] = float(row_data[2])
         row['f1_score'] = float(row_data[3])
-        row['support'] = float(row_data[4])
+        row['support'] = float(row_data[4])-
         report_data.append(row)
     # noinspection PyTypeChecker
     dataframe = pd.DataFrame.from_dict(report_data)
