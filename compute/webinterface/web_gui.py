@@ -2,22 +2,16 @@ import os
 from flask import Flask, render_template, request
 from compute.modules import datahandler
 from compute.modules.ml import regressor
-from flask_socketio import SocketIO, emit
 
 
 dth = datahandler
 dth.Data.dataframe = dth.load_dataframe_from_pickle()
 dth.Data.split = dth.load_split_value_from_pickle()
-
 app = Flask(__name__)
-socketio = SocketIO(app)
-
-# Fix for different paths - web_gui.py / main.py
-# TODO make it better
-
 path = dth.ROOT_DIRECTORY + r'/data/'
 
 
+@app.route('/getjson')
 def dataframe_to_json():
     return dth.Data.dataframe.to_json()
 
@@ -29,7 +23,6 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/', methods=['POST'])
 def test_regression():
     dth.Data.dataframe = dth.load_dataframe(path)
     ohno, nope = regressor.regress(dth.Data.dataframe, dth.Data.split)
@@ -50,5 +43,4 @@ def add_header(r):
 
 
 if __name__ == "__main__":
-    # app.run(debug=True)
-    socketio.run(app, debug=True)
+    app.run(debug=True)
