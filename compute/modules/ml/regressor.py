@@ -29,9 +29,9 @@ def regress(df, split):
     meanlist = df['years in vivo'].tolist()
     mae = metrics.mean_absolute_error(ytest, ypred)
 
-    print(result, '\n')
-    print(sum(meanlist) / float(len(meanlist)), '\n')
-    print('Mean Absolute Error: ', mae)
+    #print(result, '\n')
+    #print(sum(meanlist) / float(len(meanlist)), '\n')
+    #print('Mean Absolute Error: ', mae)
     return result, mae
 
 

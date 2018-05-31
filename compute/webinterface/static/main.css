@@ -84,3 +84,11 @@ button:focus {
     background-color: white;
     font-family: 'Roboto', sans-serif;
 }
+
+#regression_result td {
+    padding: 5px;
+    width: fit-content;
+    height: fit-content;
+    margin: auto;
+    font-family: 'Roboto', sans-serif;
+}

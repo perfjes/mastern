@@ -1,8 +1,9 @@
 import os
-from flask import Flask, render_template, request, Blueprint
+from flask import Flask, render_template, request, Blueprint, jsonify
 from compute.modules import datahandler
 from compute.modules.ml import regressor
-from flask_rest import Api
+from flask_restful import Api, Resource
+import json
 
 # Module related variables
 dth = datahandler
@@ -15,12 +16,16 @@ dth.Data.dataframe = dth.load_dataframe(path)
 app = Flask(__name__)
 api_blueprint = Blueprint('api', __name__)
 web_api = Api(api_blueprint)
-web_api.add_resource(dth.Data.dataframe, '/api/data/<string:file>', endpoint='data')
 
 
-@app.route('/getjson')
-def dataframe_to_json():
-    return dth.Data.dataframe.to_json()
+class Data(Resource):
+    def get(self):
+        return dth.Data.dataframe.to_json()
+
+
+@app.route('/regress', methods=['GET', 'POST'])
+def get_df_to_json():
+    return test_regression()
 
 
 # Doesn't work with buttons...yet
@@ -33,7 +38,20 @@ def index():
 def test_regression():
     dth.Data.dataframe = dth.load_dataframe(path)
     ohno, nope = regressor.regress(dth.Data.dataframe, dth.Data.split)
-    return render_template('index.html', data=ohno.sort_index().to_html(), mae=nope)
+    return pandas_to_json(ohno)
+
+
+def pandas_to_json(df):
+    d = [
+        dict([
+            (colname, row[i])
+            for i,colname in enumerate(df.columns)
+        ])
+        for row in df.values
+    ]
+
+    boi = {'result':d}
+    return json.dumps(boi)
 
 
 @app.after_request
@@ -47,6 +65,9 @@ def add_header(r):
     r.headers["Expires"] = "0"
     r.headers['Cache-Control'] = 'public, max-age=0'
     return r
+
+
+web_api.add_resource(Data, '/api/data/<string:file>', endpoint='data')
 
 
 if __name__ == "__main__":

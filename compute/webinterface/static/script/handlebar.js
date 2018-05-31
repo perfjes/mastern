@@ -5,13 +5,38 @@ $(document).ready(function() {
 
     // so this should enable JavaScript to call on python code, but it doesn't really work (yet).
     $('#regress').click(function() {
-
+        /**
         $.ajax({
             type: 'POST',
-            url: '../../web_gui.py', // this returns http://127.0.0.1:5000/web_gui.py which is weird haha
+            url: '../../regress',
             data: { param: text }
-        }).done(function (o) {
-            console.log(o);
+        }).done( function(json) {
+            console.log(json);
+            updateTable($.parseJSON(json));
+        });
+         **/
+
+        $.getJSON('../../regress', function(data) {
+            $('.result_element').remove();
+            $.each(data.result, function(index, item) {
+                appendDataToTable(item);
+            });
         });
     });
 });
+
+function updateTable(json) {
+    $.each(json.result, function(index, item) {
+        console.log(item);
+        appendDataToTable(item);
+    });
+}
+
+function appendDataToTable(rowdata) {
+    //var rowitem = $.parseJSON(rowdata);
+    $('#regression_result').append(function() {
+        console.log(rowdata);
+        return '<tr class="result_element"><td>Actual: ' + rowdata.Actual + '</td>' + '\n' + '<td>Predicted: ' + rowdata.Predicted + '</td></tr>';
+
+    });
+}
