@@ -1,42 +1,39 @@
-var dataframeJSON;
-var text;
+var reg = 'reg',
+    clas = 'clas';
 
 $(document).ready(function() {
 
-    // so this should enable JavaScript to call on python code, but it doesn't really work (yet).
     $('#regress').click(function() {
-        /**
-        $.ajax({
-            type: 'POST',
-            url: '../../regress',
-            data: { param: text }
-        }).done( function(json) {
-            console.log(json);
-            updateTable($.parseJSON(json));
-        });
-         **/
-
+        $('.result_element').remove();
         $.getJSON('../../regress', function(data) {
-            $('.result_element').remove();
-            $.each(data.result, function(index, item) {
-                appendDataToTable(item);
-            });
+            updateTable(data, reg);
         });
     });
+
+    $('#classify').click(function() {
+        $('.result_element').remove();
+        $.getJSON('../../classify', function(data) {
+            updateTable(data, clas);
+        });
+    });
+
 });
 
-function updateTable(json) {
-    $.each(json.result, function(index, item) {
-        console.log(item);
-        appendDataToTable(item);
+function updateTable(json, type) {
+    $.each(json.result, function (index, item) {
+        appendDataToTable(item, type);
     });
 }
 
-function appendDataToTable(rowdata) {
-    //var rowitem = $.parseJSON(rowdata);
-    $('#regression_result').append(function() {
-        console.log(rowdata);
-        return '<tr class="result_element"><td>Actual: ' + rowdata.Actual + '</td>' + '\n' + '<td>Predicted: ' + rowdata.Predicted + '</td></tr>';
-
-    });
+function appendDataToTable(rowdata, type) {
+    if(type === 'reg') {
+        $('#regression_result').append(function () {
+            console.log(rowdata);
+            return '<tr class="result_element"><td>Actual: ' + rowdata.Actual + '</td>' + '\n' + '<td>Predicted: ' + rowdata.Predicted + '</td></tr>';
+        });
+    }else if(type === 'clas'){
+        $('#regression_result').append(function () {
+            console.log(rowdata);
+        });
+    }
 }
