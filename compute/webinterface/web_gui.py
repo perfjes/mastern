@@ -47,22 +47,22 @@ def test_regression():
 
 
 def test_classification():
-    result = StringIO(classifier.classify(dth.Data.dataframe))
-    resulty = pandas_to_json(pd.read_csv(result, sep=' '))
-    return resulty
+    result = classifier.classify(dth.Data.dataframe)
+    print(result)
+    print(type(result))
+    return pandas_to_json(result)
 
 
-def pandas_to_json(df):
-    d = [
+# Turns a dataframe into a dict, then returns a properly formatted JSON string
+def pandas_to_json(dataframe):
+    json_result = [
         dict([
-            (colname, row[i])
-            for i,colname in enumerate(df.columns)
+            (column, row[i])
+            for i, column in enumerate(dataframe.columns)
         ])
-        for row in df.values
+        for row in dataframe.values
     ]
-
-    boi = {'result':d}
-    return json.dumps(boi)
+    return json.dumps({'result': json_result})
 
 
 # Attempt at fixing Chrome overaggressive caching
@@ -70,7 +70,7 @@ def pandas_to_json(df):
 def add_header(r):
     """
     Add headers to both force latest IE rendering engine or Chrome Frame,
-    and also to cache the rendered page for 10 minutes.
+    and also to cache the rendered page for 0 minutes.
     """
     r.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
     r.headers["Pragma"] = "no-cache"

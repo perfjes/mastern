@@ -13,8 +13,13 @@ $(document).ready(function() {
     $('#classify').click(function() {
         $('.result_element').remove();
         $.getJSON('../../classify', function(data) {
+            console.log(data);
             updateTable(data, clas);
         });
+    });
+
+    $('#split').click(function () {
+
     });
 
 });
@@ -27,13 +32,15 @@ function updateTable(json, type) {
 
 function appendDataToTable(rowdata, type) {
     if(type === 'reg') {
-        $('#regression_result').append(function () {
-            console.log(rowdata);
-            return '<tr class="result_element"><td>Actual: ' + rowdata.Actual + '</td>' + '\n' + '<td>Predicted: ' + rowdata.Predicted + '</td></tr>';
+        $('#results_table').append(function () {
+            return '<tr class="result_element"><td>Actual: ' + rowdata['Actual'] + '</td>' + '\n' + '<td>Predicted: ' +
+                rowdata['Predicted'] + '</td></tr>';
         });
     }else if(type === 'clas'){
-        $('#regression_result').append(function () {
+        $('#results_table').append(function () {
             console.log(rowdata);
+            value =
+            return '<tr class="result_element"><td>' + rowdata.value + '</td></tr>'
         });
     }
 }

@@ -85,8 +85,16 @@ button:focus {
     font-family: 'Roboto', sans-serif;
 }
 
-#regression_result td {
-    padding: 5px;
+#results_table {
+    width: fit-content;
+    height: fit-content;
+    padding: 10px;
+    margin: auto;
+
+}
+
+#results_table td {
+    padding: 8px;
     width: fit-content;
     height: fit-content;
     margin: auto;

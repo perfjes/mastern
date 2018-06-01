@@ -1,7 +1,9 @@
+import pandas as pd
+
 from compute.modules import graph_factory as g_factory, datahandler as dth
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import classification_report
+from sklearn.metrics import classification_report, precision_recall_fscore_support
 
 
 # Now stores the model after training, and for every run uses the stored model (if it exists)
@@ -22,7 +24,7 @@ def classify(df):
 
     y_prediction = classifier.predict(x_test)
     # graph = g_factory.graph_factory(df)
-    return classification_report(y_test, y_prediction)  # graph
+    return pandas_classification_report(y_test, y_prediction)  # graph
 
 
 def update_model(df):
@@ -33,3 +35,28 @@ def update_model(df):
     classifier = DecisionTreeClassifier()
     classifier = classifier.fit(x_train, y_train)
     dth.save_file('classifier.sav', classifier)
+
+
+def pandas_classification_report(y_true, y_pred):
+    metrics_summary = precision_recall_fscore_support(
+            y_true=y_true,
+            y_pred=y_pred)
+
+    avg = list(precision_recall_fscore_support(
+            y_true=y_true,
+            y_pred=y_pred,
+            average='weighted'))
+
+    metrics_sum_index = ['precision', 'recall', 'f1-score', 'support']
+
+    class_report_df = pd.DataFrame(
+        list(metrics_summary),
+        index=metrics_sum_index)
+
+    support = class_report_df.loc['support']
+    total = support.sum()
+    avg[-1] = total
+
+    class_report_df['avg / total'] = avg
+
+    return class_report_df.T

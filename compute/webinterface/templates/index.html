@@ -20,11 +20,11 @@
         <section id="data">
             <form id="buttons" method="post">
                 <button type="button" value="Load data" name="loaddata"></button>
-                <button type="button" value="Save as new" name="saveasnew"></button>
+                <button type="button" id="split" value="Change split value" name="split"> Change test size </button>
                 <button type="button" id="regress" value="Regress" name="regress"> Run regressor </button>
                 <button type="button" id="classify" value="Classify" name="classify"> Run classifier </button>
             </form>
-            <table id="regression_result">
+            <table id="results_table">
             </table>
             {{ data | safe }}
             {{ mae | safe }}
