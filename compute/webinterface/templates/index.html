@@ -28,6 +28,11 @@
             </table>
             {{ data | safe }}
             {{ mae | safe }}
+
+            <form action="{{ '/split' }}" method="POST" id="splitbox">
+                <input name="split" id="splot">
+                <input type="submit" id="commit">
+            </form>
         </section>
     </body>
 </html>

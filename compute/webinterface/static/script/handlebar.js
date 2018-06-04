@@ -18,10 +18,16 @@ $(document).ready(function() {
         });
     });
 
-    $('#split').click(function () {
-
+    $('#splitbox').submit(function () {
+        var boop = $('#splot');
+        if(boop != null) {
+            $.ajax({
+                type: 'POST',
+                url: '../../split',
+                data: boop
+            });
+        }
     });
-
 });
 
 function updateTable(json, type) {
@@ -39,7 +45,7 @@ function appendDataToTable(rowdata, type) {
     }else if(type === 'clas'){
         $('#results_table').append(function () {
             console.log(rowdata);
-            value =
+
             return '<tr class="result_element"><td>' + rowdata.value + '</td></tr>'
         });
     }

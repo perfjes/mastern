@@ -7,7 +7,6 @@ from sklearn import metrics
 def split_dataset_into_train_test(df, column, test_size):
     # Drop the feature called "Case" which I assume is whether or not the implant had to be removed, 0 for no, 1 for yes
     # Classifies the test cases into whether or not they have removed their implants
-    # TODO implement auto detect of which column to drop?
     x = df.drop(column, axis=1)
     y = df[column]
 
@@ -15,8 +14,6 @@ def split_dataset_into_train_test(df, column, test_size):
     # Xtrain and ytrain are training sets - X have all data except case, y contains only case
     # Xtest and ytest are test sets - X have all data except case, y contains only case
     # Test size is 30% (meaning training set is 70%), random_state is a pseudo-rng for random sampling
-    # TODO implement gini index function instead of using sklearns split func?
-
     return train_test_split(x, y, test_size=test_size)
 
 

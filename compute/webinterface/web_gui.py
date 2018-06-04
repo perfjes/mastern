@@ -1,6 +1,6 @@
 from io import StringIO
 
-from flask import Flask, render_template, Blueprint
+from flask import Flask, render_template, Blueprint, request
 from compute.modules import datahandler
 from compute.modules.ml import regressor, classifier
 from flask_restful import Api, Resource
@@ -34,11 +34,19 @@ def get_classification_result():
     return test_classification()
 
 
+@app.route('/split', methods=['GET', 'POST'])
+def get_split_input_from_html():
+    dth.Data.split = float(request.form['split'])
+    print(dth.Data.split)
+    print(type(dth.Data.split))
+    return render_template('index.html', split=dth.Data.split)
+
+
 # Doesn't work with buttons...yet
 @app.route('/')
 def index():
     # Initiate website
-    return render_template('index.html')
+    return render_template('index.html', split=dth.Data.split)
 
 
 def test_regression():

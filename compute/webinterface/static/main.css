@@ -100,3 +100,10 @@ button:focus {
     margin: auto;
     font-family: 'Roboto', sans-serif;
 }
+
+#splitbox {
+    width: fit-content;
+    height: fit-content;
+    margin: auto;
+    padding: 10px;
+}
