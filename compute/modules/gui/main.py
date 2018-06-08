@@ -57,7 +57,7 @@ def classification_report_csv(report):
 
 # Ask for the user to input their desired split, where the input defines the test set size.
 # The greater the test set the less the training set, and vice versa.
-def askforsplit():
+def ask_for_split():
     answer = simpledialog.askfloat("Input", "Which percentage of \n the dataset will be \n used for testing? \n "
                                             "Please input a value \n greater than 0.0 and \n less than 1.0",
                                    parent=app, minvalue=0, maxvalue=0.999)
@@ -204,7 +204,7 @@ savenewfileBTN.pack(padx=5, pady=15)
 printdataBTN = Button(buttonframe, text='Print dataset', command=print_dataset)
 printdataBTN.pack(padx=5, pady=5)
 
-inputsplitBTN = Button(buttonframe, text="Change split value", command=askforsplit)
+inputsplitBTN = Button(buttonframe, text="Change split value", command=ask_for_split)
 inputsplitBTN.pack(padx=15, pady=15)
 
 buttonframe.grid(column='0', row='0')
