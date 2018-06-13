@@ -2,7 +2,7 @@ from io import StringIO
 
 from flask import Flask, render_template, Blueprint, request
 from compute.modules import datahandler
-from compute.modules.ml import regressor, classifier
+from compute.modules.ml import regressor, classifier, ml
 from flask_restful import Api, Resource
 import json
 import pandas as pd
@@ -50,8 +50,8 @@ def index():
 
 
 def test_regression():
-    ohno, nope = regressor.regress(dth.Data.dataframe)
-    return pandas_to_json(ohno)
+    result = ml.predict_longevity(dth.Data.dataframe)
+    return pandas_to_json(result)
 
 
 def test_classification():
