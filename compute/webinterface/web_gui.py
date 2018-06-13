@@ -50,7 +50,7 @@ def index():
 
 
 def test_regression():
-    ohno, nope = regressor.regress(dth.Data.dataframe, dth.Data.split)
+    ohno, nope = regressor.regress(dth.Data.dataframe)
     return pandas_to_json(ohno)
 
 

@@ -6,10 +6,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3e93f87e-0a3c-431c-8be6-2f63de5c70bc" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/compute/webinterface/static/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/compute/webinterface/static/main.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/compute/webinterface/static/script/handlebar.js" beforeDir="false" afterPath="$PROJECT_DIR$/compute/webinterface/static/script/handlebar.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/compute/webinterface/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/compute/webinterface/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/compute/webinterface/web_gui.py" beforeDir="false" afterPath="$PROJECT_DIR$/compute/webinterface/web_gui.py" afterDir="false" />
     </list>
     <ignored path="venv/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -30,10 +28,22 @@
       <file leaf-file-name="web_gui.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/compute/webinterface/web_gui.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="437">
-              <caret line="55" lean-forward="true" selection-start-line="55" selection-end-line="55" />
+            <state relative-caret-position="-598">
+              <caret line="50" lean-forward="true" selection-start-line="50" selection-end-line="50" />
               <folding>
                 <element signature="e#0#23#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="regressor.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/compute/modules/ml/regressor.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="305">
+              <caret line="42" column="34" selection-start-line="42" selection-start-column="34" selection-end-line="42" selection-end-column="34" />
+              <folding>
+                <element signature="e#0#46#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -69,7 +79,7 @@
       <file leaf-file-name="datahandler.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/compute/modules/datahandler.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3427">
+            <state relative-caret-position="443">
               <caret line="155" selection-start-line="155" selection-end-line="155" />
               <folding>
                 <element signature="e#0#36#0" expanded="true" />
@@ -81,8 +91,8 @@
       <file leaf-file-name="main.css" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/compute/webinterface/static/main.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="518">
-              <caret line="121" column="17" selection-start-line="121" selection-start-column="17" selection-end-line="121" selection-end-column="17" />
+            <state relative-caret-position="230">
+              <caret line="54" column="14" lean-forward="true" selection-start-line="54" selection-start-column="14" selection-end-line="54" selection-end-column="14" />
             </state>
           </provider>
         </entry>
@@ -144,12 +154,12 @@
         <option value="$PROJECT_DIR$/compute/webinterface/static/script/jquery.js" />
         <option value="$PROJECT_DIR$/compute/webinterface/templates/regress.html" />
         <option value="$PROJECT_DIR$/compute/modules/ml/classifier.py" />
-        <option value="$PROJECT_DIR$/compute/webinterface/web_gui.py" />
         <option value="$PROJECT_DIR$/compute/modules/datahandler.py" />
         <option value="$PROJECT_DIR$/compute/modules/ml/regressor.py" />
         <option value="$PROJECT_DIR$/compute/modules/gui/main.py" />
         <option value="$PROJECT_DIR$/compute/webinterface/static/script/handlebar.js" />
         <option value="$PROJECT_DIR$/compute/webinterface/templates/index.html" />
+        <option value="$PROJECT_DIR$/compute/webinterface/web_gui.py" />
         <option value="$PROJECT_DIR$/compute/webinterface/static/main.css" />
       </list>
     </option>
@@ -418,7 +428,7 @@
       <window_info anchor="bottom" id="Database Changes" order="11" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="9" />
       <window_info anchor="bottom" id="Python Console" order="10" weight="0.32943678" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49464285" weight="0.41053787" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49464285" visible="true" weight="0.41053787" />
       <window_info anchor="bottom" id="Terminal" order="8" />
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4963899" visible="true" weight="0.13333334" />
       <window_info anchor="right" id="R Packages" order="6" />
@@ -632,26 +642,6 @@
     <entry file="file://$PROJECT_DIR$/compute/requirements.txt" />
     <entry file="file://$PROJECT_DIR$/requirements.txt" />
     <entry file="file://$PROJECT_DIR$/compute/webinterface/templates/regress.html" />
-    <entry file="file://$PROJECT_DIR$/compute/modules/datahandler.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3427">
-          <caret line="155" selection-start-line="155" selection-end-line="155" />
-          <folding>
-            <element signature="e#0#36#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/compute/modules/ml/regressor.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="483">
-          <caret line="49" column="4" lean-forward="true" selection-start-line="49" selection-start-column="4" selection-end-line="49" selection-end-column="101" />
-          <folding>
-            <element signature="e#0#46#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/compute/modules/ml/classifier.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="541">
@@ -676,16 +666,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/compute/webinterface/web_gui.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="437">
-          <caret line="55" lean-forward="true" selection-start-line="55" selection-end-line="55" />
-          <folding>
-            <element signature="e#0#23#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/compute/webinterface/templates/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="529">
@@ -693,10 +673,40 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/compute/modules/ml/regressor.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="305">
+          <caret line="42" column="34" selection-start-line="42" selection-start-column="34" selection-end-line="42" selection-end-column="34" />
+          <folding>
+            <element signature="e#0#46#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/compute/modules/datahandler.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="443">
+          <caret line="155" selection-start-line="155" selection-end-line="155" />
+          <folding>
+            <element signature="e#0#36#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/compute/webinterface/web_gui.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-598">
+          <caret line="50" lean-forward="true" selection-start-line="50" selection-end-line="50" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/compute/webinterface/static/main.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="518">
-          <caret line="121" column="17" selection-start-line="121" selection-start-column="17" selection-end-line="121" selection-end-column="17" />
+        <state relative-caret-position="230">
+          <caret line="54" column="14" lean-forward="true" selection-start-line="54" selection-start-column="14" selection-end-line="54" selection-end-column="14" />
         </state>
       </provider>
     </entry>

@@ -82,6 +82,7 @@ button:focus {
 /****************************** DATA TABLE ******************************/
 #data {
     grid-column: 2 / 3;
+    grid-row-end: span 3;
     background-color: white;
     border-radius: 5px;
     width: fit-content;
