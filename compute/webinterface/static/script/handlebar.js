@@ -3,6 +3,8 @@ var reg = 'reg',
 
 $(document).ready(function() {
 
+    $
+
     $('#regress').click(function() {
         $('.result_element').remove();
         $.getJSON('../../regress', function(data) {

@@ -11,28 +11,34 @@
         <script src="../static/script/handlebar.js"></script>
     </head>
     <body>
-        <section id="title">
-            <h1>Machine learning<br>in progress</h1>
-            <p>This is the web framework for my master thesis project.</p>
-            <p id="status">Website is loading (probably)</p>
-        </section>
+        <div id="gridwrapper">
+            <section id="title">
+                <h1>Machine learning<br>in progress</h1>
+                <p>This is the web framework for my master thesis project.</p>
+                <p id="status">Website is loading (probably)</p>
+            </section>
 
-        <section id="data">
-            <form id="buttons" method="post">
-                <button type="button" value="Load data" name="loaddata"></button>
-                <button type="button" id="split" value="Change split value" name="split"> Change test size </button>
-                <button type="button" id="regress" value="Regress" name="regress"> Run regressor </button>
-                <button type="button" id="classify" value="Classify" name="classify"> Run classifier </button>
-            </form>
-            <table id="results_table">
-            </table>
-            {{ data | safe }}
-            {{ mae | safe }}
+            <section id="input">
+                <form id="buttons" method="post">
+                    <button type="button" value="Load data" name="loaddata"></button>
+                    <button type="button" id="split" value="Change split value" name="split"> Change test size </button>
+                    <button type="button" id="regress" value="Regress" name="regress"> Run regressor </button>
+                    <button type="button" id="classify" value="Classify" name="classify"> Run classifier </button>
+                </form>
 
-            <form action="{{ '/split' }}" method="POST" id="splitbox">
-                <input name="split" id="splot">
-                <input type="submit" id="commit">
-            </form>
-        </section>
+                <form action="{{ '/split' }}" method="POST" id="splitbox">
+                    <input name="split" id="splot">
+                    <input type="submit" id="commit">
+                </form>
+            </section>
+
+            <section id="data">
+                <table id="results_table">
+                    {{ data | safe }}
+                    {{ mae | safe }}
+                </table>
+
+            </section>
+        </div>
     </body>
 </html>
