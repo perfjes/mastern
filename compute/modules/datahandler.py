@@ -145,6 +145,7 @@ def save_file(file, item):
         pickle.dump(item, output_data)
 
 
+# TODO find better name for function
 def load_file(file):
     file = '%s%s' % (Path.path, file)
     if os.path.isfile(file):

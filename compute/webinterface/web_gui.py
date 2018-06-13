@@ -1,11 +1,8 @@
-from io import StringIO
-
 from flask import Flask, render_template, Blueprint, request
 from compute.modules import datahandler
 from compute.modules.ml import regressor, classifier, ml
 from flask_restful import Api, Resource
 import json
-import pandas as pd
 
 # Module related variables
 dth = datahandler
@@ -31,7 +28,10 @@ def get_regression_result():
 
 @app.route('/classify', methods=['GET', 'POST'])
 def get_classification_result():
-    return test_classification()
+    # return test_classification()
+    result = pandas_to_json(ml.target_regress(dth.Data.dataframe, dth.load_dataframe('test')))
+    print(result)
+    return result
 
 
 @app.route('/split', methods=['GET', 'POST'])
@@ -50,8 +50,8 @@ def index():
 
 
 def test_regression():
-    result = ml.predict_longevity(dth.Data.dataframe)
-    return pandas_to_json(result)
+    print(pandas_to_json(ml.predict_longevity(dth.Data.dataframe)))
+    return pandas_to_json(ml.predict_longevity(dth.Data.dataframe))
 
 
 def test_classification():

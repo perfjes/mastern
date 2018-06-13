@@ -15,7 +15,6 @@ $(document).ready(function() {
     $('#classify').click(function() {
         $('.result_element').remove();
         $.getJSON('../../classify', function(data) {
-            console.log(data);
             updateTable(data, clas);
         });
     });
@@ -46,9 +45,8 @@ function appendDataToTable(rowdata, type) {
         });
     }else if(type === 'clas'){
         $('#results_table').append(function () {
-            console.log(rowdata);
-
-            return '<tr class="result_element"><td>' + rowdata.value + '</td></tr>'
+            return '<tr class="result_element"><td>Actual: ' + rowdata['Actual'] + '</td>' + '\n' + '<td>Predicted: ' +
+                rowdata['Predicted'] + '</td></tr>';
         });
     }
 }

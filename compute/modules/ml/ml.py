@@ -36,6 +36,8 @@ def regress(df):
 
 
 def target_regress(df, target):
+    df = prune_features(df)
+    target = prune_features(target)
     xtrain, xtest, ytrain, ytest = split_dataset_into_train_test(df, 'years in vivo', dth.Data.split)
     reg = DecisionTreeRegressor()
     reg.fit(xtrain, ytrain)
@@ -49,8 +51,7 @@ def target_regress(df, target):
 # Function for predicting the longevity of test set. Modify this to work on a singular entry (as with the target
 # regress).
 def predict_longevity(df):
-    for feature in discard_features_regression:
-        df = df.drop(feature, axis=1)
+    df = prune_features(df)
     x_train, x_test, y_train, y_test = split_dataset_into_train_test(df, 'years in vivo', dth.Data.split)
     if dth.load_file('regressor-model.sav') is None:
         regressor = DecisionTreeRegressor()
@@ -65,3 +66,9 @@ def predict_longevity(df):
 
 def update_model(model):
     dth.save_file('regressor-model.sav', model)
+
+
+def prune_features(df):
+    for feature in discard_features_regression:
+        df = df.drop(feature, axis=1)
+    return df
