@@ -87,7 +87,6 @@ def classify_clicked():
     print(dth.ROOT_DIRECTORY)
     #image = Image(graph.create_png())
     #Img.display = ImageTk.PhotoImage(image)
-
     output.insert(INSERT, result, spacing())
 
 

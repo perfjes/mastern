@@ -10,6 +10,8 @@ from sklearn.metrics import classification_report, precision_recall_fscore_suppo
 # That should remove the runtime needed to retrain the model for each run
 # But it introduces the problem of test-size variations - how to implement a check to retrain with new size?
 
+# TODO keep this module at all?
+
 
 def classify(df):
     x = df.drop('Case', axis=1)
@@ -31,7 +33,7 @@ def update_model(df):
     x = df.drop('Case', axis=1)
     y = df['Case']
 
-    x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=dth.Data.split)
+    x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=dth.Data.split, random_state=33)
     classifier = DecisionTreeClassifier()
     classifier = classifier.fit(x_train, y_train)
     dth.save_file('classifier.sav', classifier)
