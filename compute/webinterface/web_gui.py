@@ -28,37 +28,27 @@ def get_regression_result():
 
 @app.route('/classify', methods=['GET', 'POST'])
 def get_classification_result():
-    # return test_classification()
-    result = pandas_to_json(ml.target_regress(dth.Data.dataframe, dth.load_dataframe('test')))
-    print(result)
-    return result
+    return pandas_to_json(ml.predict_longevity(dth.load_dataframe('test')))
 
 
 @app.route('/split', methods=['GET', 'POST'])
 def get_split_input_from_html():
     dth.Data.split = float(request.form['split'])
-    print(dth.Data.split)
-    print(type(dth.Data.split))
+    dth.autosave_split_to_pickle(dth.Data.split)
     return render_template('index.html', split=dth.Data.split)
 
 
-# Doesn't work with buttons...yet
 @app.route('/')
 def index():
-    # Initiate website
     return render_template('index.html', split=dth.Data.split)
 
 
 def test_regression():
-    print(pandas_to_json(ml.predict_longevity(dth.Data.dataframe)))
     return pandas_to_json(ml.predict_longevity(dth.Data.dataframe))
 
 
 def test_classification():
-    result = classifier.classify(dth.Data.dataframe)
-    print(result)
-    print(type(result))
-    return pandas_to_json(result)
+    return pandas_to_json(classifier.classify(dth.Data.dataframe))
 
 
 # Turns a dataframe into a dict, then returns a properly formatted JSON string

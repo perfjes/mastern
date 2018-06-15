@@ -61,6 +61,7 @@ def load_split_value_from_pickle():
         return split
 
 
+# Class variables allow for mutation
 class Data(Resource):
     dataframe = load_dataframe_from_pickle()
     split = load_split_value_from_pickle()
@@ -145,8 +146,7 @@ def save_file(file, item):
         pickle.dump(item, output_data)
 
 
-# TODO find better name for function
-def load_file(file):
+def load_pickle_file(file):
     file = '%s%s' % (Path.path, file)
     if os.path.isfile(file):
         with open(file, 'rb') as input_data:
