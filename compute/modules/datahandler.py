@@ -110,15 +110,6 @@ def load_dataframe(path):
             file = path
     else:
         file = '%s%s' % (path, default)
-    if not os.path.isfile(file):
-        for root, dirs, files in os.walk(path):
-            if file in files:
-                data = pd.read_csv(file, sep=',')
-                if data.isnull().values.any():
-                    filled = data.fillna(data.mean(skipna=True))
-                    return filled
-                else:
-                    return data
 
     data = pd.read_csv(file, sep=',', encoding='utf-8')
 

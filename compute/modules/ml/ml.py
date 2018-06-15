@@ -12,7 +12,13 @@ discard_features_regression = ['volWear', 'volWearRate', 'Cr', 'Co', 'Zr', 'Ni',
 def split_dataset_into_train_test(df, column):
     x = df.drop(column, axis=1)
     y = df[column]
-    return train_test_split(x, y, test_size=dth.Data.split)
+    return train_test_split(x, y, test_size=dth.Data.split, random_state=55)
+
+
+def mass_split_dataset_into_train_test(df, column, num):
+    x = df.drop(column, axis=1)
+    y = df[column]
+    return train_test_split(x, y, test_size=dth.Data.split, random_state=num)
 
 
 def regress(df):
@@ -42,7 +48,23 @@ def predict_longevity(df):
         regressor = dth.load_pickle_file('regressor-model.sav')
     y_prediction = regressor.predict(x_test)
     result = pd.DataFrame({'Actual': y_test, 'Predicted': y_prediction})
-    return result
+    return result, True
+
+
+def target_predict_longevity(df, target):
+    df = prune_features(df)
+    target = prune_features(target)
+    targetpred = target.drop('years in vivo', axis=1)
+    x_train, x_test, y_train, y_test = split_dataset_into_train_test(df, 'years in vivo')
+    if dth.load_pickle_file('regressor-model.sav') is None:
+        regressor = DecisionTreeRegressor()
+        regressor.fit(x_train, y_train)
+        update_regression_model(regressor)
+    else:
+        regressor = dth.load_pickle_file('regressor-model.sav')
+    y_prediction = regressor.predict(targetpred)
+    result = pd.DataFrame({'Actual': target['years in vivo'], 'Predicted': y_prediction})
+    return result, target
 
 
 def update_regression_model(model):

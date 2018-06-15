@@ -17,7 +17,8 @@ web_api = Api(api_blueprint)
 
 
 class Data(Resource):
-    def get(self):
+    @staticmethod
+    def get():
         return dth.Data.dataframe.to_json()
 
 
@@ -27,8 +28,8 @@ def get_regression_result():
 
 
 @app.route('/classify', methods=['GET', 'POST'])
-def get_classification_result():
-    return pandas_to_json(ml.predict_longevity(dth.load_dataframe('test')))
+def get_target_prediction_result():
+    return test_target_prediction()
 
 
 @app.route('/split', methods=['GET', 'POST'])
@@ -44,7 +45,15 @@ def index():
 
 
 def test_regression():
-    return pandas_to_json(ml.predict_longevity(dth.Data.dataframe))
+    predictions, score = ml.predict_longevity(dth.Data.dataframe)
+    print(score)
+    return pandas_to_json(predictions)
+
+
+def test_target_prediction():
+    test_sample = dth.load_dataframe(dth.Path.path + 'test.csv')
+    result, _ = ml.target_predict_longevity(dth.Data.dataframe, test_sample)
+    return pandas_to_json(result)
 
 
 def test_classification():
