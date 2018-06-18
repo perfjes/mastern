@@ -3,9 +3,15 @@ var reg = 'reg',
 
 $(document).ready(function() {
 
-    $('#data').hide();
-    $('#resultheader').text('');
-    $('#resultcontext').text('');
+    clearTable();
+
+    $('#resetmodel').click(function() {
+        // figure out how
+    });
+
+    $('#split').click(function () {
+
+    });
 
     $('#regress').click(function() {
         $('.result_element').remove();
@@ -61,4 +67,10 @@ function appendDataToTable(rowdata, type) {
                 rowdata['Predicted'] + '</td></tr>';
         });
     }
+}
+
+function clearTable() {
+    $('#data').hide();
+    $('#resultheader').text('');
+    $('#resultcontext').text('');
 }

@@ -29,6 +29,8 @@ def get_regression_result():
 
 @app.route('/classify', methods=['GET', 'POST'])
 def get_target_prediction_result():
+    i = 10
+    print(i)
     return test_target_prediction()
 
 
@@ -39,15 +41,58 @@ def get_split_input_from_html():
     return render_template('index.html', split=dth.Data.split)
 
 
+# This function tests every split value between 0.15 and 0.85, incrementing by 0.01 for every run and running each
+# incremental value 15 times. The result is a dictionary containing the split value as key and a list containing the
+# resulting R2 scores - pruning out those split values that result in negative R2 score.
+
+# TODO maybe delete the saved regression model and create a new for each run?
+def mass_test_split():
+    i = 0.15
+    r2scores = dict()
+    while i < 0.85:
+        dth.Data.split = i
+        j = 0
+        splitvalue_r2score = list()
+        while j < 15:
+            _, r2 = ml.predict_longevity(dth.Data.dataframe)
+            splitvalue_r2score.append(r2)
+            j += 1
+        r2scores[i] = splitvalue_r2score
+        i += 0.01
+    for key, value in r2scores.items():
+        print(key, value)
+
+    better_scores = r2scores
+    for key, values in list(r2scores.items()):
+        bad_score = False
+        print(key)
+        for score in values:
+            if score < 0:
+                bad_score = True
+        if bad_score:
+            better_scores.pop(key)
+
+    # Prints the value of the better scores dictionary where i represents the split value and better_scores[i]
+    # represents the list of r2 scores resulting from that split value
+    for i in better_scores:
+        print('better_scores: ', i, better_scores[i])
+
+    # Filler code to make the webGUI play nice
+    predictions, score = ml.predict_longevity(dth.Data.dataframe)
+    return pandas_to_json(predictions)
+
+
 @app.route('/')
 def index():
-    return render_template('index.html', split=dth.Data.split)
+    return render_template('index.html')
 
 
 def test_regression():
-    predictions, score = ml.predict_longevity(dth.Data.dataframe)
-    print(score)
-    return pandas_to_json(predictions)
+    #predictions, score = ml.predict_longevity(dth.Data.dataframe)
+    #print(score)
+    #return pandas_to_json(predictions)
+    return mass_test_split()
+
 
 
 def test_target_prediction():
