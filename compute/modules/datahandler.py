@@ -2,8 +2,6 @@ from os.path import dirname, abspath
 import pandas as pd
 import os
 import _pickle as pickle
-
-# TODO add comparison between load and previously saved, in order to reduce redundancy on larger sets
 from flask_restful import Resource
 
 ROOT_DIRECTORY = dirname(dirname(abspath(__file__)))
@@ -65,6 +63,7 @@ def load_split_value_from_pickle():
 class Data(Resource):
     dataframe = load_dataframe_from_pickle()
     split = load_split_value_from_pickle()
+    target = pd.DataFrame()
 
 
 # In case the system should be able to mutate the data, then it should be able to not overwrite the existing
@@ -85,9 +84,9 @@ def save_as_new(data):
     if not os.path.isfile(data_directory + save):
         data.to_csv(os.path.join(data_directory + save), encoding='utf-8', index=False)
         print(os.path.join(data_directory + save))
-        return save
+        return True
     else:
-        return 'Saving as new file did not work'
+        return False
 
 
 # Loads file from path, reads it as CSV and returns the result as a pandas dataframe (or series).
@@ -111,10 +110,21 @@ def load_dataframe(path):
     else:
         file = '%s%s' % (path, default)
 
+    # Turn the CSV file into a Pandas dataframe, then turn all columns into lowercase. Refactor columns where binary
+    # values have a higher level of semantic value than 'yes/no', rename the results of these refactorings and
+    # replace the original columns with the refactored ones.
     data = pd.read_csv(file, sep=',', encoding='utf-8')
+    data = data.rename(str.lower, axis='columns')
+    if 'sex' in data:
+        refactored_columns = pd.get_dummies(data['sex'])
+        refactored_columns = refactored_columns.rename(columns={1.0: 'male', 2.0: 'female'})
+        data = data.drop('sex', axis=1)
+        data = pd.concat([data, refactored_columns], axis=1)
 
+    # Fill in the blanks (with mean values for the mean time)
     if data.isnull().values.any():
         filled = data.fillna(data.mean(skipna=True))
+
         return filled
     else:
         return data
@@ -143,5 +153,5 @@ def load_pickle_file(file):
         with open(file, 'rb') as input_data:
             return pickle.load(input_data)
     else:
-        print('no')
+        print('The file couldn\'t be loaded')
         return None

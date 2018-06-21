@@ -1,2 +1,2 @@
-id,Case,cupLoose,stemLoose,sex,years in vivo,Cr,Co,Zr,Ni,Mb,linWear,linWearRate,volWear,volWearRate,Inc,Ant,CupX,CupY
-99,0,0,0,2,0,1.95,0.16,0.4,1.14,0.89,0,0,0,0,15.7,7.25,14.53,4.88
+id,case,cuploose,stemloose,years in vivo,cr,co,zr,ni,mb,linwear,linwearrate,volwear,volwearrate,inc,ant,cupx,cupy,male,female
+88,0,0,0,10.22861054,0.03,0.03,0.09,0.12,0.39,2.42,0.24,1492.54,145.92,35.59,4.4,28.9,15.45,0,1

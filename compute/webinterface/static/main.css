@@ -45,13 +45,6 @@ body {
     border-radius: 5px;
 }
 
-#splitbox {
-    width: fit-content;
-    height: fit-content;
-    margin: auto;
-    padding: 10px;
-}
-
 #buttons {
     width: fit-content;
     height: auto;
@@ -63,6 +56,9 @@ body {
 }
 
 #buttons button {
+    display: block;
+    width: 200px;
+    margin: 10px;
     -webkit-border-radius: 9px;
     -moz-border-radius: 9px;
     border-radius: 9px;

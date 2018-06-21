@@ -21,15 +21,10 @@
 
                 <section id="input">
                     <form id="buttons" method="post">
-                        <button type="button" value="Load data" name="loaddata"> Reset model </button>
-                        <button type="button" id="split" value="Change split value" name="split"> Massive model test </button>
-                        <button type="button" id="regress" value="Regress" name="regress"> Run regressor </button>
-                        <button type="button" id="classify" value="Classify" name="classify"> Run target prediction </button>
-                    </form>
-
-                    <form action="{{ '/split' }}" method="POST" id="splitbox">
-                        <input name="split" id="splot">
-                        <input type="submit" id="commit">
+                        <button type="button" id="save" name="save"> Save dataframe </button>
+                        <button type="button" id="split" name="split"> Massive model test </button>
+                        <button type="button" id="regress" name="regress"> Run regressor </button>
+                        <button type="button" id="classify" name="classify"> Run target prediction </button>
                     </form>
                 </section>
             </div>

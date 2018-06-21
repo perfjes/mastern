@@ -9,12 +9,9 @@ $(document).ready(function() {
         // figure out how
     });
 
-    $('#split').click(function () {
-
-    });
-
     $('#regress').click(function() {
         $('.result_element').remove();
+        loading();
         $.getJSON('../../regress', function(data) {
             updateTable(data, reg);
             $('#resultheader').text('Results - Training the model');
@@ -37,15 +34,8 @@ $(document).ready(function() {
         });
     });
 
-    $('#splitbox').submit(function () {
-        var boop = $('#splot');
-        if(boop != null) {
-            $.ajax({
-                type: 'POST',
-                url: '../../split',
-                data: boop
-            });
-        }
+    $('#save').click(function() {
+
     });
 });
 
@@ -73,4 +63,9 @@ function clearTable() {
     $('#data').hide();
     $('#resultheader').text('');
     $('#resultcontext').text('');
+}
+
+function loading() {
+    $('#resultheader').text('Loading...');
+    $('#resultcontext').text('We\'re doing some heavy lifting, this shouldn\'t take too long');
 }
