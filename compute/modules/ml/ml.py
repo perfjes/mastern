@@ -4,16 +4,20 @@ import pandas as pd
 from sklearn import metrics
 from compute.modules import datahandler
 
+# TODO fiddle with decisiontreeregressor parameters to get better score
 # TODO minmaxscaler (morten)
 dth = datahandler
 features_regression = ['case', 'volwear', 'volwearrate', 'cr', 'co', 'zr', 'ni', 'mb']
 sexes = ['male', 'female']
 
 
+# TODO få inn en lengde-sjekker på features? Evt om den har samme features? Åååhhh stress
+
 # Saving of split value in mutatable variable makes it possible to detect changes to split value and retrain the
 # models should a change be present.
 class Data:
     split = dth.Data.split
+    arthroplasty_dataset = list(dth.load_dataframe('db.csv'))  # the original file TODO unsure if needed
 
 
 # Takes two parameters; dataframe contains the dataset to be split into testing and training datasets, and column is
@@ -55,10 +59,13 @@ def predict_longevity():
     else:
         regressor = update_regression_model(df)
 
-    try:
+    # Checks whether the amount of features in the regression model is the same as the data being used to predict a
+    # feature. TODO create save-new-model so I don't have to deal with retraining the model every time? Or handle better
+    if regressor.max_features_ == len(list(x_test)):
         y_prediction = regressor.predict(x_test)
-    except ValueError:
-        print('oops')
+    else:
+        regressor = update_regression_model(df)
+        y_prediction = regressor.predict(x_test)
 
     result = pd.DataFrame({'Actual': y_test, 'Predicted': y_prediction})
 
