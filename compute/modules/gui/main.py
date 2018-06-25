@@ -10,6 +10,9 @@ from compute.modules.ml import classifier, regressor
 import os
 
 
+""" DEPRECATED - This module contains the TKinter implementation that was to be used as GUI, before the decision to 
+move on to a web app GUI was made. This file will be deleted. """
+
 # System modules abbreviated for simplicity
 dtc = classifier
 dtr = regressor

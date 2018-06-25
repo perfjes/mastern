@@ -130,6 +130,13 @@ button:focus {
     margin: 25px;
 }
 
+#loadinggif {
+    display: block;
+    width: 70%;
+    height: 35%;
+    margin: auto;
+}
+
 #results_table {
     width: fit-content;
     height: fit-content;
