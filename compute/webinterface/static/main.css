@@ -2,39 +2,145 @@ body {
     background-color: lavender;
 }
 
+/****************************** GRID ******************************/
+#gridwrapper {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: minmax(10px, auto);
+}
+
+#leftside {
+    background-color: white;
+    border-radius: 5px;
+    height: 100%;
+    width: fit-content;
+    margin: 35px auto;
+    margin-right: 20px;
+}
+
+/****************************** TITLE ******************************/
 #title {
-    width: 50%;
+    grid-column: 1;
+    grid-row: 1 / 2;
+    width: fit-content;
     height: auto;
-    margin: 50px auto;
+    margin: 3% 5%;
     background-color: white;
     border-radius: 5px;
     padding: 50px;
-    font-family: sans-serif;
-    font-size: 40pt;
+    font-family: 'Roboto', sans-serif;
+    font-size: 26pt;
 }
 
 #title p {
-    font-size: 20pt;
+    font-size: 16pt;
+    font-family: 'Roboto Condensed', sans-serif;
+}
+
+/****************************** INPUT ******************************/
+#input {
+    grid-column: 1;
+    grid-row: 3;
+    background-color: white;
+    border-radius: 5px;
 }
 
 #buttons {
     width: fit-content;
     height: auto;
     margin: 20px auto;
-    padding: 20px;
+    padding: 10px;
     background-color: white;
+    border: 0;
+    font-family: inherit;
 }
 
+#buttons button {
+    display: block;
+    width: 200px;
+    margin: 10px;
+    -webkit-border-radius: 9px;
+    -moz-border-radius: 9px;
+    border-radius: 9px;
+    font-family: 'Roboto Condensed', sans-serif;
+    color: white;
+    font-size: 16px;
+    background: #734f96;
+    padding: 10px 20px 10px 20px;
+    text-decoration: none;
+    transition: 0.4s ease;
+}
+
+#buttons button:hover {
+    background: #96964f;
+    text-decoration: none;
+    transition: 0.4s ease;
+}
+
+button:focus {
+    outline:0;
+}
+
+/****************************** DATA TABLE ******************************/
 #data {
+    grid-column: 2;
+    grid-row-end: span 3;
     background-color: white;
-    padding: 20px;
     border-radius: 5px;
     width: fit-content;
     height: fit-content;
-    margin: auto;
+    margin: 35px;
+    font-family: 'Roboto', sans-serif;
+    max-width: 70%;
+}
+
+.dataframe {
+    width: fit-content;
+    height: fit-content;
+    border: none;
+}
+
+.dataframe thead tr th {
+    text-align: center;
+    margin: 50px;
+    border: none;
+}
+
+.dataframe tbody tr td, th {
+    padding: 10px;
+    border: none;
+    border-top: 2px solid #734f96;
 }
 
 #data thead th, td {
     padding: 3px;
     background-color: white;
+    font-family: 'Roboto', sans-serif;
+}
+
+#data h1 {
+    width: auto;
+    height: auto;
+    margin: 25px;
+}
+
+#data p {
+    width: auto;
+    height: auto;
+    margin: 25px;
+}
+
+#results_table {
+    width: fit-content;
+    height: fit-content;
+    padding: 10px;
+    margin: auto;
+}
+
+#results_table td {
+    padding: 8px;
+    width: fit-content;
+    height: fit-content;
+    margin: auto;
+    font-family: 'Roboto', sans-serif;
 }

@@ -1,36 +1,64 @@
-from compute.modules import datahandler
-from sklearn import tree
 import pandas as pd
+
+from compute.modules import graph_factory as g_factory, datahandler as dth
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import classification_report, confusion_matrix
+from sklearn.metrics import classification_report, precision_recall_fscore_support
 
 
-def split_dataset_into_train_test(df, testsize):
-    # Drop the feature called "Case" which I assume is whether or not the implant had to be removed, 0 for no, 1 for yes
-    # Classifies the test cases into whether or not they have removed their implants
-    X = df.drop('Case', axis=1)
+# Now stores the model after training, and for every run uses the stored model (if it exists)
+# That should remove the runtime needed to retrain the model for each run
+# But it introduces the problem of test-size variations - how to implement a check to retrain with new size?
+
+# TODO keep this module at all?
+
+
+def classify(df):
+    x = df.drop('Case', axis=1)
+    y = df['Case']
+    x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=dth.Data.split)
+
+    classifier = dth.load_pickle_file('classifier.sav')
+    if classifier is None:
+        classifier = DecisionTreeClassifier()
+        classifier = classifier.fit(x_train, y_train)
+        dth.save_file('classifier.sav', classifier)
+
+    y_prediction = classifier.predict(x_test)
+    # graph = g_factory.graph_factory(df)
+    return pandas_classification_report(y_test, y_prediction)  # graph
+
+
+def update_model(df):
+    x = df.drop('Case', axis=1)
     y = df['Case']
 
-    # TODO implement gini index function instead of using sklearns split func?
-    # these declarations make two pairs of sets
-    # Xtrain and ytrain are training sets - X have all data except case, y contains only case
-    # Xtest and ytest are test sets - X have all data except case, y contains only case
-    # Test size is 30% (meaning training set is 70%), random_state is a pseudo-rng for random sampling
-    xtrain, xtest, ytrain, ytest = train_test_split(X, y, test_size=testsize)
-
-    return xtrain, xtest, ytrain, ytest
-
-
-def classify(df, testsize):
-    xtrain, xtest, ytrain, ytest = split_dataset_into_train_test(df, testsize)
-
+    x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=dth.Data.split, random_state=33)
     classifier = DecisionTreeClassifier()
-    classifier = classifier.fit(xtrain, ytrain)
+    classifier = classifier.fit(x_train, y_train)
+    dth.save_file('classifier.sav', classifier)
 
-    ypred = classifier.predict(xtest)
-    report = classification_report(ytest, ypred)
 
-    # print(confusion_matrix(ytest, ypred))
-    print(report)
-    return report
+def pandas_classification_report(y_true, y_pred):
+    metrics_summary = precision_recall_fscore_support(
+            y_true=y_true,
+            y_pred=y_pred)
+
+    avg = list(precision_recall_fscore_support(
+            y_true=y_true,
+            y_pred=y_pred,
+            average='weighted'))
+
+    metrics_sum_index = ['precision', 'recall', 'f1-score', 'support']
+
+    class_report_df = pd.DataFrame(
+        list(metrics_summary),
+        index=metrics_sum_index)
+
+    support = class_report_df.loc['support']
+    total = support.sum()
+    avg[-1] = total
+
+    class_report_df['avg / total'] = avg
+
+    return class_report_df.T

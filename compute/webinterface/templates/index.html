@@ -2,25 +2,41 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
+        <title>Mastern</title>
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
-        <title>Master</title>
+        <link href='https://fonts.googleapis.com/css?family=Roboto:300' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed' rel='stylesheet' type='text/css'>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
+        <script src="../static/script/handlebar.js"></script>
     </head>
     <body>
-        <section id="title">
-            <h1>Machine learning in progress</h1>
-            <p>This is the web framework for my master thesis project.</p>
-        </section>
+        <div id="gridwrapper">
+            <div id='leftside'>
+                <section id="title">
+                    <h1>Machine learning<br>in progress</h1>
+                    <p>This is the web framework for my master thesis project.</p>
+                    <p id="status">Website is loading (probably)</p>
+                </section>
 
-        <!-- Currently does nothing -->
-        <section id="buttons">
-            <button type="button" value="loaddata" name="loaddata"> {{ loaddata }} </button>
-            <button type="button" value="savedata" name="savedata"> {{ savedata }} </button>
-            <button type="button" value="regress" name="regress"> {{ regress }} </button>
-            <button type="button" value="classify" name="classify"> {{ classify }} </button>
-            <button type="button" value="clearoutput" name="clearoutput"> {{ clearoutput }} </button>
-        </section>
-        <section id="data">
-            {{ data | safe }}
-        </section>
+                <section id="input">
+                    <form id="buttons" method="post">
+                        <button type="button" id="save" name="save"> Save dataframe </button>
+                        <button type="button" id="split" name="split"> Massive model test </button>
+                        <button type="button" id="regress" name="regress"> Run regressor </button>
+                        <button type="button" id="classify" name="classify"> Run target prediction </button>
+                    </form>
+                </section>
+            </div>
+
+            <section id="data">
+                <h1 id="resultheader"></h1>
+                <table id="results_table">
+                    {{ data | safe }}
+                    {{ mae | safe }}
+                </table>
+                <p id="resultcontext"></p>
+            </section>
+        </div>
     </body>
 </html>
