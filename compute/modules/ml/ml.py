@@ -1,16 +1,15 @@
 import csv
 
-import numpy as np
-from matplotlib import pyplot as plt
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.model_selection import train_test_split
 import pandas as pd
 from sklearn import metrics
-from compute.modules import datahandler
+from compute.modules import datahandler, graph_factory
 
 # TODO fiddle with decisiontreeregressor parameters to get better score
 # TODO minmaxscaler (morten)
 dth = datahandler
+graph = graph_factory
 features_regression = ['id', 'volwear', 'volwearrate', 'cr', 'co', 'zr', 'ni', 'mb']  # These are removed
 sexes = ['male', 'female']  # These are added
 
@@ -113,10 +112,7 @@ def target_predict_longevity(target):
     r2pred = r2pred.reshape(-1, 1)
     r2 = metrics.r2_score(y_true, r2pred)
 
-    print(r2)
-
-
-    return result
+    return result, r2
 
 
 # TESTING FUNCTION - DOES NOT CURRENTLY WORK - USED FOR AUTONOMOUS TESTING OF REGRESSOR PARAMETER TUNING

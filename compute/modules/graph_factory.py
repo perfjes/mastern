@@ -1,10 +1,19 @@
 import collections
+
+import numpy as np
+
 from compute.modules import datahandler as dth
 import pydotplus
+import matplotlib.pyplot as plt
 
 path = dth.Path.path
 
 
+def generate_regression_graph(regressor, data1, data2):
+    return None
+
+
+# DEPRECATED (still want the code for reference though)
 def graph_factory(classifier):
     from sklearn import tree
 

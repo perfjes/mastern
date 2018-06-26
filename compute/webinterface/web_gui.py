@@ -14,10 +14,10 @@ dth.Data.dataframe = dth.load_dataframe(path)
 app = Flask(__name__)
 
 
+# Maybe delegating the code snippet to a separate function will help - it doesn't do much right now
 @app.route('/save', methods=['GET', 'POST'])
 def save_dataframe_as_new():
-
-    return str(dth.save_as_new(dth.Data.dataframe))
+    return save_new_dataframe()
 
 
 @app.route('/regress', methods=['GET'])
@@ -25,9 +25,8 @@ def get_regression_result():
     return test_regression()
 
 
-@app.route('/classify', methods=['GET'])
+@app.route('/target', methods=['GET'])
 def get_target_prediction_result():
-    dth.Data.split = 0.35
     return test_target_prediction()
 
 
@@ -44,15 +43,26 @@ def test_regression():
 
 def test_target_prediction():
     test_sample = dth.load_dataframe(dth.Path.path + 'test.csv')
-    result = ml.target_predict_longevity(test_sample)
-    return pandas_to_json(result)
+    prediction, r2 = ml.target_predict_longevity(test_sample)
+    result = pandas_to_json(prediction)
+    return result
 
 
 def test_classification():
     return pandas_to_json(classifier.classify(dth.Data.dataframe))
 
 
-# Turns a dataframe into a dict, then returns a properly formatted JSON string
+def save_new_dataframe():
+    success, filename = dth.save_as_new(dth.Data.dataframe)
+    if success:
+        feedback = '%s%s%s' % ('<p id="success">success</p><p id="fname">', filename, '</p>')
+        return feedback
+    else:
+        feedback = '%s%s%s' % ('<p id="success">error</p><p id="fname">', 'file was not saved', '</p>')
+        return feedback
+
+
+# Turns a Pandas dataframe into a dict, then returns a properly formatted JSON string
 def pandas_to_json(dataframe):
     json_result = [
         dict([

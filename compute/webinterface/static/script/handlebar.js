@@ -3,6 +3,7 @@ var reg = 'reg',
 
 $(document).ready(function() {
 
+    $('#status').text('System is loaded and ready. It\'s very much in development so please cut it some slack.');
     clearTable();
 
     $('#resetmodel').click(function() {
@@ -24,10 +25,10 @@ $(document).ready(function() {
         });
     });
 
-    $('#classify').click(function() {
+    $('#target').click(function() {
         loading();
         $('.result_element').remove();
-        $.getJSON('../../classify', function(data) {
+        $.getJSON('../../target', function(data) {
             $('#data').fadeIn();
             updateTable(data, clas);
             $('#resultheader').text('Results - Target prediction');
@@ -37,8 +38,22 @@ $(document).ready(function() {
         });
     });
 
-    $('#save').click(function() {
-
+    $('#savebtn').click(function() {
+        loading();
+        $('.result_element').remove();
+        $("#savestatus").load("../../save", function() {
+            $('#data').fadeIn();
+            if($('#success').text() == 'success'){
+                $('#resultheader').text('File saved as ' + $('#fname').text());
+                $('#resultcontext').text('The dataset was saved as a new file with the aforementioned name for ' +
+                    'future use.');
+                $('#loadinggif').hide();
+            } else {
+                $('#resultheader').text('An error occurred!');
+                $('#resultcontext').text('The dataset has not been saved.');
+                $('#loadinggif').hide();
+            }
+        });
     });
 });
 

@@ -67,7 +67,8 @@ class Data(Resource):
 
 
 # In case the system should be able to mutate the data, then it should be able to not overwrite the existing
-# datasets.
+# datasets. Parameter to be passed need be pandas dataframe.
+# TODO error handling
 def save_as_new(data):
     counter = 1
     save = 'df.csv'
@@ -84,7 +85,7 @@ def save_as_new(data):
     if not os.path.isfile(data_directory + save):
         data.to_csv(os.path.join(data_directory + save), encoding='utf-8', index=False)
         print(os.path.join(data_directory + save))
-        return True
+        return True, save
     else:
         return False
 

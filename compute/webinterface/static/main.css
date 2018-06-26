@@ -12,27 +12,27 @@ body {
 #leftside {
     background-color: white;
     border-radius: 5px;
-    height: 100%;
-    width: fit-content;
-    margin: 35px auto;
+    height: auto;
+    width: 62%;
+    margin: 20px auto;
     margin-right: 20px;
+    box-shadow: 0 5px 5px 0 #734f96;
 }
 
 /****************************** TITLE ******************************/
 #title {
     grid-column: 1;
     grid-row: 1 / 2;
-    width: fit-content;
+    width: inherit;
     height: auto;
-    margin: 3% 5%;
-    background-color: white;
+    margin: 14%;
     border-radius: 5px;
-    padding: 50px;
     font-family: 'Roboto', sans-serif;
     font-size: 26pt;
 }
 
 #title p {
+    width: 110%;
     font-size: 16pt;
     font-family: 'Roboto Condensed', sans-serif;
 }
@@ -48,9 +48,7 @@ body {
 #buttons {
     width: fit-content;
     height: auto;
-    margin: 20px auto;
-    padding: 10px;
-    background-color: white;
+    margin: 4% 14% 10% 14%;
     border: 0;
     font-family: inherit;
 }
@@ -58,7 +56,8 @@ body {
 #buttons button {
     display: block;
     width: 200px;
-    margin: 10px;
+    margin: 15px;
+    margin-left: 0;
     -webkit-border-radius: 9px;
     -moz-border-radius: 9px;
     border-radius: 9px;
@@ -66,15 +65,16 @@ body {
     color: white;
     font-size: 16px;
     background: #734f96;
-    padding: 10px 20px 10px 20px;
+    padding: 10px 22px;
     text-decoration: none;
     transition: 0.4s ease;
 }
 
 #buttons button:hover {
-    background: #96964f;
+    background: #4f9650;
     text-decoration: none;
     transition: 0.4s ease;
+    cursor: pointer;
 }
 
 button:focus {
@@ -89,9 +89,10 @@ button:focus {
     border-radius: 5px;
     width: fit-content;
     height: fit-content;
-    margin: 35px;
+    margin: 20px;
     font-family: 'Roboto', sans-serif;
     max-width: 70%;
+    box-shadow: 0 5px 5px 0 #734f96;
 }
 
 .dataframe {
@@ -150,4 +151,8 @@ button:focus {
     height: fit-content;
     margin: auto;
     font-family: 'Roboto', sans-serif;
+}
+
+#savestatus, #success, #fname {
+    display:none
 }
