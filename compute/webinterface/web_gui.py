@@ -14,12 +14,14 @@ dth.Data.dataframe = dth.load_dataframe(path)
 app = Flask(__name__)
 
 
-# Maybe delegating the code snippet to a separate function will help - it doesn't do much right now
+# TODO add functionality for user input when saving filename - also some kind of "did you just save" check to keep
+# TODO people from running scripts on this to save a billion copies and flooding the server
 @app.route('/save', methods=['GET', 'POST'])
 def save_dataframe_as_new():
     return save_new_dataframe()
 
 
+# TODO maybe rename url
 @app.route('/regress', methods=['GET'])
 def get_regression_result():
     return test_regression()
@@ -36,15 +38,15 @@ def index():
 
 
 def test_regression():
-    predictions, score = ml.predict_longevity()
+    predictions, r2 = ml.predict_longevity()
     print(score)
-    return pandas_to_json(predictions)
+    return pandas_to_json(predictions, r2)
 
 
 def test_target_prediction():
     test_sample = dth.load_dataframe(dth.Path.path + 'test.csv')
     prediction, r2 = ml.target_predict_longevity(test_sample)
-    result = pandas_to_json(prediction)
+    result = pandas_to_json(prediction, r2)
     return result
 
 
@@ -63,7 +65,7 @@ def save_new_dataframe():
 
 
 # Turns a Pandas dataframe into a dict, then returns a properly formatted JSON string
-def pandas_to_json(dataframe):
+def pandas_to_json(dataframe, r2score):
     json_result = [
         dict([
             (column, row[i])
@@ -71,6 +73,8 @@ def pandas_to_json(dataframe):
         ])
         for row in dataframe.values
     ]
+
+    json_result.append({'r2': r2score})
     return json.dumps({'result': json_result})
 
 

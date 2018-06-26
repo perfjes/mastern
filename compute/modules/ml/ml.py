@@ -10,11 +10,17 @@ from compute.modules import datahandler, graph_factory
 # TODO minmaxscaler (morten)
 dth = datahandler
 graph = graph_factory
-features_regression = ['id', 'volwear', 'volwearrate', 'cr', 'co', 'zr', 'ni', 'mb']  # These are removed
+features_regression = ['id', 'volwear', 'volwearrate']  # These are removed
 sexes = ['male', 'female']  # These are added
 
+""" 
+    List of features in dataset, excluding sexes
+    'id', 'case', 'cuploose', 'stemloose', 'sex', 'years in vivo', 'cr', 'co', 'zr', 'ni', 'mb', 'linwear', 
+    'linwearrate', 'volwear', 'volwearrate', 'inc', 'ant', 'cupx', 'cupy'
+"""
 
 # TODO få inn en lengde-sjekker på features? Evt om den har samme features? Åååhhh stress
+
 
 # Saving of split value in mutatable variable makes it possible to detect changes to split value and retrain the
 # models should a change be present.
