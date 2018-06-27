@@ -14,12 +14,14 @@ dth.Data.dataframe = dth.load_dataframe(path)
 app = Flask(__name__)
 
 
-# Maybe delegating the code snippet to a separate function will help - it doesn't do much right now
+# TODO add functionality for user input when saving filename - also some kind of "did you just save" check to keep
+# TODO people from running scripts on this to save a billion copies and flooding the server
 @app.route('/save', methods=['GET', 'POST'])
 def save_dataframe_as_new():
     return save_new_dataframe()
 
 
+# TODO maybe rename url
 @app.route('/regress', methods=['GET'])
 def get_regression_result():
     return test_regression()

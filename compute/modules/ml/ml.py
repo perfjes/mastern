@@ -15,7 +15,6 @@ drop_features_regression = ['id', 'case', 'cuploose', 'stemloose', 'volwear', 'v
     List of all features in the dataset
     'id', 'case', 'cuploose', 'stemloose', 'years in vivo', 'cr', 'co', 'zr', 'ni', 'mb', 'linwear', 'linwearrate', 
     'volwear', 'volwearrate', 'inc', 'ant', 'cupx', 'cupy', 'male', 'female'
-    
 """
 
 
