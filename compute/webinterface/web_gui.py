@@ -36,15 +36,16 @@ def index():
 
 
 def test_regression():
-    predictions, score = ml.predict_longevity()
-    print(score)
-    return pandas_to_json(predictions)
+    predictions, r2 = ml.predict_longevity()
+    print(r2)
+    return pandas_to_json(predictions, r2)
 
 
 def test_target_prediction():
     test_sample = dth.load_dataframe(dth.Path.path + 'test.csv')
     prediction, r2 = ml.target_predict_longevity(test_sample)
-    result = pandas_to_json(prediction)
+    print(r2)
+    result = pandas_to_json(prediction, r2)
     return result
 
 
@@ -63,15 +64,18 @@ def save_new_dataframe():
 
 
 # Turns a Pandas dataframe into a dict, then returns a properly formatted JSON string
-def pandas_to_json(dataframe):
-    json_result = [
-        dict([
-            (column, row[i])
-            for i, column in enumerate(dataframe.columns)
-        ])
-        for row in dataframe.values
-    ]
-    return json.dumps({'result': json_result})
+def pandas_to_json(dataframe, r2score=2):
+    if r2score != 2:
+        json_result = {'r2': r2score}
+        table_data = [dict([(column, row[i]) for i, column in enumerate(dataframe.columns)]) for row in
+                      dataframe.values]
+        json_result['result'] = table_data
+        return json.dumps(json_result)
+    else:
+        table_data = [dict([(column, row[i]) for i, column in enumerate(dataframe.columns)]) for row in
+                      dataframe.values]
+        json_result = {'result': table_data}
+        return json.dumps(json_result)
 
 
 # Attempt at fixing Chrome overaggressive caching

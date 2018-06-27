@@ -93,6 +93,7 @@ button:focus {
     font-family: 'Roboto', sans-serif;
     max-width: 70%;
     box-shadow: 0 5px 5px 0 #734f96;
+    position: relative;
 }
 
 .dataframe {
@@ -125,6 +126,18 @@ button:focus {
     margin: 25px;
 }
 
+#r2info {
+    height: 23px;
+    width: 23px;
+    top: 25px;
+    right: 25px;
+    position: absolute;
+}
+
+#r2info:hover {
+    cursor: pointer;
+}
+
 #data p {
     width: auto;
     height: auto;
@@ -133,7 +146,7 @@ button:focus {
 
 #loadinggif {
     display: block;
-    width: 70%;
+    width: 100%;
     height: 35%;
     margin: auto;
 }
@@ -146,7 +159,7 @@ button:focus {
 }
 
 #results_table td {
-    padding: 8px;
+    padding: 8px 30px;
     width: fit-content;
     height: fit-content;
     margin: auto;

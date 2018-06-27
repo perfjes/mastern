@@ -15,6 +15,7 @@ $(document).ready(function() {
         $('.result_element').remove();
         $.getJSON('../../regress', function(data) {
             $('#data').fadeIn();
+            $('#r2info').show();
             updateTable(data, reg);
             $('#resultheader').text('Results - Training the model');
             $('#resultcontext').text('The training function randomly selects a subset of test cases and training' +
@@ -30,6 +31,7 @@ $(document).ready(function() {
         $('.result_element').remove();
         $.getJSON('../../target', function(data) {
             $('#data').fadeIn();
+            $('#r2info').show();
             updateTable(data, clas);
             $('#resultheader').text('Results - Target prediction');
             $('#resultcontext').text('The predicted \'years in vivo\' value represent the years that the implant is ' +
@@ -55,9 +57,17 @@ $(document).ready(function() {
             }
         });
     });
+
+    $('#r2info').click(function() {
+
+    })
 });
 
 function updateTable(json, type) {
+    if ('r2' in json) {
+        // Display the R2 score somewhere
+        console.log(json['r2'])
+    }
     $.each(json.result, function (index, item) {
         appendDataToTable(item, type);
     });
@@ -66,26 +76,30 @@ function updateTable(json, type) {
 function appendDataToTable(rowdata, type) {
     if(type === 'reg') {
         $('#results_table').append(function () {
-            return '<tr class="result_element"><td>Actual: ' + rowdata['Actual'] + '</td>' + '\n' + '<td>Predicted: ' +
-                rowdata['Predicted'] + '</td></tr>';
+            return '<tr class="result_element"><td>Actual: ' + rowdata['Actual'].toFixed(5) + '</td>' + '\n' +
+                '<td>Predicted: ' + rowdata['Predicted'].toFixed(5) + '</td></tr>';
         });
     }else if(type === 'clas'){
         $('#results_table').append(function () {
-            return '<tr class="result_element"><td>Actual: ' + rowdata['Actual'] + '</td>' + '\n' + '<td>Predicted: ' +
-                rowdata['Predicted'] + '</td></tr>';
+            return '<tr class="result_element"><td>Actual: ' + rowdata['Actual'].toFixed(5) + '</td>' + '\n' +
+                '<td>Predicted: ' + rowdata['Predicted'].toFixed(5) + '</td></tr>';
         });
     }
+}
+
+function displayR2Score(r2score) {
+    // Display on hover? Display in extra div? Does div overlay button? Anchored to just below button on click?
 }
 
 function clearTable() {
     $('#data').hide();
     $('#resultheader').text('');
     $('#resultcontext').text('');
-    $('#loadinggif').hide();
 }
 
 function loading() {
     $('#loadinggif').show();
     $('#resultheader').text('Loading...');
     $('#resultcontext').text('We\'re doing some heavy lifting, this shouldn\'t take too long');
+    $('#r2info').hide();
 }
