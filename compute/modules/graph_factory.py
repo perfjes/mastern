@@ -10,7 +10,10 @@ path = dth.Path.path
 
 
 def generate_regression_graph(regressor, data1, data2):
-
+    plt.scatter(data1, data2)
+    plt.xlabel('True vivos')
+    plt.ylabel('Predictivivos')
+    plt.show()
     return None
 
 
