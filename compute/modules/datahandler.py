@@ -76,7 +76,7 @@ def save_as_new(data):
 
     if not os.path.isfile(data_directory + save):
         data.to_csv(os.path.join(data_directory + save), encoding='utf-8', index=False)
-        return save
+        return True, save
     if os.path.isfile(data_directory + save):
         save = 'df' + str(counter) + '.csv'
         while os.path.isfile(data_directory + save):
