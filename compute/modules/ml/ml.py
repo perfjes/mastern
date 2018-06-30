@@ -73,7 +73,8 @@ def predict_longevity():
     y_pred = y_prediction.reshape(-1, 1)
     r2 = metrics.r2_score(y_true, y_pred)
 
-    graph.generate_regression_graph(regressor, y_test, y_prediction)
+    png = graph.save_regression_scatter_as_png(regressor, y_test, y_prediction)
+    print(png)
 
     return result, r2
 

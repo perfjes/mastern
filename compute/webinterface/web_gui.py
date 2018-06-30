@@ -1,7 +1,6 @@
-from flask import Flask, render_template, Blueprint, request
+from flask import Flask, render_template
 from compute.modules import datahandler
 from compute.modules.ml import classifier, ml
-from flask_restful import Api, Resource
 import json
 
 # Module related variables

@@ -1,4 +1,6 @@
 import collections
+import os
+from os.path import dirname
 
 import numpy as np
 
@@ -7,14 +9,24 @@ import pydotplus
 import matplotlib.pyplot as plt
 
 path = dth.Path.path
+file_name = 'graph'
+file_type = '.png'
 
 
-def generate_regression_graph(regressor, data1, data2):
+# TODO add functionality for multiple images being created without overwriting existing ones
+# TODO stop programming python like it's Java
+def save_regression_scatter_as_png(regressor, data1, data2):
+    file = '%s%s%s' % (dirname(dirname(path)), file_name, file_type)
+
     plt.scatter(data1, data2)
     plt.xlabel('True vivos')
     plt.ylabel('Predictivivos')
-    plt.show()
-    return None
+    plt.savefig(file)
+
+    if os.path.isfile(file):
+        return True
+    else:
+        return False
 
 
 # DEPRECATED (still want the code for reference though)

@@ -103,3 +103,7 @@ function loading() {
     $('#resultcontext').text('We\'re doing some heavy lifting, this shouldn\'t take too long');
     $('#r2info').hide();
 }
+
+function addImage() {
+    var
+}
