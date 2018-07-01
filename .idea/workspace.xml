@@ -5,14 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3e93f87e-0a3c-431c-8be6-2f63de5c70bc" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/mastern.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/mastern.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/compute/modules/graph_factory.py" beforeDir="false" afterPath="$PROJECT_DIR$/compute/modules/graph_factory.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/compute/modules/ml/ml.py" beforeDir="false" afterPath="$PROJECT_DIR$/compute/modules/ml/ml.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/compute/webinterface/static/script/display.js" beforeDir="false" afterPath="$PROJECT_DIR$/compute/webinterface/static/script/display.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/compute/webinterface/static/script/interactions.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/compute/webinterface/web_gui.py" beforeDir="false" afterPath="$PROJECT_DIR$/compute/webinterface/web_gui.py" afterDir="false" />
     </list>
     <ignored path="venv/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -33,13 +27,13 @@
       <file leaf-file-name="web_gui.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/compute/webinterface/web_gui.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1391">
+            <state>
               <caret column="40" selection-start-column="40" selection-end-column="40" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="graph_factory.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="graph_factory.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/compute/modules/graph_factory.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="272">
@@ -54,7 +48,7 @@
       <file leaf-file-name="datahandler.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/compute/modules/datahandler.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
+            <state relative-caret-position="2750">
               <caret line="129" column="9" selection-start-line="129" selection-start-column="9" selection-end-line="129" selection-end-column="9" />
               <folding>
                 <element signature="e#0#36#0" expanded="true" />
@@ -66,7 +60,7 @@
       <file leaf-file-name="ml.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/compute/modules/ml/ml.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="902">
+            <state relative-caret-position="2310">
               <caret line="110" column="17" selection-start-line="110" selection-start-column="17" selection-end-line="110" selection-end-column="17" />
               <folding>
                 <element signature="e#0#46#0" expanded="true" />
@@ -78,17 +72,17 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/compute/webinterface/templates/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1012">
-              <caret line="46" selection-start-line="46" selection-end-line="46" />
+            <state relative-caret-position="325">
+              <caret line="32" column="29" selection-start-line="32" selection-start-column="25" selection-end-line="32" selection-end-column="29" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="display.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="display.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/compute/webinterface/static/script/display.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="316">
-              <caret line="107" column="7" selection-start-line="107" selection-start-column="7" selection-end-line="107" selection-end-column="7" />
+            <state relative-caret-position="457">
+              <caret line="109" selection-start-line="109" selection-end-line="109" />
             </state>
           </provider>
         </entry>
@@ -96,7 +90,7 @@
       <file leaf-file-name="main.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/compute/webinterface/static/main.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3740">
+            <state relative-caret-position="545">
               <caret line="170" column="1" selection-start-line="170" selection-start-column="1" selection-end-line="170" selection-end-column="1" />
             </state>
           </provider>
@@ -167,14 +161,14 @@
         <option value="$PROJECT_DIR$/compute/modules/ml/regressor.py" />
         <option value="$PROJECT_DIR$/compute/modules/ml/classifier.py" />
         <option value="$PROJECT_DIR$/compute/modules/gui/main.py" />
-        <option value="$PROJECT_DIR$/compute/webinterface/templates/index.html" />
         <option value="$PROJECT_DIR$/compute/webinterface/static/script/handlebar.js" />
         <option value="$PROJECT_DIR$/compute/webinterface/static/main.css" />
         <option value="$PROJECT_DIR$/compute/modules/datahandler.py" />
         <option value="$PROJECT_DIR$/compute/webinterface/web_gui.py" />
         <option value="$PROJECT_DIR$/compute/modules/ml/ml.py" />
-        <option value="$PROJECT_DIR$/compute/webinterface/static/script/display.js" />
         <option value="$PROJECT_DIR$/compute/modules/graph_factory.py" />
+        <option value="$PROJECT_DIR$/compute/webinterface/templates/index.html" />
+        <option value="$PROJECT_DIR$/compute/webinterface/static/script/display.js" />
       </list>
     </option>
   </component>
@@ -194,7 +188,7 @@
     <packageJsonPaths />
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-9" />
+    <option name="x" value="-10" />
     <option name="y" value="10" />
     <option name="width" value="1400" />
     <option name="height" value="970" />
@@ -441,20 +435,20 @@
       <window_info anchor="bottom" id="Python Console" order="10" weight="0.32930845" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49464285" weight="0.40689656" />
       <window_info anchor="bottom" id="Terminal" order="8" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4856115" visible="true" weight="0.1328125" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4856115" visible="true" weight="0.1328125" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="3" />
       <window_info anchor="right" id="SciView" order="4" sideWeight="0.49628055" weight="0.32877603" />
       <window_info id="Structure" order="1" sideWeight="0.5143885" side_tool="true" weight="0.13333334" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39736554" />
-      <window_info anchor="right" id="R Graphics" order="5" />
+      <window_info anchor="right" id="R Packages" order="6" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" visible="true" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="Inspection Results" order="12" weight="0.32979852" />
-      <window_info anchor="right" id="R Packages" order="6" />
+      <window_info anchor="right" id="R Graphics" order="5" />
       <window_info anchor="right" x="0" y="0" width="434" height="856" id="Documentation" order="7" sideWeight="0.50371945" side_tool="true" weight="0.32916668" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
@@ -476,7 +470,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/compute/modules/xls-to-json.py" />
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -620,17 +613,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/compute/webinterface/static/main.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3740">
-          <caret line="170" column="1" selection-start-line="170" selection-start-column="1" selection-end-line="170" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/compute/modules/ml/ml.py" />
     <entry file="file://$PROJECT_DIR$/compute/modules/datahandler.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
+        <state relative-caret-position="2750">
           <caret line="129" column="9" selection-start-line="129" selection-start-column="9" selection-end-line="129" selection-end-column="9" />
           <folding>
             <element signature="e#0#36#0" expanded="true" />
@@ -640,14 +626,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/compute/webinterface/web_gui.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1391">
+        <state>
           <caret column="40" selection-start-column="40" selection-end-column="40" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/compute/modules/ml/ml.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="902">
+        <state relative-caret-position="2310">
           <caret line="110" column="17" selection-start-line="110" selection-start-column="17" selection-end-line="110" selection-end-column="17" />
           <folding>
             <element signature="e#0#46#0" expanded="true" />
@@ -655,25 +641,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/compute/webinterface/static/script/interactions.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1650" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/compute/webinterface/templates/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1012">
-          <caret line="46" selection-start-line="46" selection-end-line="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/compute/webinterface/static/script/display.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="316">
-          <caret line="107" column="7" selection-start-line="107" selection-start-column="7" selection-end-line="107" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/compute/webinterface/static/script/interactions.js" />
     <entry file="file://$PROJECT_DIR$/compute/modules/graph_factory.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
@@ -681,6 +649,34 @@
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.dom.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="4710" column="12" selection-start-line="4710" selection-start-column="12" selection-end-line="4710" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/compute/webinterface/templates/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="325">
+          <caret line="32" column="29" selection-start-line="32" selection-start-column="25" selection-end-line="32" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/compute/webinterface/static/main.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="545">
+          <caret line="170" column="1" selection-start-line="170" selection-start-column="1" selection-end-line="170" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/compute/webinterface/static/script/display.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="457">
+          <caret line="109" selection-start-line="109" selection-end-line="109" />
         </state>
       </provider>
     </entry>

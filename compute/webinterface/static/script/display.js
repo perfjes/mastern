@@ -23,6 +23,7 @@ $(document).ready(function() {
                 ', the results being displayed above. \"Actual\" represents the actual years in vivo value ' +
                 'from the test set, while \"Predicted\" represents the value predicted by the model.');
             $('#loadinggif').hide();
+            displayImage();
         });
     });
 
@@ -98,12 +99,16 @@ function clearTable() {
 }
 
 function loading() {
+    $('.graphImage').remove();
     $('#loadinggif').show();
     $('#resultheader').text('Loading...');
     $('#resultcontext').text('We\'re doing some heavy lifting, this shouldn\'t take too long');
     $('#r2info').hide();
 }
 
-function addImage() {
-    var
+function displayImage() {
+    var img = document.createElement('img');
+    img.setAttribute('src', '../static/img/scatterplot.png');
+    img.setAttribute('class', 'graphImage');
+    document.getElementById('data').appendChild(img);
 }
