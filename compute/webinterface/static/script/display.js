@@ -61,7 +61,7 @@ $(document).ready(function() {
 
     $('#r2info').click(function() {
 
-    })
+    });
 });
 
 function updateTable(json, type) {
@@ -93,12 +93,14 @@ function displayR2Score(r2score) {
 }
 
 function clearTable() {
+    $('#graphs').hide();
     $('#data').hide();
     $('#resultheader').text('');
     $('#resultcontext').text('');
 }
 
 function loading() {
+    $('#graphs').hide();
     $('.graphImage').remove();
     $('#loadinggif').show();
     $('#resultheader').text('Loading...');
@@ -107,8 +109,17 @@ function loading() {
 }
 
 function displayImage() {
+    $('#graphs').show();
+    for(var i = 0; i < 3; i++){
+        var img = document.createElement('img');
+        img.setAttribute('src', '../static/img/scatterplot.png');
+        img.setAttribute('class', 'graphImage');
+        document.getElementById('graphs').appendChild(img);
+    }
+    /*
     var img = document.createElement('img');
     img.setAttribute('src', '../static/img/scatterplot.png');
     img.setAttribute('class', 'graphImage');
-    document.getElementById('data').appendChild(img);
+    document.getElementById('graphs').appendChild(img);
+    */
 }
