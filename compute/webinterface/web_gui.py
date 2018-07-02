@@ -20,7 +20,11 @@ def save_dataframe_as_new():
     return save_new_dataframe()
 
 
-# TODO maybe rename url
+@app.route('/mlp', methods=['GET'])
+def mlp_regressor():
+    return mlp_regressor_test()
+
+
 @app.route('/regress', methods=['GET'])
 def get_regression_result():
     return test_regression()
@@ -34,6 +38,12 @@ def get_target_prediction_result():
 @app.route('/')
 def index():
     return render_template('index.html')
+
+
+def mlp_regressor_test():
+    predictions, score = ml.mlp_regressor()
+    print(score)
+    return pandas_to_json(predictions)
 
 
 def test_regression():

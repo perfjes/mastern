@@ -16,12 +16,14 @@ file_type = '.png'
 # TODO add functionality for multiple images being created without overwriting existing ones
 # TODO stop programming python like it's Java
 def save_regression_scatter_as_png(regressor, data1, data2):
-    file = '%s%s%s' % (dirname(dirname(path)), file_name, file_type)
-
+    file = '%s%s%s%s' % (dirname(dirname(path)), '/webinterface/static/img/', file_name, file_type)
+    if os.path.isfile(file):
+        os.remove(file)
     plt.scatter(data1, data2)
     plt.xlabel('True vivos')
     plt.ylabel('Predictivivos')
     plt.savefig(file)
+    plt.clf()
 
     if os.path.isfile(file):
         return True

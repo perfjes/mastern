@@ -1,4 +1,5 @@
 from sklearn.tree import DecisionTreeRegressor
+from sklearn.neural_network import multilayer_perceptron as mlp
 from sklearn.model_selection import train_test_split, GridSearchCV
 import pandas as pd
 import numpy as np
@@ -26,8 +27,9 @@ parameters = {'splitter': ('best', 'random'),
 # Saving of split value in mutatable variable makes it possible to detect changes to split value and retrain the
 # models should a change be present.
 class Data:
-    split = dth.Data.split
     arthroplasty_dataset = list(dth.load_dataframe('db.csv'))  # the original file TODO unsure if needed
+    dt_regressor = dth.load_pickle_file('dt-regressor.sav')
+    mlp_regressor = dth.load_pickle_file('mlp-regressor.sav')
 
 
 # Takes two parameters; dataframe contains the dataset to be split into testing and training datasets, and column is
@@ -37,13 +39,13 @@ def split_dataset_into_train_test(dataframe, column):
     x = dataframe.drop(column, axis=1)
     y = dataframe[column]
     # Create a training/testing split
-    x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.33, random_state=55)
+    x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.35, random_state=55)
 
     # TODO might not be necessary
     while (len(x.loc[x['case'] == 0].index) / 2.2) > len(x_train.loc[x_train['case'] == 0].index) > \
             len(x.loc[x['case'] == 0].index) / 1.5:
         print('\n', 'RECALIBRATING', '\n')
-        x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.33)
+        x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.35)
 
     x_train = x_train.drop('case', axis=1)
     x_test = x_test.drop('case', axis=1)
@@ -51,24 +53,15 @@ def split_dataset_into_train_test(dataframe, column):
     return x_train, x_test, y_train, y_test
 
 
-def cv_test(dataframe, column):
-    x_train, x_test, y_train, y_test = split_dataset_into_train_test(dataframe, column)
-
-    params = parameters
-    regressor = GridSearchCV(DecisionTreeRegressor(), params, refit=True)
-    regressor.fit(x_train, y_train)
-    return regressor
-
-
 # Function for predicting the longevity of test set. Modify this to work on a singular entry (as with the target
 # regress).
 def predict_longevity():
-    x_train, x_test, y_train, y_test, regressor = validate_or_create_decision_tree_regressor()
+    x_train, x_test, y_train, y_test, regressor = validate_or_create_regressor('dt-regressor.sav')
     y_prediction = regressor.predict(x_test)
 
     result = pd.DataFrame({'Actual': y_test, 'Predicted': y_prediction})
 
-    # Reshape the arrays to work with R2 score validator
+    # Reshape the arrays to work with R2 score validator1
     y_true = y_test.values.reshape(-1, 1)
     y_pred = y_prediction.reshape(-1, 1)
     r2 = metrics.r2_score(y_true, y_pred)
@@ -92,7 +85,9 @@ def target_predict_longevity(target):
 
     # Actual prediction
     """
-    regressor = cv_test(dth.Data.dataframe, 'years in vivo')
+    x_train, x_test, y_train, y_test = split_dataset_into_train_test(dth.Data.dataframe, 'years in vivo')
+    regressor = GridSearchCV(DecisionTreeRegressor(), parameters, refit=True)
+    regressor.fit(x_train, y_train)
     target_pred = target.drop('years in vivo',axis=1)
     target_pred = target_pred.drop('case', axis=1)
     y_prediction = regressor.predict(target_pred)
@@ -133,13 +128,12 @@ def target_predict_longevity(target):
 
 # Loads a previously saved regression model if there is one, trains a new if there's not. If the dataframe being used
 #  for the prediction have more or less features than the regression model,
-def validate_or_create_decision_tree_regressor():
+def validate_or_create_regressor(filename):
     df = prune_features(dth.Data.dataframe)
     x_train, x_test, y_train, y_test = split_dataset_into_train_test(df, 'years in vivo')
-    filename = 'dt-regressor-model.sav'
 
     # Checks whether the feature length of the dataset is the same as the model features, retrain model if not
-    if dth.load_pickle_file(filename) is not None and Data.split == dth.Data.split:
+    if dth.load_pickle_file(filename) is not None:
         regressor = dth.load_pickle_file(filename)
     else:
         regressor = update_regression_model(filename, x_train, y_train)
@@ -155,12 +149,18 @@ def validate_or_create_decision_tree_regressor():
 
 def update_regression_model(filename, x_train, y_train):
     Data.split = dth.Data.split
-    
-    regressor = DecisionTreeRegressor(random_state=0)
-    regressor.fit(x_train, y_train)
-    # dth.save_file(filename, regressor)  TODO activate to save again
+    if filename == 'dt-regressor.sav':
+        regressor = DecisionTreeRegressor(random_state=0)
+        regressor.fit(x_train, y_train)
+        # dth.save_file(filename, regressor)  TODO activate to save again
+    elif filename == 'mlp-regressor.sav':
+        regressor = mlp.MLPRegressor(solver='lbfgs', random_state=0)
+        regressor.fit(x_train, y_train)
+        # dth.save_file(filename, regressor)  TODO activate to save again
+    else:
+        print('Wrong filetype?')
+
     print('Saved new regression model as', filename)
-    
     return regressor
 
 
@@ -203,7 +203,24 @@ def masstest(target):
     print(info)
 
 
-""" 
+def mlp_regressor():
+    x_train, x_test, y_train, y_test = split_dataset_into_train_test(dth.Data.dataframe, 'years in vivo')
+    # regressor = GridSearchCV(mlp.MLPRegressor)  TODO maybe not as runtime is immense
+    regressor = mlp.MLPRegressor(solver='lbfgs', random_state=0)
+    regressor.fit(x_train, y_train)
+    prediction = regressor.predict(x_test)
+    result = pd.DataFrame({'Actual': y_test, 'Predicted': prediction})
+
+    y_true = y_test.values.reshape(-1, 1)
+    y_pred = prediction.reshape(-1, 1)
+    r2 = metrics.r2_score(y_true, y_pred)
+
+    graph.save_regression_scatter_as_png(regressor, y_test, prediction)
+
+    return result, r2
+
+
+"""    DEPRECATED
 # Tests the regression model on the currently loaded dataset, prints the predicted results and the actual results for
 # simple comparison, prints the mean absoulte error to the console
 def regress():

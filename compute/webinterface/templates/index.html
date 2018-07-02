@@ -23,7 +23,7 @@
                 <section id="input">
                     <form id="buttons" method="post">
                         <button type="button" id="savebtn"> Save dataset in new file </button>
-                        <button type="button" id="masstest"> Massive model test (disabled) </button>
+                        <button type="button" id="mlp"> Run MLP regressor </button>
                         <button type="button" id="regress"> Run training and testing </button>
                         <button type="button" id="target"> Run target prediction </button>
                     </form>
@@ -32,7 +32,8 @@
 
             <section id="data">
                 <h1 id="resultheader"></h1>
-                <img src="../static/img/i.png" id="r2info"/>
+                <button id="r2button"> R^2 score </button>
+                <div id="r2info"> Prediction has score of 0.002 </div>
                 <img src="../static/img/load.gif" id="loadinggif" title="Loading"/>
                 <table id="results_table">
                     {{ data | safe }}

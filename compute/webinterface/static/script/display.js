@@ -15,7 +15,6 @@ $(document).ready(function() {
         $('.result_element').remove();
         $.getJSON('../../regress', function(data) {
             $('#data').fadeIn();
-            $('#r2info').show();
             updateTable(data, reg);
             $('#resultheader').text('Results - Training the model');
             $('#resultcontext').text('The training function randomly selects a subset of test cases and training' +
@@ -27,12 +26,24 @@ $(document).ready(function() {
         });
     });
 
+    $('#mlp').click(function() {
+        loading();
+        $('.result_element').remove();
+        $.getJSON('../../mlp', function(data) {
+            $('#data').fadeIn();
+            updateTable(data, reg);
+            $('#resultheader').text('Results - Training the MLP regression model');
+            $('#resultcontext').text('This Multi-Layer Perceptron regression model needs to be tweaked.');
+            $('#loadinggif').hide();
+            displayImage();
+        });
+    });
+
     $('#target').click(function() {
         loading();
         $('.result_element').remove();
         $.getJSON('../../target', function(data) {
             $('#data').fadeIn();
-            $('#r2info').show();
             updateTable(data, clas);
             $('#resultheader').text('Results - Target prediction');
             $('#resultcontext').text('The predicted \'years in vivo\' value represent the years that the implant is ' +
@@ -59,8 +70,8 @@ $(document).ready(function() {
         });
     });
 
-    $('#r2info').click(function() {
-
+    $('#r2button').click(function() {
+        displayR2Score();
     });
 });
 
@@ -88,11 +99,12 @@ function appendDataToTable(rowdata, type) {
     }
 }
 
-function displayR2Score(r2score) {
-    // Display on hover? Display in extra div? Does div overlay button? Anchored to just below button on click?
+function displayR2Score() {
+    $('#r2info').fadeToggle();
 }
 
 function clearTable() {
+    $('#r2info').hide();
     $('#graphs').hide();
     $('#data').hide();
     $('#resultheader').text('');
@@ -100,19 +112,19 @@ function clearTable() {
 }
 
 function loading() {
+    $('#r2info').hide();
     $('#graphs').hide();
     $('.graphImage').remove();
     $('#loadinggif').show();
     $('#resultheader').text('Loading...');
     $('#resultcontext').text('We\'re doing some heavy lifting, this shouldn\'t take too long');
-    $('#r2info').hide();
 }
 
 function displayImage() {
     $('#graphs').show();
     for(var i = 0; i < 3; i++){
         var img = document.createElement('img');
-        img.setAttribute('src', '../static/img/scatterplot.png');
+        img.setAttribute('src', '../static/img/graph.png');
         img.setAttribute('class', 'graphImage');
         document.getElementById('graphs').appendChild(img);
     }

@@ -71,6 +71,7 @@ body {
     padding: 10px 22px;
     text-decoration: none;
     transition: 0.4s ease;
+    border: none;
 }
 
 #buttons button:hover {
@@ -78,6 +79,7 @@ body {
     text-decoration: none;
     transition: 0.4s ease;
     cursor: pointer;
+    box-shadow: 0 3px 4px 0 #734f96;
 }
 
 button:focus {
@@ -90,7 +92,6 @@ button:focus {
     grid-row-end: span 3;
     background-color: white;
     border-radius: 5px;
-    width: fit-content;
     height: fit-content;
     margin: 15px 5px;
     font-family: 'Roboto', sans-serif;
@@ -123,22 +124,10 @@ button:focus {
     font-family: 'Roboto', sans-serif;
 }
 
-#data h1 {
-    width: auto;
+#resultheader {
+    width: 70%;
     height: auto;
     margin: 25px;
-}
-
-#r2info {
-    height: 23px;
-    width: 23px;
-    top: 25px;
-    right: 25px;
-    position: absolute;
-}
-
-#r2info:hover {
-    cursor: pointer;
 }
 
 #data p {
@@ -171,6 +160,44 @@ button:focus {
 
 #savestatus, #success, #fname {
     display:none
+}
+
+/****************************** R2 SCORE ******************************/
+#r2button {
+    width: 100px;
+    padding: 10px 2px;
+    margin: 0;
+    -webkit-border-radius: 9px;
+    -moz-border-radius: 9px;
+    border-radius: 9px;
+    font-family: 'Roboto Condensed', sans-serif;
+    color: white;
+    font-size: 16px;
+    background: #734f96;
+    border: none;
+    text-decoration: none;
+    transition: 0.4s ease;
+    top: 25px;
+    right: 25px;
+    position: absolute;
+}
+
+#r2button:hover {
+    background: #4f9650;
+    cursor: pointer;
+    box-shadow: 0 3px 4px 0 #734f96;
+}
+
+#r2info {
+    position: absolute;
+    top: 80px;
+    right: 25px;
+    z-index: 10;
+    padding: 10px;
+    width: 80px;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 3px 4px 0 #734f96;
 }
 
 /****************************** GRAPH IMAGES ******************************/
