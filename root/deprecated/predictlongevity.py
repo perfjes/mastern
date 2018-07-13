@@ -1,6 +1,5 @@
-from compute.modules import datahandler
-from compute.modules.ml import regressor
-
+from root.modules import datahandler
+from root.deprecated import regressor
 
 dth = datahandler
 df = dth.Data.dataframe

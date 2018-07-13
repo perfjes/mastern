@@ -5,8 +5,8 @@ from os.path import dirname
 
 import pandas as pd
 
-from compute.modules import datahandler
-from compute.modules.ml import classifier, regressor
+from root.modules import datahandler
+from root.deprecated import classifier, regressor
 import os
 
 
@@ -19,7 +19,7 @@ dtr = regressor
 dth = datahandler
 
 
-# Fix for different paths - web_gui.py / main.py
+# Fix for different paths - run.py / main.py
 # TODO figure out why the paths are saved in memory instead of loaded in (maybe IDE issue)
 dth.Path.pickle_data = '%s%s' % (dirname(os.getcwd()), r'/data/data.pkl')
 dth.Path.pickle_data = '%s%s' % (dirname(os.getcwd()), r'/data/split.pkl')

@@ -1,6 +1,6 @@
 import pandas as pd
 
-from compute.modules import graph_factory as g_factory, datahandler as dth
+from root.modules import graph_factory as g_factory, datahandler as dth
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report, precision_recall_fscore_support

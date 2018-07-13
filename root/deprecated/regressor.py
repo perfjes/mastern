@@ -3,7 +3,7 @@ from sklearn.model_selection import train_test_split
 import matplotlib as plt
 import pandas as pd
 from sklearn import metrics
-from compute.modules import datahandler
+from root.modules import datahandler
 
 
 dth = datahandler

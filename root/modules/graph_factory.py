@@ -4,7 +4,7 @@ from os.path import dirname
 
 import numpy as np
 
-from compute.modules import datahandler as dth
+from root.modules import datahandler as dth
 import pydotplus
 import matplotlib.pyplot as plt
 

@@ -1,7 +1,19 @@
+import sys
+import os
+from os.path import dirname
+
+module_fix = dirname(os.getcwd())
+sys.path.append(module_fix)
+for p in sys.path:
+    print(p)
+
+print(__name__)
+
 from flask import Flask, render_template
-from compute.modules import datahandler
-from compute.modules.ml import classifier, ml
+from root.modules import datahandler
+from root.modules.ml import ml
 import json
+
 
 # Module related variables
 dth = datahandler
@@ -58,10 +70,6 @@ def test_target_prediction():
     print(r2)
     result = pandas_to_json(prediction, r2)
     return result
-
-
-def test_classification():
-    return pandas_to_json(classifier.classify(dth.Data.dataframe))
 
 
 def save_new_dataframe():

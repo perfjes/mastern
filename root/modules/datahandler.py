@@ -2,7 +2,6 @@ from os.path import dirname, abspath
 import pandas as pd
 import os
 import _pickle as pickle
-from flask_restful import Resource
 
 ROOT_DIRECTORY = dirname(dirname(abspath(__file__)))
 
@@ -60,7 +59,7 @@ def load_split_value_from_pickle():
 
 
 # Class variables allow for mutation
-class Data(Resource):
+class Data():
     dataframe = load_dataframe_from_pickle()
     split = load_split_value_from_pickle()
     target = pd.DataFrame()

@@ -4,12 +4,12 @@ from sklearn.model_selection import train_test_split, GridSearchCV
 import pandas as pd
 import numpy as np
 from sklearn import metrics
-from compute.modules import datahandler, graph_factory
+from root.modules import datahandler, graph_factory
 
 dth = datahandler
 graph = graph_factory
 
-drop_features_regression = []
+drop_features_regression = ['id', 'volwear', 'volwearrate']
 # These are removed - do not remove Case
 
 parameters = {'splitter': ('best', 'random'),
@@ -38,10 +38,12 @@ class Data:
 def split_dataset_into_train_test(dataframe, column):
     x = dataframe.drop(column, axis=1)
     y = dataframe[column]
+
     # Create a training/testing split
     x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.35, random_state=55)
 
-    # TODO might not be necessary
+    # TODO might not be necessary - just in case there's too little or too much of control cases in the
+    # TODO training/testing subset. Not optimal by any means, just a temporary solution.
     while (len(x.loc[x['case'] == 0].index) / 2.2) > len(x_train.loc[x_train['case'] == 0].index) > \
             len(x.loc[x['case'] == 0].index) / 1.5:
         print('\n', 'RECALIBRATING', '\n')
@@ -152,11 +154,11 @@ def update_regression_model(filename, x_train, y_train):
     if filename == 'dt-regressor.sav':
         regressor = DecisionTreeRegressor(random_state=0)
         regressor.fit(x_train, y_train)
-        # dth.save_file(filename, regressor)  TODO activate to save again
+        dth.save_file(filename, regressor)
     elif filename == 'mlp-regressor.sav':
         regressor = mlp.MLPRegressor(solver='lbfgs', random_state=0)
         regressor.fit(x_train, y_train)
-        # dth.save_file(filename, regressor)  TODO activate to save again
+        dth.save_file(filename, regressor)
     else:
         print('Wrong filetype?')
 
@@ -218,24 +220,3 @@ def mlp_regressor():
     graph.save_regression_scatter_as_png(regressor, y_test, prediction)
 
     return result, r2
-
-
-"""    DEPRECATED
-# Tests the regression model on the currently loaded dataset, prints the predicted results and the actual results for
-# simple comparison, prints the mean absoulte error to the console
-def regress():
-    df = dth.Data.dataframe
-    x_train, x_test, y_train, y_test = split_dataset_into_train_test(df, 'years in vivo')
-
-    # Checks if whether a regressor model is saved and the split value hasn't changed
-    if dth.load_pickle_file('regressor-model.sav') is not None and Data.split == dth.Data.split:
-        regressor = dth.load_pickle_file('regressor-model.sav')
-    else:
-        regressor = update_regression_model()
-
-    y_pred = regressor.predict(y_test)
-    result = pd.DataFrame({'Actual': y_test, 'Predicted': y_pred})
-    mae = metrics.mean_absolute_error(y_test, y_pred)
-    print(mae)
-    return result, mae
-"""
