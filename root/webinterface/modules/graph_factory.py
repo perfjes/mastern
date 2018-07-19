@@ -2,9 +2,7 @@ import collections
 import os
 from os.path import dirname
 
-import numpy as np
-
-from root.modules import datahandler as dth
+from modules import datahandler as dth
 import pydotplus
 import matplotlib.pyplot as plt
 

@@ -1,4 +1,4 @@
-from root.modules import datahandler
+from root.webinterface.modules import datahandler
 from root.deprecated import regressor
 
 dth = datahandler

@@ -1,9 +1,8 @@
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.model_selection import train_test_split
-import matplotlib as plt
 import pandas as pd
 from sklearn import metrics
-from root.modules import datahandler
+from root.webinterface.modules import datahandler
 
 
 dth = datahandler

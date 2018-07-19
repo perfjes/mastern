@@ -5,7 +5,7 @@ from os.path import dirname
 
 import pandas as pd
 
-from root.modules import datahandler
+from root.webinterface.modules import datahandler
 from root.deprecated import classifier, regressor
 import os
 

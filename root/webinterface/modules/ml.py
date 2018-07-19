@@ -2,9 +2,8 @@ from sklearn.tree import DecisionTreeRegressor
 from sklearn.neural_network import multilayer_perceptron as mlp
 from sklearn.model_selection import train_test_split, GridSearchCV
 import pandas as pd
-import numpy as np
 from sklearn import metrics
-from root.modules import datahandler, graph_factory
+from modules import datahandler, graph_factory
 
 dth = datahandler
 graph = graph_factory

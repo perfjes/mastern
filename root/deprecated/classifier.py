@@ -1,9 +1,9 @@
 import pandas as pd
 
-from root.modules import graph_factory as g_factory, datahandler as dth
+from root.webinterface.modules import datahandler as dth
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import classification_report, precision_recall_fscore_support
+from sklearn.metrics import precision_recall_fscore_support
 
 
 # Now stores the model after training, and for every run uses the stored model (if it exists)

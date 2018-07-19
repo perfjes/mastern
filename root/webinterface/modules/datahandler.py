@@ -3,7 +3,7 @@ import pandas as pd
 import os
 import _pickle as pickle
 
-ROOT_DIRECTORY = dirname(dirname(abspath(__file__)))
+ROOT_DIRECTORY = dirname(dirname(dirname(abspath(__file__))))
 
 
 class Path:

@@ -1,17 +1,12 @@
+from flask import Flask, render_template
 import sys
 import os
-from os.path import dirname
+sys.path.append(os.getcwd() + "/root/")
 
-module_fix = dirname(os.getcwd())
-sys.path.append(module_fix)
-for p in sys.path:
-    print(p)
+for pt in sys.path:
+    print(pt)
 
-print(__name__)
-
-from flask import Flask, render_template
-from root.modules import datahandler
-from root.modules.ml import ml
+from modules import datahandler, ml
 import json
 
 
