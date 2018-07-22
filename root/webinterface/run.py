@@ -1,11 +1,4 @@
 from flask import Flask, render_template
-import sys
-import os
-sys.path.append(os.getcwd() + "/root/")
-
-for pt in sys.path:
-    print(pt)
-
 from modules import datahandler, ml
 import json
 
@@ -48,21 +41,18 @@ def index():
 
 
 def mlp_regressor_test():
-    predictions, score = ml.mlp_regressor()
-    print(score)
-    return pandas_to_json(predictions)
+    predictions, r2 = ml.mlp_regressor()
+    return pandas_to_json(predictions, r2)
 
 
 def test_regression():
     predictions, r2 = ml.predict_longevity()
-    print(r2)
     return pandas_to_json(predictions, r2)
 
 
 def test_target_prediction():
     test_sample = dth.load_dataframe(dth.Path.path + 'test.csv')
     prediction, r2 = ml.target_predict_longevity(test_sample)
-    print(r2)
     result = pandas_to_json(prediction, r2)
     return result
 

@@ -163,6 +163,7 @@ button:focus {
 }
 
 /****************************** R2 SCORE ******************************/
+
 #r2button {
     width: 100px;
     padding: 10px 2px;
@@ -194,7 +195,8 @@ button:focus {
     right: 25px;
     z-index: 10;
     padding: 10px;
-    width: 80px;
+    width: 100px;
+    height: fit-content;
     background-color: white;
     border-radius: 5px;
     box-shadow: 0 3px 4px 0 #734f96;

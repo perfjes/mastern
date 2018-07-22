@@ -71,14 +71,13 @@ $(document).ready(function() {
     });
 
     $('#r2button').click(function() {
-        displayR2Score();
+        $('#r2info').fadeToggle();
     });
 });
 
 function updateTable(json, type) {
     if ('r2' in json) {
-        // Display the R2 score somewhere
-        console.log(json['r2'])
+        $('#r2info').text('This prediction model has an R2 score of ' + parseFloat(json.r2).toFixed(7));
     }
     $.each(json.result, function (index, item) {
         appendDataToTable(item, type);
@@ -97,10 +96,6 @@ function appendDataToTable(rowdata, type) {
                 '<td>Predicted: ' + rowdata['Predicted'].toFixed(5) + '</td></tr>';
         });
     }
-}
-
-function displayR2Score() {
-    $('#r2info').fadeToggle();
 }
 
 function clearTable() {
