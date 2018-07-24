@@ -23,10 +23,9 @@ parameters = {'splitter': ('best', 'random'),
 """
 
 
-# Saving of split value in mutatable variable makes it possible to detect changes to split value and retrain the
-# models should a change be present.
 class Data:
-    arthroplasty_dataset = list(dth.load_dataframe('db.csv'))  # the original file TODO unsure if needed
+    arthroplasty_dataset = list(dth.load_dataframe('db.csv'))  # the original file TODO probs useless
+    dataset_features = list(dth.Data.dataframe)
     dt_regressor = dth.load_pickle_file('dt-regressor.sav')
     mlp_regressor = dth.load_pickle_file('mlp-regressor.sav')
 
@@ -94,35 +93,6 @@ def target_predict_longevity(target):
     y_prediction = regressor.predict(target_pred)
     result = pd.DataFrame({'Actual': target['years in vivo'], 'Predicted': y_prediction})
 
-    """     SCORES AND SUCH
-    # Reshape the arrays to work with R2 score validator
-    y_true = y_test.values.reshape(-1, 1)
-    r2_pred = regressor.predict(x_test)
-    r2_pred = r2_pred.reshape(-1, 1)
-    r2 = metrics.r2_score(y_true, r2_pred)
-    
-
-    features = list(target_pred)
-    i = 0
-    importances = dict()
-    for value in regressor.feature_importances_:
-        importances[features[i]] = value
-        i += 1
-
-    for key, value in importances.items():
-        print('feature importance:', key, value)
-        
-    """
-
-    """
-    for item, score in regressor.cv_results_.items():
-        if isinstance(score, np.ndarray):
-            print(item, 'List of results:')
-            for listitem in score:
-                print(listitem)
-        else:
-            print(item, score)
-    """
     r2 = regressor.best_score_
     return result, r2
 
@@ -130,7 +100,7 @@ def target_predict_longevity(target):
 # Loads a previously saved regression model if there is one, trains a new if there's not. If the dataframe being used
 #  for the prediction have more or less features than the regression model,
 def validate_or_create_regressor(filename):
-    df = prune_features(dth.Data.dataframe)
+    df = dth.Data.dataframe
     x_train, x_test, y_train, y_test = split_dataset_into_train_test(df, 'years in vivo')
 
     # Checks whether the feature length of the dataset is the same as the model features, retrain model if not
@@ -154,59 +124,21 @@ def update_regression_model(filename, x_train, y_train):
         regressor = DecisionTreeRegressor(random_state=0)
         regressor.fit(x_train, y_train)
         dth.save_file(filename, regressor)
+        print('Saved new regression model as', filename)
+        return regressor
     elif filename == 'mlp-regressor.sav':
         regressor = mlp.MLPRegressor(solver='lbfgs', random_state=0)
         regressor.fit(x_train, y_train)
         dth.save_file(filename, regressor)
+        print('Saved new regression model as', filename)
+        return regressor
     else:
         print('Wrong filetype?')
-
-    print('Saved new regression model as', filename)
-    return regressor
-
-
-# Removes all features from the pandas dataframe that are irrelevant (based on Petes suggestions)
-# TODO figure out which values are important?
-def prune_features(df):
-    for feature in drop_features_regression:
-        df = df.drop(feature, axis=1)
-    return df
-
-
-# TESTING FUNCTION - DOES NOT CURRENTLY WORK - USED FOR AUTONOMOUS TESTING OF REGRESSOR PARAMETER TUNING
-def masstest(target):
-    comparison = [-1000]
-    info = dict()
-
-    run = 0
-    for a in range(2, 9):
-        f = 0.0
-        for b in range(2, 12):
-            for c in range(2, 20):
-                run += 1
-                y = 0.0
-                regressor = DecisionTreeRegressor(random_state=0)
-                r2 = target_predict_longevity(target)
-                if r2 > comparison[0]:
-                    values = [a, b, c]
-                    oof = '%s%s%s%s' % ('run: ', str(run), ' score: ', str(r2))
-                    comparison[0] = r2
-                    info[oof] = values
-
-                y += 1.0
-        f += 1.0
-
-    ''' Test results:
-    max_features does best with 2 and 7 (7 max). When < 7, other parameters need to be higher. Best include them all.
-    max_depth, min_samples_split and max_leaf_nodes have very little effect
-    min_weight_fraction_leaf needs sample weight passed in fit() parameter - no change in my set
-    '''
-    print(info)
 
 
 def mlp_regressor():
     x_train, x_test, y_train, y_test = split_dataset_into_train_test(dth.Data.dataframe, 'years in vivo')
-    # regressor = GridSearchCV(mlp.MLPRegressor)  TODO maybe not as runtime is immense
+    # regressor = GridSearchCV(mlp.MLPRegressor)  TODO maybe not, as runtime is immense
     regressor = mlp.MLPRegressor(solver='lbfgs', random_state=0)
     regressor.fit(x_train, y_train)
     prediction = regressor.predict(x_test)

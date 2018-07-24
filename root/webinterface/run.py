@@ -40,9 +40,14 @@ def index():
     return render_template('index.html')
 
 
+@app.route('/features', methods=['GET', 'POST'])
+def select_features():
+    return feature_selector()
+
+
 def mlp_regressor_test():
-    predictions, r2 = ml.mlp_regressor()
-    return pandas_to_json(predictions, r2)
+    result, r2 = ml.mlp_regressor()
+    return pandas_to_json(result, r2)
 
 
 def test_regression():
@@ -65,6 +70,14 @@ def save_new_dataframe():
     else:
         feedback = '%s%s%s' % ('<p id="success">error</p><p id="fname">', 'file was not saved', '</p>')
         return feedback
+
+
+def feature_selector():
+    features = []
+    for feature in list(dth.Data.dataframe):
+        features.append('<li><input type="checkbox" class="feat" id="' + feature + '" checked="checked"/>' + feature +
+                        '</li>')
+    return " ".join(features)
 
 
 # Turns a Pandas dataframe into a dict, then returns a properly formatted JSON string

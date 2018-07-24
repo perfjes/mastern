@@ -121,10 +121,12 @@ def load_dataframe(path):
         data = data.drop('sex', axis=1)
         data = pd.concat([data, refactored_columns], axis=1)
 
+    if 'id' in data:
+        data = data.drop('id', axis=1)
+
     # Fill in the blanks (with mean values for the mean time)
     if data.isnull().values.any():
         filled = data.fillna(data.mean(skipna=True))
-
         return filled
     else:
         return data

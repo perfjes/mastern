@@ -14,7 +14,7 @@ $(document).ready(function() {
         loading();
         $('.result_element').remove();
         $.getJSON('../../regress', function(data) {
-            $('#data').fadeIn();
+            $('#r2button').show();
             updateTable(data, reg);
             $('#resultheader').text('Results - Training the model');
             $('#resultcontext').text('The training function randomly selects a subset of test cases and training' +
@@ -31,6 +31,7 @@ $(document).ready(function() {
         $('.result_element').remove();
         $.getJSON('../../mlp', function(data) {
             $('#data').fadeIn();
+            $('#r2button').show();
             updateTable(data, reg);
             $('#resultheader').text('Results - Training the MLP regression model');
             $('#resultcontext').text('This Multi-Layer Perceptron regression model needs to be tweaked.');
@@ -43,7 +44,8 @@ $(document).ready(function() {
         loading();
         $('.result_element').remove();
         $.getJSON('../../target', function(data) {
-            $('#data').fadeIn();
+            $('#data').show();
+            $('#r2button').show();
             updateTable(data, clas);
             $('#resultheader').text('Results - Target prediction');
             $('#resultcontext').text('The predicted \'years in vivo\' value represent the years that the implant is ' +
@@ -53,8 +55,20 @@ $(document).ready(function() {
     });
 
     $('#savebtn').click(function() {
+        clearTable();
         loading();
-        $('.result_element').remove();
+        $.get('../../features', function(input) {
+            $('#features').append(input);
+            $('#resultheader').text('Dataset features');
+            $('#resultcontext').text('These are the features of the dataset - each feature is a column that contains ' +
+                'some value. If you want to run the prediction using a specific set of values, deselect those you do ' +
+                'not want to be included in the prediction.');
+            $('#loadinggif').hide();
+            $('#r2button').hide();
+            $('.feature').fadeIn();
+        });
+
+        /*  The original Save File function - deprecated for now
         $("#savestatus").load("../../save", function() {
             $('#data').fadeIn();
             if($('#success').text() == 'success'){
@@ -68,6 +82,7 @@ $(document).ready(function() {
                 $('#loadinggif').hide();
             }
         });
+        */
     });
 
     $('#r2button').click(function() {
@@ -99,20 +114,26 @@ function appendDataToTable(rowdata, type) {
 }
 
 function clearTable() {
-    $('#r2info').hide();
+    $('#results').hide();
     $('#graphs').hide();
-    $('#data').hide();
+    $('#r2info').hide();
+    $('.feature').hide();
+    $('#loadinggif').hide();
     $('#resultheader').text('');
     $('#resultcontext').text('');
+    $('.result_element').remove();
+    $('#features').empty();
+    $('.graphImage').remove();
 }
 
 function loading() {
-    $('#r2info').hide();
-    $('#graphs').hide();
-    $('.graphImage').remove();
-    $('#loadinggif').show();
+    clearTable();
+    $('#loadinggif').fadeIn();
     $('#resultheader').text('Loading...');
     $('#resultcontext').text('We\'re doing some heavy lifting, this shouldn\'t take too long');
+    $('#data').show();
+
+    $('#results').fadeIn();
 }
 
 function displayImage() {
@@ -123,6 +144,7 @@ function displayImage() {
         img.setAttribute('class', 'graphImage');
         document.getElementById('graphs').appendChild(img);
     }
+
     /*
     var img = document.createElement('img');
     img.setAttribute('src', '../static/img/scatterplot.png');

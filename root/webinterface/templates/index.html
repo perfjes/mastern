@@ -22,29 +22,32 @@
 
                 <section id="input">
                     <form id="buttons" method="post">
-                        <button type="button" id="savebtn"> Save dataset in new file </button>
-                        <button type="button" id="mlp"> Run MLP regressor </button>
-                        <button type="button" id="regress"> Run training and testing </button>
-                        <button type="button" id="target"> Run target prediction </button>
+                        <button type="button" id="savebtn" class="button"> Choose feature set </button>
+                        <button type="button" id="mlp" class="button"> Run MLP regressor </button>
+                        <button type="button" id="regress" class="button"> Run training and testing </button>
+                        <button type="button" id="target" class="button"> Run target prediction </button>
                     </form>
                 </section>
             </div>
 
-            <section id="data">
-                <h1 id="resultheader"></h1>
-                <button id="r2button"> R^2 score </button>
-                <div id="r2info"> Prediction has score of 0.002 </div>
-                <img src="../static/img/load.gif" id="loadinggif" title="Loading"/>
-                <table id="results_table">
-                    {{ data | safe }}
-                    {{ data | safe }}
-                    {{ r2 | safe }}
-                </table>
-                <p id="savestatus"></p>
-                <p id="resultcontext"></p>
-            </section>
-            <section id="graphs">
-                <h1>Graphs</h1>
+            <section id="results">
+                <section id="data">
+                    <h1 id="resultheader"></h1>
+                    <button id="r2button"> R2 score </button>
+                    <div id="r2info"> You shouldn't be able to see this. </div>
+                    <img src="../static/img/load.gif" id="loadinggif" title="Loading"/>
+                    <table id="results_table">
+                        {{ data | safe }}
+                        {{ r2 | safe }}
+                    </table>
+                    <p id="savestatus"></p>
+                    <p id="resultcontext"></p>
+                    <ul id="features" class="feature"></ul>
+                    <button type="button" id="saveFeatures" class="button feature"> Save </button>
+                </section>
+                <section id="graphs">
+                    <h1>Graphs</h1>
+                </section>
             </section>
         </div>
     </body>
