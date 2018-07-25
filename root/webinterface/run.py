@@ -1,4 +1,8 @@
-from flask import Flask, render_template
+import os
+from os.path import dirname
+
+from flask import Flask, render_template, request, redirect, url_for, flash, send_from_directory
+from werkzeug.utils import secure_filename
 from modules import datahandler, ml
 import json
 
@@ -30,9 +34,30 @@ def get_regression_result():
     return test_regression()
 
 
-@app.route('/target', methods=['GET'])
+@app.route('/target', methods=['GET', 'POST'])
 def get_target_prediction_result():
-    return test_target_prediction()
+    if request.method == 'POST':
+        if 'file' not in request.files:
+            flash('No file part')
+            return redirect(request.url)
+        file = request.files['file']
+        # if user does not select file, browser also
+        # submit a empty part without filename
+        if file.filename == '':
+            flash('No selected file')
+            return redirect(request.url)
+        name = file.filename.split('/')
+        print(name)
+        if file and name[(len(name) - 1)].lower().endswith('.csv'):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            return redirect(url_for('uploaded_file', filename=filename))
+    return test_target_prediction(None)
+
+
+@app.route('/uploads/<filename>')
+def uploaded_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
 
 @app.route('/')
@@ -55,10 +80,15 @@ def test_regression():
     return pandas_to_json(predictions, r2)
 
 
-def test_target_prediction():
+def test_target_prediction(target):
     test_sample = dth.load_dataframe(dth.Path.path + 'test.csv')
-    prediction, r2 = ml.target_predict_longevity(test_sample)
-    result = pandas_to_json(prediction, r2)
+
+    if target is not None:
+        prediction, r2 = ml.target_predict_longevity(dth.load_dataframe(target))
+        result = pandas_to_json(prediction, r2)
+    else:
+        prediction, r2 = ml.target_predict_longevity(test_sample)
+        result = pandas_to_json(prediction, r2)
     return result
 
 
@@ -93,6 +123,7 @@ def pandas_to_json(dataframe, r2score=2):
                       dataframe.values]
         json_result = {'result': table_data}
         return json.dumps(json_result)
+
 
 
 # Attempt at fixing Chrome overaggressive caching

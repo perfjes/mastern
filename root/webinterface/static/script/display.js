@@ -3,7 +3,8 @@ var reg = 'reg',
 
 $(document).ready(function() {
 
-    $('#status').text('System is loaded and ready. It\'s very much in development so please cut it some slack.');
+    $('#status').text('Everything\'s loaded and ready. This is a decision support system that - based on a dataset ' +
+        'of patient information - should be able to predict the longevity of a total hip replacement implant.');
     clearTable();
 
     $('#resetmodel').click(function() {
@@ -34,7 +35,9 @@ $(document).ready(function() {
             $('#r2button').show();
             updateTable(data, reg);
             $('#resultheader').text('Results - Training the MLP regression model');
-            $('#resultcontext').text('This Multi-Layer Perceptron regression model needs to be tweaked.');
+            $('#resultcontext').text('These are the results from training and testing the Multi-Layer Perceptron ' +
+                'regression model on the dataset - not very important results, but the information is useful when ' +
+                'comparing different regression models..');
             $('#loadinggif').hide();
             displayImage();
         });

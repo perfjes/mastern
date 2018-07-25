@@ -16,7 +16,9 @@ body {
 /****************************** GRID ******************************/
 
 #gridwrapper {
+    display: -ms-grid;
     display: grid;
+         -ms-grid-columns: (1fr)[3];
     grid-template-columns: repeat(3, 1fr);
     grid-auto-rows: minmax(0, auto);
     height: 100%;
@@ -27,9 +29,12 @@ body {
 
 #menu {
     position: fixed;
+    -ms-grid-row: 1;
     grid-row: 1;
     background-color: #1e1e1e;
     min-height: 100%;
+    height: -webkit-fit-content;
+    height: -moz-fit-content;
     height: fit-content;
     width: 33.3%;
     padding: 0;
@@ -42,7 +47,6 @@ body {
     font-family: 'Roboto', sans-serif;
     font-size: 26pt;
     color: white;
-
 }
 
 #title h1 {
@@ -60,11 +64,14 @@ body {
 /****************************** INPUT ******************************/
 
 #input {
+    -ms-grid-column: 1;
     grid-column: 1;
     border-radius: 5px;
 }
 
 #buttons {
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
     width: fit-content;
     height: auto;
     margin: 20% auto auto auto;
@@ -76,8 +83,6 @@ body {
     display: block;
     width: 200px;
     margin: 30px auto;
-    -webkit-border-radius: 9px;
-    -moz-border-radius: 9px;
     border-radius: 9px;
     font-family: 'Roboto Condensed', sans-serif;
     color: white;
@@ -85,6 +90,8 @@ body {
     background: #b23000;
     padding: 10px 22px;
     text-decoration: none;
+    -webkit-transition: 0.4s ease;
+    -o-transition: 0.4s ease;
     transition: 0.4s ease;
     border: none;
 }
@@ -93,6 +100,8 @@ body {
     background: #ffc7b2;
     color: black;
     text-decoration: none;
+    -webkit-transition: 0.4s ease;
+    -o-transition: 0.4s ease;
     transition: 0.4s ease;
     cursor: pointer;
 }
@@ -102,6 +111,8 @@ body {
 }
 
 #features {
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
     width: fit-content;
     height: auto;
     padding: 20px;
@@ -116,14 +127,22 @@ body {
 /****************************** RESULTS ******************************/
 
 #results {
+    -ms-grid-column: 2;
+    -ms-grid-column-span: 2;
     grid-column: 2 / 4;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
 }
 
 #data {
-    flex: 1;
+    -webkit-box-flex: 1;
+            -ms-flex: 1;
+                flex: 1;
     background-color: white;
     min-height: 100%;
+    height: -webkit-fit-content;
+    height: -moz-fit-content;
     height: fit-content;
     width: 100%;
     max-width: 800px;
@@ -133,7 +152,11 @@ body {
 }
 
 .dataframe {
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
     width: fit-content;
+    height: -webkit-fit-content;
+    height: -moz-fit-content;
     height: fit-content;
     border: none;
 }
@@ -174,7 +197,11 @@ body {
 }
 
 #results_table {
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
     width: fit-content;
+    height: -webkit-fit-content;
+    height: -moz-fit-content;
     height: fit-content;
     padding: 10px;
     margin: auto;
@@ -182,7 +209,11 @@ body {
 
 #results_table td {
     padding: 8px 30px;
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
     width: fit-content;
+    height: -webkit-fit-content;
+    height: -moz-fit-content;
     height: fit-content;
     margin: auto;
     font-family: 'Roboto', sans-serif;
@@ -198,8 +229,6 @@ body {
     width: 100px;
     padding: 8px;
     margin: 0;
-    -webkit-border-radius: 9px;
-    -moz-border-radius: 9px;
     border-radius: 9px;
     font-family: 'Roboto Condensed', sans-serif;
     color: white;
@@ -207,6 +236,8 @@ body {
     background: #b23000;
     border: none;
     text-decoration: none;
+    -webkit-transition: 0.4s ease;
+    -o-transition: 0.4s ease;
     transition: 0.4s ease;
     top: 25px;
     right: 25px;
@@ -226,18 +257,25 @@ body {
     z-index: 10;
     padding: 20px;
     width: 150px;
+    height: -webkit-fit-content;
+    height: -moz-fit-content;
     height: fit-content;
     background-color: white;
     border-radius: 5px;
     font-size: 1.2em;
-    box-shadow: 0 4px 6px 1px #b23000;;
+    -webkit-box-shadow: 0 4px 6px 1px #b23000;
+            box-shadow: 0 4px 6px 1px #b23000;;
 }
 
 /****************************** GRAPH IMAGES ******************************/
 
 #graphs {
-    flex: 1;
+    -webkit-box-flex: 1;
+            -ms-flex: 1;
+                flex: 1;
     min-height: 100%;
+    height: -webkit-fit-content;
+    height: -moz-fit-content;
     height: fit-content;
     background: white;
     box-sizing: border-box;
