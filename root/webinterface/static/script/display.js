@@ -136,7 +136,7 @@ function loading() {
     $('#resultcontext').text('We\'re doing some heavy lifting, this shouldn\'t take too long');
     $('#data').show();
 
-    $('#results').fadeIn();
+    $('#results').slideDown();
 }
 
 function displayImage() {

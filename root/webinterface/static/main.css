@@ -1,16 +1,15 @@
 /****************************** DOCUMENT ******************************/
 
 html {
-    height: 100%;
-    width: 100%;
     margin: 0;
+    height: 100%;
 }
 
 body {
     background-color: #cfcfcf;
     height: 100%;
-    width: 100%;
     margin: 0;
+    padding: 0;
 }
 
 /****************************** GRID ******************************/
@@ -20,9 +19,10 @@ body {
     display: grid;
          -ms-grid-columns: (1fr)[3];
     grid-template-columns: repeat(3, 1fr);
-    grid-auto-rows: minmax(0, auto);
-    height: 100%;
+    grid-template-rows: 100%;
     width: 100%;
+    height: 100%;
+    margin: 0;
 }
 
 /****************************** TITLE ******************************/
@@ -140,10 +140,10 @@ body {
             -ms-flex: 1;
                 flex: 1;
     background-color: white;
-    min-height: 100%;
     height: -webkit-fit-content;
     height: -moz-fit-content;
     height: fit-content;
+    min-height: 100%;
     width: 100%;
     max-width: 800px;
     margin: 0;
