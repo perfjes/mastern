@@ -57,7 +57,7 @@ $(document).ready(function() {
         });
     });
 
-    $('#savebtn').click(function() {
+    $('#featurebtn').click(function() {
         clearTable();
         loading();
         $.get('../../features', function(input) {
@@ -91,6 +91,14 @@ $(document).ready(function() {
     $('#r2button').click(function() {
         $('#r2info').fadeToggle();
     });
+
+    $('#saveFeatures').click(function() {
+        $.post('../../features', function(features) {
+            console.log('what' + features);
+        })
+    })
+
+
 });
 
 function updateTable(json, type) {

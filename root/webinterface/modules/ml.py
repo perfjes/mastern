@@ -8,7 +8,7 @@ from modules import datahandler, graph_factory
 dth = datahandler
 graph = graph_factory
 
-drop_features_regression = ['id', 'volwear', 'volwearrate']
+drop_features_regression = ['id', 'volwear', 'volwearrate', 'ni', 'mb', 'cuploose', 'stemloose', 'cupz', 'cupy']
 # These are removed - do not remove Case
 
 parameters = {'splitter': ('best', 'random'),
@@ -85,6 +85,7 @@ def target_predict_longevity(target):
 
     # Actual prediction
     """
+    target = prune_features(target)
     x_train, x_test, y_train, y_test = split_dataset_into_train_test(dth.Data.dataframe, 'years in vivo')
     regressor = GridSearchCV(DecisionTreeRegressor(), parameters, refit=True)
     regressor.fit(x_train, y_train)
@@ -151,3 +152,10 @@ def mlp_regressor():
     graph.save_regression_scatter_as_png(regressor, y_test, prediction)
 
     return result, r2
+
+
+def prune_features(df):
+    for feature in drop_features_regression:
+        if feature in df:
+            df = df.drop(feature, axis=1)
+    return df

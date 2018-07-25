@@ -44,6 +44,7 @@ body {
 #title {
     width: 100%;
     height: auto;
+    max-height: 50%;
     font-family: 'Roboto', sans-serif;
     font-size: 26pt;
     color: white;
@@ -64,6 +65,11 @@ body {
 /****************************** INPUT ******************************/
 
 #input {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: fit-content;
+    margin: 0 auto;
     -ms-grid-column: 1;
     grid-column: 1;
     border-radius: 5px;
@@ -74,7 +80,8 @@ body {
     width: -moz-fit-content;
     width: fit-content;
     height: auto;
-    margin: 20% auto auto auto;
+    bottom: 0;
+    margin: 5% auto 10% auto;
     border: 0;
     font-family: inherit;
 }

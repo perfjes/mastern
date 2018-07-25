@@ -17,6 +17,11 @@ dth.Data.dataframe = dth.load_dataframe(path)
 app = Flask(__name__)
 
 
+class Data:
+    original_features = list(dth.Data.dataframe)
+    selected_features = original_features
+
+
 # TODO add functionality for user input when saving filename - also some kind of "did you just save" check to keep
 # TODO people from running scripts on this to save a billion copies and flooding the server
 @app.route('/save', methods=['GET', 'POST'])
@@ -36,6 +41,7 @@ def get_regression_result():
 
 @app.route('/target', methods=['GET', 'POST'])
 def get_target_prediction_result():
+    """
     if request.method == 'POST':
         if 'file' not in request.files:
             flash('No file part')
@@ -52,7 +58,8 @@ def get_target_prediction_result():
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             return redirect(url_for('uploaded_file', filename=filename))
-    return test_target_prediction(None)
+    """
+    return test_target_prediction()
 
 
 @app.route('/uploads/<filename>')
@@ -67,7 +74,12 @@ def index():
 
 @app.route('/features', methods=['GET', 'POST'])
 def select_features():
-    return feature_selector()
+    if request.method == 'GET':
+        return feature_selector()
+    elif request.method == 'POST':
+        features = request.form
+        return update_features(features)
+    pass
 
 
 def mlp_regressor_test():
@@ -80,15 +92,10 @@ def test_regression():
     return pandas_to_json(predictions, r2)
 
 
-def test_target_prediction(target):
-    test_sample = dth.load_dataframe(dth.Path.path + 'test.csv')
-
-    if target is not None:
-        prediction, r2 = ml.target_predict_longevity(dth.load_dataframe(target))
-        result = pandas_to_json(prediction, r2)
-    else:
-        prediction, r2 = ml.target_predict_longevity(test_sample)
-        result = pandas_to_json(prediction, r2)
+def test_target_prediction():
+    target = dth.load_dataframe(dth.Path.path + 'test.csv')
+    prediction, r2 = ml.target_predict_longevity(target)
+    result = pandas_to_json(prediction, r2)
     return result
 
 
@@ -103,11 +110,18 @@ def save_new_dataframe():
 
 
 def feature_selector():
-    features = []
-    for feature in list(dth.Data.dataframe):
-        features.append('<li><input type="checkbox" class="feat" id="' + feature + '" checked="checked"/>' + feature +
-                        '</li>')
-    return " ".join(features)
+    html_list = []
+    for feature in Data.original_features:
+        if feature in Data.selected_features:
+            html_list.append('<li><input type="checkbox" class="feat" id="' + feature + '" checked="checked"/>' +
+                             feature + '</li>')
+        else:
+            html_list.append('<li><input type="checkbox" class="feat" id="' + feature + '"/>' + feature + '</li>')
+    return " ".join(html_list)
+
+
+def update_features(features):
+    return features
 
 
 # Turns a Pandas dataframe into a dict, then returns a properly formatted JSON string
@@ -123,7 +137,6 @@ def pandas_to_json(dataframe, r2score=2):
                       dataframe.values]
         json_result = {'result': table_data}
         return json.dumps(json_result)
-
 
 
 # Attempt at fixing Chrome overaggressive caching
