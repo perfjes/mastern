@@ -2,6 +2,7 @@ import os
 from os.path import dirname
 
 from flask import Flask, render_template, request, redirect, url_for, flash, send_from_directory
+from wtforms import Form, TextField, validators
 from werkzeug.utils import secure_filename
 from modules import datahandler, ml
 import json
@@ -41,7 +42,7 @@ def get_regression_result():
 
 @app.route('/target', methods=['GET', 'POST'])
 def get_target_prediction_result():
-    """
+
     if request.method == 'POST':
         if 'file' not in request.files:
             flash('No file part')
@@ -58,8 +59,8 @@ def get_target_prediction_result():
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             return redirect(url_for('uploaded_file', filename=filename))
-    """
-    return test_target_prediction()
+
+    return target_prediction()
 
 
 @app.route('/uploads/<filename>')
@@ -77,7 +78,9 @@ def select_features():
     if request.method == 'GET':
         return feature_selector()
     elif request.method == 'POST':
-        features = request.form
+
+        features = request.form.getlist('input')
+        print(features)
         return update_features(features)
     pass
 
@@ -92,13 +95,14 @@ def test_regression():
     return pandas_to_json(predictions, r2)
 
 
-def test_target_prediction():
+def target_prediction():
     target = dth.load_dataframe(dth.Path.path + 'test.csv')
     prediction, r2 = ml.target_predict_longevity(target)
     result = pandas_to_json(prediction, r2)
     return result
 
 
+# TODO deprecated
 def save_new_dataframe():
     success, filename = dth.save_as_new(dth.Data.dataframe)
     if success:
@@ -110,17 +114,19 @@ def save_new_dataframe():
 
 
 def feature_selector():
-    html_list = []
+    html_list = ['<form>']
     for feature in Data.original_features:
         if feature in Data.selected_features:
             html_list.append('<li><input type="checkbox" class="feat" id="' + feature + '" checked="checked"/>' +
                              feature + '</li>')
         else:
             html_list.append('<li><input type="checkbox" class="feat" id="' + feature + '"/>' + feature + '</li>')
+    html_list.append('</form>')
     return " ".join(html_list)
 
 
 def update_features(features):
+
     return features
 
 

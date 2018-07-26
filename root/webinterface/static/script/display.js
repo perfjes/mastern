@@ -67,7 +67,6 @@ $(document).ready(function() {
                 'some value. If you want to run the prediction using a specific set of values, deselect those you do ' +
                 'not want to be included in the prediction.');
             $('#loadinggif').hide();
-            $('#r2button').hide();
             $('.feature').fadeIn();
         });
 
@@ -128,6 +127,7 @@ function clearTable() {
     $('#results').hide();
     $('#graphs').hide();
     $('#r2info').hide();
+    $('#r2button').hide();
     $('.feature').hide();
     $('#loadinggif').hide();
     $('#resultheader').text('');

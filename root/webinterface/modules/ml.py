@@ -1,3 +1,5 @@
+import itertools
+
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.neural_network import multilayer_perceptron as mlp
 from sklearn.model_selection import train_test_split, GridSearchCV
@@ -8,13 +10,8 @@ from modules import datahandler, graph_factory
 dth = datahandler
 graph = graph_factory
 
-drop_features_regression = ['id', 'volwear', 'volwearrate', 'ni', 'mb', 'cuploose', 'stemloose', 'cupz', 'cupy']
+drop_features_regression = ['cupx', 'cupy', 'volwear', 'volwearrate']
 # These are removed - do not remove Case
-
-parameters = {'splitter': ('best', 'random'),
-              'max_depth': range(1, 10),
-              'min_samples_split': range(2, 10),
-              'min_samples_leaf': range(1, 5)}
 
 """
     List of all features in the dataset
@@ -47,9 +44,6 @@ def split_dataset_into_train_test(dataframe, column):
         print('\n', 'RECALIBRATING', '\n')
         x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.35)
 
-    x_train = x_train.drop('case', axis=1)
-    x_test = x_test.drop('case', axis=1)
-
     return x_train, x_test, y_train, y_test
 
 
@@ -67,7 +61,6 @@ def predict_longevity():
     r2 = metrics.r2_score(y_true, y_pred)
 
     png = graph.save_regression_scatter_as_png(regressor, y_test, y_prediction)
-    print(png)
 
     return result, r2
 
@@ -75,27 +68,33 @@ def predict_longevity():
 # Function for predicting the longevity of a single sample - given the training/testing dataset and a new CSV file
 # containing the exact same features as the training/testing set.
 def target_predict_longevity(target):
-    """     OLD DATA HANDLING
-    x_train, x_test, y_train, y_test, regressor = validate_or_create_decision_tree_regressor()
-    difference = np.setdiff1d(list(target), list(x_train))
-    for item in difference:
-        print('difference in features: ', item)
-        if item != 'years in vivo':
-            target = target.drop(item, axis=1)
-
-    # Actual prediction
-    """
+    parameters = {
+        'criterion': ('mse', 'friedman_mse', 'mae'),
+        'splitter': ('best', 'random'),
+        'max_depth': range(1, 4),
+        'min_samples_split': range(10, 13),
+        'min_samples_leaf': range(1, 3),
+        'max_leaf_nodes': range(2, 6)
+    }
     target = prune_features(target)
-    x_train, x_test, y_train, y_test = split_dataset_into_train_test(dth.Data.dataframe, 'years in vivo')
-    regressor = GridSearchCV(DecisionTreeRegressor(), parameters, refit=True)
-    regressor.fit(x_train, y_train)
-    target_pred = target.drop('years in vivo',axis=1)
-    target_pred = target_pred.drop('case', axis=1)
-    y_prediction = regressor.predict(target_pred)
-    result = pd.DataFrame({'Actual': target['years in vivo'], 'Predicted': y_prediction})
+    df = prune_features(dth.Data.dataframe)
 
-    r2 = regressor.best_score_
-    return result, r2
+    x_train, x_test, y_train, y_test = split_dataset_into_train_test(df, 'years in vivo')
+    regressor = GridSearchCV(DecisionTreeRegressor(random_state=33), parameters, refit=True)
+    regressor.fit(x_train, y_train)
+
+    # TODO for use with random_state=none
+    #while regressor.best_score_ < 0.29:
+    #    print('recalibrating')
+    #    regressor = GridSearchCV(DecisionTreeRegressor(), parameters, refit=True)
+    #    regressor.fit(x_train, y_train)
+
+    target_pred = target.drop('years in vivo',axis=1)
+    y_prediction = regressor.predict(target_pred)
+
+    print(regressor.best_params_)
+
+    return pd.DataFrame({'Actual': target['years in vivo'], 'Predicted': y_prediction}), regressor.best_score_
 
 
 # Loads a previously saved regression model if there is one, trains a new if there's not. If the dataframe being used
@@ -138,20 +137,24 @@ def update_regression_model(filename, x_train, y_train):
 
 
 def mlp_regressor():
+    parameters = {
+        #'hidden_layer_sizes': [x for x in itertools.product((10, 20, 30, 40, 50, 100), repeat=3)],
+        'max_iter': range(80, 200),
+        'alpha': (0.0001, 0.0002, 0.0003, 0.0004),
+        'early_stopping': (True, False)
+
+    }
     x_train, x_test, y_train, y_test = split_dataset_into_train_test(dth.Data.dataframe, 'years in vivo')
-    # regressor = GridSearchCV(mlp.MLPRegressor)  TODO maybe not, as runtime is immense
-    regressor = mlp.MLPRegressor(solver='lbfgs', random_state=0)
+    regressor = GridSearchCV(mlp.MLPRegressor(hidden_layer_sizes=(10, 10, 20), solver='lbfgs', random_state=33),
+                             parameters)
     regressor.fit(x_train, y_train)
     prediction = regressor.predict(x_test)
-    result = pd.DataFrame({'Actual': y_test, 'Predicted': prediction})
-
-    y_true = y_test.values.reshape(-1, 1)
-    y_pred = prediction.reshape(-1, 1)
-    r2 = metrics.r2_score(y_true, y_pred)
 
     graph.save_regression_scatter_as_png(regressor, y_test, prediction)
 
-    return result, r2
+    print(regressor.best_params_)
+
+    return pd.DataFrame({'Actual': y_test, 'Predicted': prediction}), regressor.best_score_
 
 
 def prune_features(df):
