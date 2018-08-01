@@ -1,4 +1,5 @@
 import os
+import time
 from os.path import dirname
 
 from flask import Flask, render_template, request, redirect, url_for, flash, send_from_directory
@@ -32,7 +33,11 @@ def save_dataframe_as_new():
 
 @app.route('/mlp', methods=['GET'])
 def mlp_regressor():
-    return mlp_regressor_test()
+    start = time.time()
+    stupidass = mlp_target_prediction()
+    end = (time.time() - start)
+    print('Runtime is: ' + str(end))
+    return stupidass
 
 
 @app.route('/regress', methods=['GET'])
@@ -60,7 +65,12 @@ def get_target_prediction_result():
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             return redirect(url_for('uploaded_file', filename=filename))
 
-    return target_prediction()
+    start = time.time()
+    stupidass = dt_target_prediction()
+    end = (time.time() - start)
+    print('Runtime is: ' + str(end))
+
+    return stupidass
 
 
 @app.route('/uploads/<filename>')
@@ -85,9 +95,11 @@ def select_features():
     pass
 
 
-def mlp_regressor_test():
-    result, r2 = ml.mlp_regressor()
-    return pandas_to_json(result, r2)
+# Multi-Layer Perceptron
+def mlp_target_prediction():
+    target = dth.load_dataframe(dth.Path.path + 'test.csv')
+    prediction, r2 = ml.mlp_regressor(target)
+    return pandas_to_json(prediction, r2)
 
 
 def test_regression():
@@ -95,7 +107,8 @@ def test_regression():
     return pandas_to_json(predictions, r2)
 
 
-def target_prediction():
+# Decision tree
+def dt_target_prediction():
     target = dth.load_dataframe(dth.Path.path + 'test.csv')
     prediction, r2 = ml.target_predict_longevity(target)
     result = pandas_to_json(prediction, r2)
