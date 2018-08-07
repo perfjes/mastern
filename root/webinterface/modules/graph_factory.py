@@ -13,7 +13,7 @@ file_type = '.png'
 
 # TODO add functionality for multiple images being created without overwriting existing ones
 # TODO stop programming python like it's Java
-def save_regression_scatter_as_png(regressor, data1, data2):
+def save_regression_scatter_as_png(data1, data2, regressor=None):
     file = '%s%s%s%s' % (dirname(dirname(path)), '/webinterface/static/img/', file_name, file_type)
     if os.path.isfile(file):
         os.remove(file)
