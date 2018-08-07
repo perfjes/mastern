@@ -22,6 +22,7 @@ app = Flask(__name__)
 class Data:
     original_features = list(dth.Data.dataframe)
     selected_features = original_features
+    recalibrate = True
 
 
 # TODO add functionality for user input when saving filename - also some kind of "did you just save" check to keep
@@ -33,24 +34,24 @@ def save_dataframe_as_new():
 
 @app.route('/mlp', methods=['GET'])
 def mlp_regressor():
-    start = time.time()
-    stupidass = mlp_target_prediction()
-    end = (time.time() - start)
-    print('Runtime is: ' + str(end))
-    return stupidass
+    start_time = time.time()
+    prediction_result = mlp_target_prediction()
+    end_time = (time.time() - start_time)
+    print('Runtime is: ' + str(end_time))
+    return prediction_result
 
 
 @app.route('/linear', methods=['GET'])
-def get_regression_result():
-    start = time.time()
-    stupidass = mlp_target_prediction()
-    end = (time.time() - start)
-    print('Runtime is: ' + str(end))
-    return stupidass
+def linear_regressor():
+    start_time = time.time()
+    prediction_result = linear_target_prediction()
+    end_time = (time.time() - start_time)
+    print('Runtime is: ' + str(end_time))
+    return prediction_result
 
 
 @app.route('/dt', methods=['GET', 'POST'])
-def get_target_prediction_result():
+def decision_tree_regressor():
     if request.method == 'POST':
         if 'file' not in request.files:
             flash('No file part')
@@ -68,12 +69,12 @@ def get_target_prediction_result():
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             return redirect(url_for('uploaded_file', filename=filename))
 
-    start = time.time()
-    stupidass = dt_target_prediction()
-    end = (time.time() - start)
-    print('Runtime is: ' + str(end))
+    start_time = time.time()
+    prediction_result = dt_target_prediction()
+    end_time = (time.time() - start_time)
+    print('Runtime is: ' + str(end_time))
 
-    return stupidass
+    return prediction_result
 
 
 @app.route('/uploads/<filename>')
@@ -101,14 +102,14 @@ def select_features():
 # Multi-Layer Perceptron
 def mlp_target_prediction():
     target = dth.load_dataframe(dth.Path.path + 'test.csv')
-    prediction, r2 = ml.target_predict_mlp(target)
+    prediction, r2 = ml.target_predict_mlp(target, Data.recalibrate)
     return pandas_to_json(prediction, r2)
 
 
 # Decision tree
 def dt_target_prediction():
     target = dth.load_dataframe(dth.Path.path + 'test.csv')
-    prediction, r2 = ml.target_predict_longevity(target)
+    prediction, r2 = ml.target_predict_decision_tree(target, Data.recalibrate)
     result = pandas_to_json(prediction, r2)
     return result
 
@@ -116,7 +117,7 @@ def dt_target_prediction():
 # Linear regression
 def linear_target_prediction():
     target = dth.load_dataframe(dth.Path.path + 'test.csv')
-    prediction, r2 = ml.target_predict_linear(target)
+    prediction, r2 = ml.target_predict_linear(target, Data.recalibrate)
     return pandas_to_json(prediction, r2)
 
 

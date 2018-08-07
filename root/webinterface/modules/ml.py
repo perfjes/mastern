@@ -68,28 +68,32 @@ def validate_or_create_regressor(filename):
     if dth.load_pickle_file(filename) is not None:
         regressor = dth.load_pickle_file(filename)
     else:
-        regressor = update_regression_model(filename, x_train, y_train)
+        regressor = update_regression_model(filename)
 
     # Checks whether the amount of features in the regression model is the same as the data being used to predict a
     # feature. TODO create save-new-model so I don't have to deal with retraining the model every time? Or handle better
     if regressor.max_features_ == len(list(x_test)):
-        return x_train, x_test, y_train, y_test, regressor
+        return regressor
     else:
-        regressor = update_regression_model(filename, x_train, y_train)
-        return x_train, x_test, y_train, y_test, regressor
+        regressor = update_regression_model(filename)
+        return regressor
 
 
-def update_regression_model(filename, x_train, y_train):
+def update_regression_model(filename):
     Data.split = dth.Data.split
     if filename == 'dt-regressor.sav':
         regressor = DecisionTreeRegressor(random_state=0)
-        regressor.fit(x_train, y_train)
         dth.save_file(filename, regressor)
         print('Saved new regression model as', filename)
         return regressor
     elif filename == 'mlp-regressor.sav':
-        regressor = mlp.MLPRegressor(solver='lbfgs', random_state=0)
-        regressor.fit(x_train, y_train)
+        regressor = MLPRegressor(activation='logistic', early_stopping=True, alpha=0.0001,
+                                 hidden_layer_sizes=(50, 50, 70, 60), solver='lbfgs', max_iter=195)
+        dth.save_file(filename, regressor)
+        print('Saved new regression model as', filename)
+        return regressor
+    elif filename == 'linear-regressor.sav':
+        regressor = LinearRegression(fit_intercept=True, normalize=True, copy_X=True)
         dth.save_file(filename, regressor)
         print('Saved new regression model as', filename)
         return regressor
@@ -105,32 +109,36 @@ def target_predict_decision_tree(target, recalibrate=False):
     x_train, x_test, y_train, y_test = split_dataset_into_train_test(df, 'years in vivo')
     target_pred = target.drop('years in vivo', axis=1)
 
-    # For each parameter value range, multiply that value with the next and the next and so on, split the result by:
-    # i7-3770k at 4.8GHz - divide by 136 to get the seconds required to run the test.
     if recalibrate:
         parameters = {
-            # 'criterion': ('mse', 'friedman_mse', 'mae'),
+            'criterion': ('mse', 'friedman_mse', 'mae'),
             'splitter': ('best', 'random'),
-            'max_depth': range(1, 4),
-            'min_samples_split': range(10, 13),  # iterates from 0.01 to 0.99
-            'max_leaf_nodes': range(2, 5),
-            'min_impurity_decrease': (0.0, 0.01, 0.02, 0.04),
-            'presort': (True, False)
+            'max_depth': range(1, 7),
+            'min_samples_split': range(7, 18),  # iterates from 0.01 to 0.99
+            'max_leaf_nodes': range(2, 8),
+            'min_impurity_decrease': (0.0, 0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.1, 0.11, 0.12, 0.13, 0.14),
+            'presort': (True, False),
+            # 'random_state': range(0, 101)
         }
-        regressor = GridSearchCV(DecisionTreeRegressor(), parameters, refit=True)
+        regressor = GridSearchCV(DecisionTreeRegressor(random_state=48), parameters, refit=True)
     else:
-        regressor = DecisionTreeRegressor()
+        regressor = validate_or_create_regressor('dt-regressor.sav')
 
     regressor.fit(x_train, y_train)
-
+    r2_prediction = regressor.predict(x_test)
     y_prediction = regressor.predict(target_pred)
 
-    print(regressor.best_params_)
-    print('R2 is: ' + str(regressor.best_score_))
+    if recalibrate:
+        print(regressor.best_params_)
+        print('R2 is: ' + str(regressor.best_score_))
+        dth.save_file('DTRegressionBestParams.sav', regressor.best_params_)
+        r2 = regressor.best_score_
+    else:
+        y_true = y_test.values.reshape(-1, 1)
+        r2_pred = r2_prediction.reshape(-1, 1)
+        r2 = metrics.r2_score(y_true, r2_pred)
 
-    dth.save_file('DTregressorbestparams.sav', regressor.best_params_)
-
-    return pd.DataFrame({'Actual': target['years in vivo'], 'Predicted': y_prediction}), regressor.best_score_
+    return pd.DataFrame({'Actual': target['years in vivo'], 'Predicted': y_prediction}), r2
 
 
 def target_predict_mlp(target, recalibrate=False):
@@ -150,59 +158,69 @@ def target_predict_mlp(target, recalibrate=False):
             # 'hidden_layer_sizes': [x for x in itertools.product((10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60), repeat=1)],
             # 'hidden_layer_sizes': [x for x in itertools.product((10, 20, 25, 30, 40, 45, 50, 55, 60), repeat=2)],
             # 'hidden_layer_sizes': [x for x in itertools.product((30, 40, 50, 60, 70, 80), repeat=4)],
-            'activation': ('identity', 'logistic', 'tanh', 'relu'),
-            'max_iter': range(150, 300),
-            'alpha': (0.0000, 0.0001, 0.0002, 0.0003, 0.0004, 0.0005, 0.0006, 0.0007),
-            'early_stopping': (True, False)
+            # 'activation': ('identity', 'logistic', 'tanh', 'relu'),
+            # 'max_iter': range(150, 300),
+            # 'alpha': (0.0000, 0.0001, 0.0002, 0.0003, 0.0004, 0.0005, 0.0006, 0.0007),
+            # 'early_stopping': (True, False)
         }
         regressor = GridSearchCV(MLPRegressor(activation='logistic', early_stopping=True, alpha=0.0001,
                                               hidden_layer_sizes=(50, 50, 70, 60), solver='lbfgs', max_iter=195,
                                               random_state=33), parameters)
     else:
-        regressor = MLPRegressor(activation='logistic', early_stopping=True, alpha=0.0001,
-                                     hidden_layer_sizes=(50, 50, 70, 60), solver='lbfgs', max_iter=195, random_state=33)
+        regressor = validate_or_create_regressor('mlp-regressor.sav')
 
     regressor.fit(x_train, y_train)
+    r2_prediction = regressor.predict(x_test)
     prediction = regressor.predict(target_pred)
 
-    # graph.save_regression_scatter_as_png(regressor, y_test, prediction)
+    if recalibrate:
+        print(regressor.best_params_)
+        print('R2 is: ' + str(regressor.best_score_))
+        dth.save_file('MLPRegressionBestParams.sav', regressor.best_params_)
+        r2 = regressor.best_score_
+    else:
+        y_true = y_test.values.reshape(-1, 1)
+        r2_pred = r2_prediction.reshape(-1, 1)
+        r2 = metrics.r2_score(y_true, r2_pred)
 
-    print(regressor.best_params_)
-    print('R2 is: ' + str(regressor.best_score_))
-
-    dth.save_file('mlpbestscorefullparams.sav', regressor.best_params_)
-
-    return pd.DataFrame({'Actual': target['years in vivo'], 'Predicted': prediction}), regressor.best_score_
+    return pd.DataFrame({'Actual': target['years in vivo'], 'Predicted': prediction}), r2
 
 
 def target_predict_linear(target, recalibrate=False):
-
-    parameters = {
-
-    }
-
+    # Preprocessing the data
     target = prune_features(target)
-    df = prune_features(dth.Data.dataframe)
-
-    x_train, x_test, y_train, y_test = split_dataset_into_train_test(df, 'years in vivo')
-    regressor = GridSearchCV(DecisionTreeRegressor(random_state=33), parameters, refit=True)
-    regressor.fit(x_train, y_train)
-
-    # TODO for use with random_state=none
-    # while regressor.best_score_ < 0.29:
-    #    print('recalibrating')
-    #    regressor = GridSearchCV(DecisionTreeRegressor(), parameters, refit=True)
-    #    regressor.fit(x_train, y_train)
-
     target_pred = target.drop('years in vivo', axis=1)
+    df = prune_features(dth.Data.dataframe)
+    x_train, x_test, y_train, y_test = split_dataset_into_train_test(df, 'years in vivo')
+
+    if recalibrate:
+        parameters = {
+            'fit_intercept': (True, False),
+            'normalize': (True, False),
+            'copy_X': (True, False)
+        }
+
+        regressor = GridSearchCV(LinearRegression(), parameters, refit=True)
+    else:
+        regressor = LinearRegression()
+
+    regressor.fit(x_train, y_train)
+    r2_prediction = regressor.predict(x_test)
     y_prediction = regressor.predict(target_pred)
 
-    print(regressor.best_params_)
-    print('R2 is: ' + str(regressor.best_score_))
+    if recalibrate:
+        print(regressor.best_params_)
+        print('R2 is: ' + str(regressor.best_score_))
+        dth.save_file('LinearRegressionBestParams.sav', regressor.best_params_)
+        r2 = regressor.best_score_
+    else:
+        y_true = y_test.values.reshape(-1, 1)
+        r2_pred = r2_prediction.reshape(-1, 1)
+        r2 = metrics.r2_score(y_true, r2_pred)
 
-    dth.save_file('DTregressorbestparams.sav', regressor.best_params_)
+    # graph_factory.save_regression_scatter_as_png(df['years in vivo'], y_prediction)
 
-    return pd.DataFrame({'Actual': target['years in vivo'], 'Predicted': y_prediction}), regressor.best_score_
+    return pd.DataFrame({'Actual': target['years in vivo'], 'Predicted': y_prediction}), r2
 
 
 def prune_features(df):
