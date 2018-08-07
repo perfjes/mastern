@@ -40,14 +40,17 @@ def mlp_regressor():
     return stupidass
 
 
-@app.route('/regress', methods=['GET'])
+@app.route('/linear', methods=['GET'])
 def get_regression_result():
-    return test_regression()
+    start = time.time()
+    stupidass = mlp_target_prediction()
+    end = (time.time() - start)
+    print('Runtime is: ' + str(end))
+    return stupidass
 
 
-@app.route('/target', methods=['GET', 'POST'])
+@app.route('/dt', methods=['GET', 'POST'])
 def get_target_prediction_result():
-
     if request.method == 'POST':
         if 'file' not in request.files:
             flash('No file part')
@@ -98,13 +101,8 @@ def select_features():
 # Multi-Layer Perceptron
 def mlp_target_prediction():
     target = dth.load_dataframe(dth.Path.path + 'test.csv')
-    prediction, r2 = ml.mlp_regressor(target)
+    prediction, r2 = ml.target_predict_mlp(target)
     return pandas_to_json(prediction, r2)
-
-
-def test_regression():
-    predictions, r2 = ml.predict_longevity()
-    return pandas_to_json(predictions, r2)
 
 
 # Decision tree
@@ -113,6 +111,13 @@ def dt_target_prediction():
     prediction, r2 = ml.target_predict_longevity(target)
     result = pandas_to_json(prediction, r2)
     return result
+
+
+# Linear regression
+def linear_target_prediction():
+    target = dth.load_dataframe(dth.Path.path + 'test.csv')
+    prediction, r2 = ml.target_predict_linear(target)
+    return pandas_to_json(prediction, r2)
 
 
 # TODO deprecated

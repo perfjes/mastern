@@ -11,10 +11,10 @@ $(document).ready(function() {
         // figure out how
     });
 
-    $('#regress').click(function() {
+    $('#linear').click(function() {
         loading();
         $('.result_element').remove();
-        $.getJSON('../../regress', function(data) {
+        $.getJSON('../../linear', function(data) {
             $('#r2button').show();
             updateTable(data, reg);
             $('#resultheader').text('Results - Training the model');
@@ -43,10 +43,10 @@ $(document).ready(function() {
         });
     });
 
-    $('#target').click(function() {
+    $('#dt').click(function() {
         loading();
         $('.result_element').remove();
-        $.getJSON('../../target', function(data) {
+        $.getJSON('../../dt', function(data) {
             $('#data').show();
             $('#r2button').show();
             updateTable(data, clas);

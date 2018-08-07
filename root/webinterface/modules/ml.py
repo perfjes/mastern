@@ -1,7 +1,8 @@
 import itertools
 
 from sklearn.tree import DecisionTreeRegressor
-from sklearn.neural_network import multilayer_perceptron as mlp
+from sklearn.linear_model import LinearRegression
+from sklearn.neural_network.multilayer_perceptron import MLPRegressor
 from sklearn.model_selection import train_test_split, GridSearchCV
 import pandas as pd
 from sklearn import metrics
@@ -45,64 +46,6 @@ def split_dataset_into_train_test(dataframe, column):
         x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.35)
 
     return x_train, x_test, y_train, y_test
-
-
-# Function for predicting the longevity of test set. Modify this to work on a singular entry (as with the target
-# regress).
-def predict_longevity():
-    x_train, x_test, y_train, y_test, regressor = validate_or_create_regressor('dt-regressor.sav')
-    y_prediction = regressor.predict(x_test)
-
-    result = pd.DataFrame({'Actual': y_test, 'Predicted': y_prediction})
-
-    # Reshape the arrays to work with R2 score validator1
-    y_true = y_test.values.reshape(-1, 1)
-    y_pred = y_prediction.reshape(-1, 1)
-    r2 = metrics.r2_score(y_true, y_pred)
-
-    png = graph.save_regression_scatter_as_png(regressor, y_test, y_prediction)
-
-    return result, r2
-
-
-# Function for predicting the longevity of a single sample - given the training/testing dataset and a new CSV file
-# containing the exact same features as the training/testing set.
-def target_predict_longevity(target, recalibrate=False):
-
-    # For each parameter value range, multiply that value with the next and the next and so on, split the result by:
-    # i7-3770k at 4.8GHz - divide by 136 to get the seconds required to run the test.
-    parameters = {
-        # 'criterion': ('mse', 'friedman_mse', 'mae'),
-        'splitter': ('best', 'random'),
-        'max_depth': range(1, 4),
-        'min_samples_split':  range(10, 13),  # iterates from 0.01 to 0.99
-        'max_leaf_nodes': range(2, 5),
-        'min_impurity_decrease': (0.0, 0.01, 0.02, 0.04),
-        'presort': (True, False)
-    }
-
-    target = prune_features(target)
-    df = prune_features(dth.Data.dataframe)
-
-    x_train, x_test, y_train, y_test = split_dataset_into_train_test(df, 'years in vivo')
-    regressor = GridSearchCV(DecisionTreeRegressor(random_state=33), parameters, refit=True)
-    regressor.fit(x_train, y_train)
-
-    # TODO for use with random_state=none
-    # while regressor.best_score_ < 0.29:
-    #    print('recalibrating')
-    #    regressor = GridSearchCV(DecisionTreeRegressor(), parameters, refit=True)
-    #    regressor.fit(x_train, y_train)
-
-    target_pred = target.drop('years in vivo', axis=1)
-    y_prediction = regressor.predict(target_pred)
-
-    print(regressor.best_params_)
-    print('R2 is: ' + str(regressor.best_score_))
-
-    dth.save_file('DTregressorbestparams.sav', regressor.best_params_)
-
-    return pd.DataFrame({'Actual': target['years in vivo'], 'Predicted': y_prediction}), regressor.best_score_
 
 
 def float_test():
@@ -154,34 +97,72 @@ def update_regression_model(filename, x_train, y_train):
         print('Wrong filetype?')
 
 
-def mlp_regressor(target):
-    # According to the dataset I've been given, these are the best parameters for MLP
-    # activation='logistic', alpha=0.0001, early_stopping=True, hidden_layer_sizes=(50, 40, 60, 80), solver='lbfgs,
-    # max_iter=195'
-
-    # - hidden_layer_sizes=(50, 40, 60, 80) when full unprocessed dataset
-    # - hidden_layer_sizes=(50, 50, 70, 60) for processed (pruned) dataset
-
-    parameters = {
-        # 'hidden_layer_sizes': [x for x in itertools.product((10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60), repeat=1)],
-        # 'hidden_layer_sizes': [x for x in itertools.product((10, 20, 25, 30, 40, 45, 50, 55, 60), repeat=2)],
-        # 'hidden_layer_sizes': [x for x in itertools.product((30, 40, 50, 60, 70, 80), repeat=4)],
-        # 'activation': ('identity', 'logistic', 'tanh', 'relu'),
-        # 'max_iter': range(150, 300),
-        # 'alpha': (0.0000, 0.0001, 0.0002, 0.0003, 0.0004, 0.0005, 0.0006, 0.0007),
-        # 'early_stopping': (True, False)
-    }
-
+# Function for predicting the longevity of a single sample - given the training/testing dataset and a new CSV file
+# containing the exact same features as the training/testing set.
+def target_predict_decision_tree(target, recalibrate=False):
     target = prune_features(target)
     df = prune_features(dth.Data.dataframe)
-
     x_train, x_test, y_train, y_test = split_dataset_into_train_test(df, 'years in vivo')
-    regressor = GridSearchCV(mlp.MLPRegressor(activation='logistic', early_stopping=True, alpha=0.0001,
-                                              hidden_layer_sizes=(50, 50, 70, 60), solver='lbfgs', max_iter=195,
-                                              random_state=33), parameters)
+    target_pred = target.drop('years in vivo', axis=1)
+
+    # For each parameter value range, multiply that value with the next and the next and so on, split the result by:
+    # i7-3770k at 4.8GHz - divide by 136 to get the seconds required to run the test.
+    if recalibrate:
+        parameters = {
+            # 'criterion': ('mse', 'friedman_mse', 'mae'),
+            'splitter': ('best', 'random'),
+            'max_depth': range(1, 4),
+            'min_samples_split': range(10, 13),  # iterates from 0.01 to 0.99
+            'max_leaf_nodes': range(2, 5),
+            'min_impurity_decrease': (0.0, 0.01, 0.02, 0.04),
+            'presort': (True, False)
+        }
+        regressor = GridSearchCV(DecisionTreeRegressor(), parameters, refit=True)
+    else:
+        regressor = DecisionTreeRegressor()
+
     regressor.fit(x_train, y_train)
 
+    y_prediction = regressor.predict(target_pred)
+
+    print(regressor.best_params_)
+    print('R2 is: ' + str(regressor.best_score_))
+
+    dth.save_file('DTregressorbestparams.sav', regressor.best_params_)
+
+    return pd.DataFrame({'Actual': target['years in vivo'], 'Predicted': y_prediction}), regressor.best_score_
+
+
+def target_predict_mlp(target, recalibrate=False):
+    target = prune_features(target)
+    df = prune_features(dth.Data.dataframe)
+    x_train, x_test, y_train, y_test = split_dataset_into_train_test(df, 'years in vivo')
     target_pred = target.drop('years in vivo', axis=1)
+
+    if recalibrate:
+        # According to the dataset I've been given, these are the best parameters for MLP
+        # activation='logistic', alpha=0.0001, early_stopping=True, hidden_layer_sizes=(50, 40, 60, 80), solver='lbfgs,
+        # max_iter=195'
+
+        # - hidden_layer_sizes=(50, 40, 60, 80) when full unprocessed dataset
+        # - hidden_layer_sizes=(50, 50, 70, 60) for processed (pruned) dataset
+        parameters = {
+            # 'hidden_layer_sizes': [x for x in itertools.product((10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60), repeat=1)],
+            # 'hidden_layer_sizes': [x for x in itertools.product((10, 20, 25, 30, 40, 45, 50, 55, 60), repeat=2)],
+            # 'hidden_layer_sizes': [x for x in itertools.product((30, 40, 50, 60, 70, 80), repeat=4)],
+            'activation': ('identity', 'logistic', 'tanh', 'relu'),
+            'max_iter': range(150, 300),
+            'alpha': (0.0000, 0.0001, 0.0002, 0.0003, 0.0004, 0.0005, 0.0006, 0.0007),
+            'early_stopping': (True, False)
+        }
+        regressor = GridSearchCV(MLPRegressor(activation='logistic', early_stopping=True, alpha=0.0001,
+                                              hidden_layer_sizes=(50, 50, 70, 60), solver='lbfgs', max_iter=195,
+                                              random_state=33), parameters)
+    else:
+        regressor = MLPRegressor(activation='logistic', early_stopping=True, alpha=0.0001,
+                                     hidden_layer_sizes=(50, 50, 70, 60), solver='lbfgs', max_iter=195, random_state=33)
+
+    regressor.fit(x_train, y_train)
     prediction = regressor.predict(target_pred)
 
     # graph.save_regression_scatter_as_png(regressor, y_test, prediction)
@@ -192,6 +173,36 @@ def mlp_regressor(target):
     dth.save_file('mlpbestscorefullparams.sav', regressor.best_params_)
 
     return pd.DataFrame({'Actual': target['years in vivo'], 'Predicted': prediction}), regressor.best_score_
+
+
+def target_predict_linear(target, recalibrate=False):
+
+    parameters = {
+
+    }
+
+    target = prune_features(target)
+    df = prune_features(dth.Data.dataframe)
+
+    x_train, x_test, y_train, y_test = split_dataset_into_train_test(df, 'years in vivo')
+    regressor = GridSearchCV(DecisionTreeRegressor(random_state=33), parameters, refit=True)
+    regressor.fit(x_train, y_train)
+
+    # TODO for use with random_state=none
+    # while regressor.best_score_ < 0.29:
+    #    print('recalibrating')
+    #    regressor = GridSearchCV(DecisionTreeRegressor(), parameters, refit=True)
+    #    regressor.fit(x_train, y_train)
+
+    target_pred = target.drop('years in vivo', axis=1)
+    y_prediction = regressor.predict(target_pred)
+
+    print(regressor.best_params_)
+    print('R2 is: ' + str(regressor.best_score_))
+
+    dth.save_file('DTregressorbestparams.sav', regressor.best_params_)
+
+    return pd.DataFrame({'Actual': target['years in vivo'], 'Predicted': y_prediction}), regressor.best_score_
 
 
 def prune_features(df):
