@@ -114,12 +114,16 @@ def target_predict_decision_tree(target, recalibrate=False):
             'criterion': ('mse', 'friedman_mse', 'mae'),
             'splitter': ('best', 'random'),
             'max_depth': range(1, 7),
-            'min_samples_split': range(7, 18),  # iterates from 0.01 to 0.99
+            'min_samples_split': range(3, 9),  # TODO need to make more iterations with less vlaues
             'max_leaf_nodes': range(2, 8),
-            'min_impurity_decrease': (0.0, 0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.1, 0.11, 0.12, 0.13, 0.14),
+            'min_impurity_decrease': (0.0, 0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.1, 0.11, 0.12, 0.13,
+                                       0.14),
             'presort': (True, False),
             # 'random_state': range(0, 101)
         }
+        # 'criterion': 'mae', 'max_depth': 1, 'max_leaf_nodes': 2, 'min_impurity_decrease': 0.0, 'min_samples_split': 7, 'presort': True, 'splitter': 'random' randomstate 48
+        # 'criterion': 'mse', 'max_depth': 1, 'max_leaf_nodes': 3, 'min_impurity_decrease': 0.0, 'min_samples_split': 11, 'presort': True, 'splitter': 'random' randomstate 33
+        # {'criterion': 'mae', 'max_depth': 1, 'max_leaf_nodes': 2, 'min_impurity_decrease': 0.0, 'min_samples_split': 3, 'presort': True, 'splitter': 'random'} - 22 score, 48 random
         regressor = GridSearchCV(DecisionTreeRegressor(random_state=48), parameters, refit=True)
     else:
         regressor = validate_or_create_regressor('dt-regressor.sav')
