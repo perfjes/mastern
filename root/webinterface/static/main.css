@@ -118,6 +118,9 @@ body {
 }
 
 #features {
+    -webkit-columns: 2;
+       -moz-columns: 2;
+            columns: 2;
     width: -webkit-fit-content;
     width: -moz-fit-content;
     width: fit-content;
@@ -129,6 +132,7 @@ body {
 
 #features li {
     padding: 5px;
+    margin: 5px 15px;
 }
 
 /****************************** RESULTS ******************************/

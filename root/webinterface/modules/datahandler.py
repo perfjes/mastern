@@ -12,6 +12,15 @@ class Path:
     pickle_split = '%s%s' % (ROOT_DIRECTORY, r'/data/split.pkl')
 
 
+class Features:
+    drop_features_regression = ['id', 'cupx', 'cupy', 'volwear', 'volwearrate', 'cupx', 'cupy']
+    """
+        List of all features in the dataset
+        'id', 'case', 'cuploose', 'stemloose', 'years in vivo', 'cr', 'co', 'zr', 'ni', 'mb', 'linwear', 'linwearrate', 
+        'volwear', 'volwearrate', 'inc', 'ant', 'cupx', 'cupy', 'male', 'female'
+    """
+
+
 # ---------- OBJECT SAVING AND LOADING ----------
 # TODO - implement error handling on save/load, make sure values are correct etc
 # Autosaves the dataframe to pickle
@@ -115,6 +124,7 @@ def load_dataframe(path):
     # replace the original columns with the refactored ones.
     data = pd.read_csv(file, sep=',', encoding='utf-8')
     data = data.rename(str.lower, axis='columns')
+
     if 'sex' in data:
         refactored_columns = pd.get_dummies(data['sex'])
         refactored_columns = refactored_columns.rename(columns={1.0: 'male', 2.0: 'female'})
@@ -123,6 +133,8 @@ def load_dataframe(path):
 
     if 'id' in data:
         data = data.drop('id', axis=1)
+
+    data = prune_features(data)
 
     # Fill in the blanks (with mean values for the mean time)
     if data.isnull().values.any():
@@ -157,3 +169,10 @@ def load_pickle_file(file):
     else:
         print('The file couldn\'t be loaded')
         return None
+
+
+def prune_features(df):
+    for feature in Features.drop_features_regression:
+        if feature in df:
+            df = df.drop(feature, axis=1)
+    return df

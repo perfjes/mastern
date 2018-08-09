@@ -33,15 +33,23 @@
             <section id="results">
                 <section id="data">
                     <h1 id="resultheader"></h1>
+
                     <button id="r2button"> R2 score </button>
                     <div id="r2info"> You shouldn't be able to see this. </div>
+
                     <img src="../static/img/load.gif" id="loadinggif" title="Loading"/>
+
                     <table id="results_table">
-                        {{ data | safe }}
-                        {{ r2 | safe }}
+
                     </table>
+
+                    <p id="best"></p>
+                    <p id="worst"></p>
+                    <p id="mean"></p>
+
                     <p id="savestatus"></p>
                     <p id="resultcontext"></p>
+
                     <ul id="features" class="feature"></ul>
                     <button type="button" id="saveFeatures" class="button feature"> Save </button>
                 </section>

@@ -1,9 +1,8 @@
 import os
+import statistics
+import pandas as pd
 import time
-from os.path import dirname
-
 from flask import Flask, render_template, request, redirect, url_for, flash, send_from_directory
-from wtforms import Form, TextField, validators
 from werkzeug.utils import secure_filename
 from modules import datahandler, ml
 import json
@@ -18,11 +17,15 @@ dth.Data.dataframe = dth.load_dataframe(path)
 # Web app
 app = Flask(__name__)
 
+# Testing
+r2results = []
+prediction_results_list = []
+
 
 class Data:
     original_features = list(dth.Data.dataframe)
     selected_features = original_features
-    recalibrate = True
+    recalibrate = False
 
 
 # TODO add functionality for user input when saving filename - also some kind of "did you just save" check to keep
@@ -30,6 +33,7 @@ class Data:
 @app.route('/save', methods=['GET', 'POST'])
 def save_dataframe_as_new():
     return save_new_dataframe()
+# TODO maybe just remove this :)
 
 
 @app.route('/mlp', methods=['GET'])
@@ -92,33 +96,76 @@ def select_features():
     if request.method == 'GET':
         return feature_selector()
     elif request.method == 'POST':
-
-        features = request.form.getlist('input')
-        print(features)
+        features = request.form.getlist('ff')
+        print('Features that are saved', features)
         return update_features(features)
     pass
 
 
-# Multi-Layer Perceptron
-def mlp_target_prediction():
-    target = dth.load_dataframe(dth.Path.path + 'test.csv')
-    prediction, r2 = ml.target_predict_mlp(target, Data.recalibrate)
-    return pandas_to_json(prediction, r2)
-
-
+# TODO implement multiple runs if recalibrate is turned off - gather results of each run, present
+# best/worst/mean/standard deviation
 # Decision tree
 def dt_target_prediction():
+    prediction_results_list.clear()
     target = dth.load_dataframe(dth.Path.path + 'test.csv')
-    prediction, r2 = ml.target_predict_decision_tree(target, Data.recalibrate)
-    result = pandas_to_json(prediction, r2)
+    if not Data.recalibrate:
+        for x in range(500):
+            prediction_result, r2 = ml.target_predict_decision_tree(target, Data.recalibrate)
+            prediction = pd.DataFrame({'Actual': target['years in vivo'], 'Predicted': prediction_result})
+            result = pandas_to_json(prediction, r2)
+            prediction_results_list.append(float(prediction_result))
+    else:
+        prediction, r2 = ml.target_predict_decision_tree(target, Data.recalibrate)
+        result = pandas_to_json(prediction, r2)
+
+    # print(sorted(prediction_results_list))
+    get_processed_list_of_predictions(prediction_results_list)
+    return result
+
+
+# Multi-Layer Perceptron
+def mlp_target_prediction():
+    prediction_results_list.clear()
+    target = dth.load_dataframe(dth.Path.path + 'test.csv')
+    if not Data.recalibrate:
+        for x in range(50):
+            prediction_result, r2 = ml.target_predict_mlp(target, Data.recalibrate)
+            prediction = pd.DataFrame({'Actual': target['years in vivo'], 'Predicted': prediction_result})
+            result = pandas_to_json(prediction, r2)
+            prediction_results_list.append(float(prediction_result))
+    else:
+        prediction, r2 = ml.target_predict_mlp(target, Data.recalibrate)
+        result = pandas_to_json(prediction, r2)
+
+    # print(sorted(prediction_results_list))
+    get_processed_list_of_predictions(prediction_results_list)
     return result
 
 
 # Linear regression
 def linear_target_prediction():
+    prediction_results_list.clear()
     target = dth.load_dataframe(dth.Path.path + 'test.csv')
-    prediction, r2 = ml.target_predict_linear(target, Data.recalibrate)
-    return pandas_to_json(prediction, r2)
+    if not Data.recalibrate:
+        for x in range(500):
+            prediction_result, r2 = ml.target_predict_linear(target, Data.recalibrate)
+            prediction = pd.DataFrame({'Actual': target['years in vivo'], 'Predicted': prediction_result})
+            result = pandas_to_json(prediction, r2)
+            prediction_results_list.append(float(prediction_result))
+    else:
+        prediction, r2 = ml.target_predict_linear(target, Data.recalibrate)
+        result = pandas_to_json(prediction, r2)
+
+    # print(sorted(prediction_results_list))
+    get_processed_list_of_predictions(prediction_results_list)
+    return result
+
+
+def get_processed_list_of_predictions(results):
+    print('Standard deviation: ', statistics.stdev(results))
+    print('Maximum years: ', max(results))
+    print('Minimum years: ', min(results))
+    print('Average years: ', statistics.mean(results))
 
 
 # TODO deprecated
@@ -133,35 +180,42 @@ def save_new_dataframe():
 
 
 def feature_selector():
-    html_list = ['<form>']
+    html_list = ['<form name="feats" action="/features" methods="POST">']
     for feature in Data.original_features:
-        if feature in Data.selected_features:
-            html_list.append('<li><input type="checkbox" class="feat" id="' + feature + '" checked="checked"/>' +
-                             feature + '</li>')
-        else:
-            html_list.append('<li><input type="checkbox" class="feat" id="' + feature + '"/>' + feature + '</li>')
+        if feature != 'case' and feature != 'years in vivo':
+            if feature in Data.selected_features:
+                html_list.append('<li><input type="checkbox" name="ff" class="feat" value="' + feature + '" checked="checked"/>' +
+                        feature + '</li>')
+            else:
+                html_list.append('<li><input type="checkbox" name="ff" class="feat" value="' + feature + '"/>' + feature + '</li>')
     html_list.append('</form>')
+
     return " ".join(html_list)
 
 
 def update_features(features):
-
-    return features
+    Data.selected_features = features
+    for feature in Data.original_features:
+        if feature in Data.selected_features and feature in dth.Features.drop_features_regression:
+            dth.Features.drop_features_regression.remove(feature)
+        if feature != 'case' and feature != 'years in vivo':
+            if feature not in Data.selected_features and feature not in dth.Features.drop_features_regression:
+                dth.Features.drop_features_regression.append(feature)
+    print('Drop features: ', dth.Features.drop_features_regression)
+    dth.Data.dataframe = dth.load_dataframe('df.csv')
+    print('Dataframe columns: ', list(dth.Data.dataframe))
+    return feature_selector()
 
 
 # Turns a Pandas dataframe into a dict, then returns a properly formatted JSON string
 def pandas_to_json(dataframe, r2score=2):
     if r2score != 2:
         json_result = {'r2': r2score}
-        table_data = [dict([(column, row[i]) for i, column in enumerate(dataframe.columns)]) for row in
-                      dataframe.values]
-        json_result['result'] = table_data
-        return json.dumps(json_result)
-    else:
-        table_data = [dict([(column, row[i]) for i, column in enumerate(dataframe.columns)]) for row in
-                      dataframe.values]
-        json_result = {'result': table_data}
-        return json.dumps(json_result)
+
+    table_data = [dict([(column, row[i]) for i, column in enumerate(dataframe.columns)]) for row in
+                  dataframe.values]
+    json_result = {'result': table_data}
+    return json.dumps(json_result)
 
 
 # Attempt at fixing Chrome overaggressive caching

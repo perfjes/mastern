@@ -14,7 +14,7 @@ $(document).ready(function() {
     $('#linear').click(function() {
         loading();
         $('.result_element').remove();
-        $.getJSON('../../linear', function(data) {
+        $.getJSON('/linear', function(data) {
             $('#r2button').show();
             updateTable(data, reg);
             $('#resultheader').text('Results - Training the model');
@@ -30,7 +30,7 @@ $(document).ready(function() {
     $('#mlp').click(function() {
         loading();
         $('.result_element').remove();
-        $.getJSON('../../mlp', function(data) {
+        $.getJSON('/mlp', function(data) {
             $('#data').fadeIn();
             $('#r2button').show();
             updateTable(data, reg);
@@ -46,7 +46,7 @@ $(document).ready(function() {
     $('#dt').click(function() {
         loading();
         $('.result_element').remove();
-        $.getJSON('../../dt', function(data) {
+        $.getJSON('/dt', function(data) {
             $('#data').show();
             $('#r2button').show();
             updateTable(data, clas);
@@ -60,7 +60,7 @@ $(document).ready(function() {
     $('#featurebtn').click(function() {
         clearTable();
         loading();
-        $.get('../../features', function(input) {
+        $.get('/features', function(input) {
             $('#features').append(input);
             $('#resultheader').text('Dataset features');
             $('#resultcontext').text('These are the features of the dataset - each feature is a column that contains ' +
@@ -69,7 +69,6 @@ $(document).ready(function() {
             $('#loadinggif').hide();
             $('.feature').fadeIn();
         });
-
         /*  The original Save File function - deprecated for now
         $("#savestatus").load("../../save", function() {
             $('#data').fadeIn();
@@ -87,17 +86,27 @@ $(document).ready(function() {
         */
     });
 
+    $('#saveFeatures').click(function() {
+        $.each($('#feats'), function(feature) {
+            console.log(feature);
+            console.log(feature.attr('id'));
+        });
+        $.ajax({
+            url: '/features',
+            data: $('.feat').serialize(),
+            type: 'POST',
+            success: function(response) {
+                console.log(response);
+            },
+            error: function(response) {
+                console.log('Oh no, ' + response.valueOf());
+            }
+        })
+    });
+
     $('#r2button').click(function() {
         $('#r2info').fadeToggle();
     });
-
-    $('#saveFeatures').click(function() {
-        $.post('../../features', function(features) {
-            console.log('what' + features);
-        })
-    })
-
-
 });
 
 function updateTable(json, type) {
