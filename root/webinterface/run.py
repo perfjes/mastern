@@ -26,7 +26,7 @@ prediction_results_list = []
 class Data:
     original_features = list(dth.Data.dataframe)
     selected_features = original_features
-    recalibrate = True
+    recalibrate = False
 
 
 # TODO add functionality for user input when saving filename - also some kind of "did you just save" check to keep
@@ -208,7 +208,7 @@ def update_features(features):
     for feature in Data.original_features:
         if feature in Data.selected_features and feature in dth.Features.drop_features_regression:
             dth.Features.drop_features_regression.remove(feature)
-        if feature != 'years in vivo':
+        if feature != 'years in vivo' and feature != 'case':
             if feature not in Data.selected_features and feature not in dth.Features.drop_features_regression:
                 dth.Features.drop_features_regression.append(feature)
     print('Drop features: ', dth.Features.drop_features_regression)

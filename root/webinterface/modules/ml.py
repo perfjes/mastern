@@ -107,11 +107,11 @@ def target_predict_decision_tree(target, recalibrate=False, count=0):
 
     if recalibrate:
         parameters = {
-            # 'criterion': ('mse', 'friedman_mse', 'mae'),
+            'criterion': ('mse', 'friedman_mse', 'mae'),
             'splitter': ('best', 'random'),
             'max_depth': (3, 5, 8, 12, 16, 18, 22),
-            'min_samples_split': (4, 5, 6, 9, 11, 16, 21, 25),  # TODO need to make more iterations with less vlaues
-            'max_leaf_nodes': range(4, 15),
+            #'min_samples_split': (4, 5, 6, 9, 11, 16, 21, 25),  # TODO need to make more iterations with less vlaues
+            #'max_leaf_nodes': range(4, 15),
             # 'min_impurity_decrease': (0.0, 0.01, 0.02, 0.03, 0.05, 0.08, 0.12, 0.16, 0.2),
             'presort': (True, False),
             # 'random_state': range(0, 101)
@@ -134,9 +134,8 @@ def target_predict_decision_tree(target, recalibrate=False, count=0):
     r2_prediction = regressor.predict(x_test)
     prediction = regressor.predict(target_pred)
 
-    dth.Test_data.result_dt[str(count)] = {"R2": str(regressor.best_score_), "prediction": str(prediction[0]), "parameters": regressor.best_params_}
-    # {"\"R2\": {\"%s\"}, \"prediction\": {\"%s\"}" % (str(regressor.best_score_), str(prediction)): regressor.best_params_}
-
+    if recalibrate:
+        dth.Test_data.result_dt[str(count)] = {"R2": str(regressor.best_score_), "prediction": str(prediction[0]), "parameters": regressor.best_params_}
 
     if not recalibrate:
         y_true = y_test.values.reshape(-1, 1)
