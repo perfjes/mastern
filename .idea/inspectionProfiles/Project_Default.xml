@@ -20,6 +20,7 @@
       <option name="ignoredIdentifiers">
         <list>
           <option value="object.predict" />
+          <option value="root.webinterface.run.modules" />
         </list>
       </option>
     </inspection_tool>

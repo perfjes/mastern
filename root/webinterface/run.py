@@ -1,3 +1,4 @@
+import datetime
 import os
 import statistics
 import pandas as pd
@@ -25,7 +26,7 @@ prediction_results_list = []
 class Data:
     original_features = list(dth.Data.dataframe)
     selected_features = original_features
-    recalibrate = False
+    recalibrate = True
 
 
 # TODO add functionality for user input when saving filename - also some kind of "did you just save" check to keep
@@ -34,24 +35,6 @@ class Data:
 def save_dataframe_as_new():
     return save_new_dataframe()
 # TODO maybe just remove this :)
-
-
-@app.route('/mlp', methods=['GET'])
-def mlp_regressor():
-    start_time = time.time()
-    prediction_result = mlp_target_prediction()
-    end_time = (time.time() - start_time)
-    print('Runtime is: ' + str(end_time))
-    return prediction_result
-
-
-@app.route('/linear', methods=['GET'])
-def linear_regressor():
-    start_time = time.time()
-    prediction_result = linear_target_prediction()
-    end_time = (time.time() - start_time)
-    print('Runtime is: ' + str(end_time))
-    return prediction_result
 
 
 @app.route('/dt', methods=['GET', 'POST'])
@@ -78,6 +61,31 @@ def decision_tree_regressor():
     end_time = (time.time() - start_time)
     print('Runtime is: ' + str(end_time))
 
+    ts = time.time()
+    st = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d_%H-%M-%S')
+    dth.save_file(('results' + st + '.json'), dth.Test_data.result_dt)
+    params = dth.Test_data.result_dt
+    for res in params:
+        print('Run ' + str(res), params[res])
+
+    return prediction_result
+
+
+@app.route('/mlp', methods=['GET'])
+def mlp_regressor():
+    start_time = time.time()
+    prediction_result = mlp_target_prediction()
+    end_time = (time.time() - start_time)
+    print('Runtime is: ' + str(end_time))
+    return prediction_result
+
+
+@app.route('/linear', methods=['GET'])
+def linear_regressor():
+    start_time = time.time()
+    prediction_result = linear_target_prediction()
+    end_time = (time.time() - start_time)
+    print('Runtime is: ' + str(end_time))
     return prediction_result
 
 
@@ -109,17 +117,18 @@ def dt_target_prediction():
     prediction_results_list.clear()
     target = dth.load_dataframe(dth.Path.path + 'test.csv')
     if not Data.recalibrate:
-        for x in range(500):
+        for x in range(1500):
             prediction_result, r2 = ml.target_predict_decision_tree(target, Data.recalibrate)
             prediction = pd.DataFrame({'Actual': target['years in vivo'], 'Predicted': prediction_result})
             result = pandas_to_json(prediction, r2)
             prediction_results_list.append(float(prediction_result))
+        get_processed_list_of_predictions(prediction_results_list)
     else:
-        prediction, r2 = ml.target_predict_decision_tree(target, Data.recalibrate)
-        result = pandas_to_json(prediction, r2)
+        for x in range(5):  # FOR TESTING
+            prediction_result, r2 = ml.target_predict_decision_tree(target, Data.recalibrate, x)
+            prediction = pd.DataFrame({'Actual': target['years in vivo'], 'Predicted': prediction_result})
+            result = pandas_to_json(prediction, r2)
 
-    # print(sorted(prediction_results_list))
-    get_processed_list_of_predictions(prediction_results_list)
     return result
 
 
@@ -133,12 +142,12 @@ def mlp_target_prediction():
             prediction = pd.DataFrame({'Actual': target['years in vivo'], 'Predicted': prediction_result})
             result = pandas_to_json(prediction, r2)
             prediction_results_list.append(float(prediction_result))
+        get_processed_list_of_predictions(prediction_results_list)
     else:
-        prediction, r2 = ml.target_predict_mlp(target, Data.recalibrate)
+        prediction_result, r2 = ml.target_predict_mlp(target, Data.recalibrate)
+        prediction = pd.DataFrame({'Actual': target['years in vivo'], 'Predicted': prediction_result})
         result = pandas_to_json(prediction, r2)
 
-    # print(sorted(prediction_results_list))
-    get_processed_list_of_predictions(prediction_results_list)
     return result
 
 
@@ -149,19 +158,20 @@ def linear_target_prediction():
     if not Data.recalibrate:
         for x in range(500):
             prediction_result, r2 = ml.target_predict_linear(target, Data.recalibrate)
+            prediction_results_list.append(float(prediction_result))
             prediction = pd.DataFrame({'Actual': target['years in vivo'], 'Predicted': prediction_result})
             result = pandas_to_json(prediction, r2)
-            prediction_results_list.append(float(prediction_result))
+        get_processed_list_of_predictions(prediction_results_list)
     else:
-        prediction, r2 = ml.target_predict_linear(target, Data.recalibrate)
+        prediction_result, r2 = ml.target_predict_linear(target, Data.recalibrate)
+        prediction = pd.DataFrame({'Actual': target['years in vivo'], 'Predicted': prediction_result})
         result = pandas_to_json(prediction, r2)
 
-    # print(sorted(prediction_results_list))
-    get_processed_list_of_predictions(prediction_results_list)
     return result
 
 
 def get_processed_list_of_predictions(results):
+    print(results)
     print('Standard deviation: ', statistics.stdev(results))
     print('Maximum years: ', max(results))
     print('Minimum years: ', min(results))
@@ -198,7 +208,7 @@ def update_features(features):
     for feature in Data.original_features:
         if feature in Data.selected_features and feature in dth.Features.drop_features_regression:
             dth.Features.drop_features_regression.remove(feature)
-        if feature != 'case' and feature != 'years in vivo':
+        if feature != 'years in vivo':
             if feature not in Data.selected_features and feature not in dth.Features.drop_features_regression:
                 dth.Features.drop_features_regression.append(feature)
     print('Drop features: ', dth.Features.drop_features_regression)
@@ -209,12 +219,14 @@ def update_features(features):
 
 # Turns a Pandas dataframe into a dict, then returns a properly formatted JSON string
 def pandas_to_json(dataframe, r2score=2):
+    json_result = {}
     if r2score != 2:
-        json_result = {'r2': r2score}
+        json_result['r2'] = r2score
 
     table_data = [dict([(column, row[i]) for i, column in enumerate(dataframe.columns)]) for row in
                   dataframe.values]
-    json_result = {'result': table_data}
+    json_result['result'] = table_data
+
     return json.dumps(json_result)
 
 

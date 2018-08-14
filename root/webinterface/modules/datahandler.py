@@ -21,6 +21,9 @@ class Features:
     """
 
 
+class Test_data:
+    result_dt = {}
+
 # ---------- OBJECT SAVING AND LOADING ----------
 # TODO - implement error handling on save/load, make sure values are correct etc
 # Autosaves the dataframe to pickle
@@ -161,7 +164,7 @@ def save_file(file, item):
         pickle.dump(item, output_data)
 
 
-def load_pickle_file(file):
+def load_file(file):
     file = '%s%s' % (Path.path, file)
     if os.path.isfile(file):
         with open(file, 'rb') as input_data:

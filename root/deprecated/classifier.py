@@ -18,7 +18,7 @@ def classify(df):
     y = df['Case']
     x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=dth.Data.split)
 
-    classifier = dth.load_pickle_file('classifier.sav')
+    classifier = dth.load_file('classifier.sav')
     if classifier is None:
         classifier = DecisionTreeClassifier()
         classifier = classifier.fit(x_train, y_train)
