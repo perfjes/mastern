@@ -13,12 +13,13 @@ class Path:
 
 
 class Features:
-    drop_features_regression = ['id', 'cupx', 'cupy', 'volwear', 'volwearrate']
+    drop_features_regression = ['id', 'volwear', 'volwearrate']
     """
         List of all features in the dataset
         'id', 'case', 'cuploose', 'stemloose', 'years in vivo', 'cr', 'co', 'zr', 'ni', 'mb', 'linwear', 'linwearrate', 
         'volwear', 'volwearrate', 'inc', 'ant', 'cupx', 'cupy', 'male', 'female'
     """
+    initially_deactivated = ['zr', 'ni', 'mb', 'cupx', 'cupy']
 
 
 class Test_data:

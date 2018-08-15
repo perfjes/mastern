@@ -193,7 +193,7 @@ def feature_selector():
     html_list = ['<form name="feats" action="/features" methods="POST">']
     for feature in Data.original_features:
         if feature != 'case' and feature != 'years in vivo':
-            if feature in Data.selected_features:
+            if feature in Data.selected_features and feature not in dth.Features.initially_deactivated:
                 html_list.append('<li><input type="checkbox" name="ff" class="feat" value="' + feature + '" checked="checked"/>' +
                         feature + '</li>')
             else:
