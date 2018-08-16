@@ -8,7 +8,6 @@ from werkzeug.utils import secure_filename
 from modules import datahandler, ml
 import json
 
-
 # Module related variables
 dth = datahandler
 dth.Data.split = dth.load_split_value_from_pickle()
@@ -39,6 +38,8 @@ def index():
 @app.route('/save', methods=['GET', 'POST'])
 def save_dataframe_as_new():
     return save_new_dataframe()
+
+
 # TODO maybe just remove this :)
 
 
@@ -116,15 +117,22 @@ def select_features():
 def dt_target_prediction():
     prediction_results_list.clear()
     target = dth.load_dataframe(dth.Path.path + 'test.csv')
+
+    # FOR ACTUAL USE
     if not Data.recalibrate:
         for x in range(100):
             prediction_result, r2 = ml.target_predict_decision_tree(target, Data.recalibrate)
-            prediction = pd.DataFrame({'Actual': target['years in vivo'], 'Predicted': prediction_result})
-            result = pandas_to_json(prediction, r2)
+            r2 = float(r2)
             prediction_results_list.append(float(prediction_result))
+
+        prediction = pd.DataFrame(
+            {'Actual': target['years in vivo'], 'Predicted': statistics.mean(prediction_results_list)})
+        result = pandas_to_json(prediction, r2)
         get_processed_list_of_predictions(prediction_results_list)
+
+    # FOR TESTING
     else:
-        for x in range(5):  # FOR TESTING
+        for x in range(5):
             prediction_result, r2 = ml.target_predict_decision_tree(target, Data.recalibrate, x)
             prediction = pd.DataFrame({'Actual': target['years in vivo'], 'Predicted': prediction_result})
             result = pandas_to_json(prediction, r2)
@@ -139,9 +147,11 @@ def mlp_target_prediction():
     if not Data.recalibrate:
         for x in range(50):
             prediction_result, r2 = ml.target_predict_mlp(target, Data.recalibrate)
-            prediction = pd.DataFrame({'Actual': target['years in vivo'], 'Predicted': prediction_result})
-            result = pandas_to_json(prediction, r2)
             prediction_results_list.append(float(prediction_result))
+
+        prediction = pd.DataFrame(
+            {'Actual': target['years in vivo'], 'Predicted':statistics.mean(prediction_results_list)})
+        result = pandas_to_json(prediction, r2)
         get_processed_list_of_predictions(prediction_results_list)
     else:
         prediction_result, r2 = ml.target_predict_mlp(target, Data.recalibrate)
@@ -194,10 +204,12 @@ def feature_selector():
     for feature in Data.original_features:
         if feature != 'case' and feature != 'years in vivo':
             if feature in Data.selected_features and feature not in dth.Features.initially_deactivated:
-                html_list.append('<li><input type="checkbox" name="ff" class="feat" value="' + feature + '" checked="checked"/>' +
-                        feature + '</li>')
+                html_list.append(
+                    '<li><input type="checkbox" name="ff" class="feat" value="' + feature + '" checked="checked"/>' +
+                    feature + '</li>')
             else:
-                html_list.append('<li><input type="checkbox" name="ff" class="feat" value="' + feature + '"/>' + feature + '</li>')
+                html_list.append(
+                    '<li><input type="checkbox" name="ff" class="feat" value="' + feature + '"/>' + feature + '</li>')
     html_list.append('</form>')
 
     return " ".join(html_list)
@@ -218,7 +230,7 @@ def update_features(features):
 
 
 # Turns a Pandas dataframe into a dict, then returns a properly formatted JSON string
-def pandas_to_json(dataframe, r2score=2):
+def pandas_to_json(dataframe, r2score=2.0):
     json_result = {}
     if r2score != 2:
         json_result['r2'] = r2score

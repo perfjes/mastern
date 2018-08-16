@@ -188,13 +188,12 @@ function systemStatusBad() {
 }
 
 function displayImage() {
-    $('#graphs').show();
-    for(var i = 0; i < 3; i++){
-        var img = document.createElement('img');
-        img.setAttribute('src', '../static/img/graph.png');
-        img.setAttribute('class', 'graphImage');
-        document.getElementById('graphs').appendChild(img);
-    }
+    var img = document.createElement('img');
+    img.setAttribute('src', '../static/img/graph.png');
+    img.setAttribute('class', 'graphImage');
+    document.getElementById('graphs').appendChild(img);
+
+    $('#graphs').slideDown();
 
     /*
     var img = document.createElement('img');

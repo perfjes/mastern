@@ -303,12 +303,12 @@ body {
     border-radius: 5px;
     font-size: 1.2em;
     -webkit-box-shadow: 0 4px 6px 1px #b23000;
-            box-shadow: 0 4px 6px 1px #b23000;;
+            box-shadow: 0 4px 6px 1px #b23000;
 }
 
 /****************************** GRAPH IMAGES ******************************/
 
-#graphs {
+#graphFiller {
     -webkit-box-flex: 1;
             -ms-flex: 1;
                 flex: 1;
@@ -316,12 +316,21 @@ body {
     height: -webkit-fit-content;
     height: -moz-fit-content;
     height: fit-content;
+}
+
+#graphFiller h1 {
+    margin: 40px 25px;
+}
+
+#graphs {
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
     background: white;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
-    border: 5px #1e1e1e;
-    margin: 0 3px;
+    margin: 0 auto;
     font-family: 'Roboto', sans-serif;
 }
 
@@ -330,7 +339,7 @@ body {
 }
 
 .graphImage {
-    width: 90%;
-    height: auto;
-    margin: 0 auto 5% auto;
+    width: fit-content;
+    height: fit-content;
+    margin: 10px auto;
 }

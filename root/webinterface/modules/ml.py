@@ -141,7 +141,7 @@ def target_predict_decision_tree(target, recalibrate=False, count=0):
         r2_pred = r2_prediction.reshape(-1, 1)
         r2 = metrics.r2_score(y_true, r2_pred)
 
-    graph.generate_graph(y_test, r2_pred, 'Ant', 'Predicted longevity', 'Oh no')
+    graph.generate_graph(dth.Data.dataframe['years in vivo'], dth.Data.dataframe['inc'], 'years in vivo', 'inc', 'Clustering maybe?')
 
     return prediction, r2
     # return pd.DataFrame({'Actual': target['years in vivo'], 'Predicted': y_prediction}), r2

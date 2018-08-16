@@ -49,6 +49,7 @@ $(document).ready(function () {
             $('#resultcontext').text('The predicted \'years in vivo\' value represent the years that the implant is ' +
                 'predicted to last in the patient.');
             $('#loadinggif').hide();
+            displayImage();
         });
     });
 
@@ -123,7 +124,7 @@ function appendDataToTable(rowdata) {
 
 function clearTable() {
     $('#results').hide();
-    $('#graphs').hide();
+    $('#graphFiller').hide();
     $('#r2info').hide();
     $('#r2button').hide();
     $('.feature').hide();
@@ -148,13 +149,12 @@ function loading() {
 }
 
 function displayImage() {
-    $('#graphs').show();
-    for(var i = 0; i < 3; i++){
-        var img = document.createElement('img');
-        img.setAttribute('src', '../static/img/graph.png');
-        img.setAttribute('class', 'graphImage');
-        document.getElementById('graphs').appendChild(img);
-    }
+    var img = document.createElement('img');
+    img.setAttribute('src', '../static/img/graph.png');
+    img.setAttribute('class', 'graphImage');
+    document.getElementById('graphs').appendChild(img);
+
+    $('#graphFiller').fadeIn();
 
     /*
     var img = document.createElement('img');
