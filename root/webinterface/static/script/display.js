@@ -63,6 +63,7 @@ $(document).ready(function () {
                 $('#resultcontext').text('The predicted \'years in vivo\' value represent the years that the implant is ' +
                     'predicted to last in the patient.');
                 $('#loadinggif').hide();
+                displayImage();
             });
         }
     });

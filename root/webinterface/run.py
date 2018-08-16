@@ -29,6 +29,11 @@ class Data:
     recalibrate = False
 
 
+@app.route('/')
+def index():
+    return render_template('science.html')
+
+
 # TODO add functionality for user input when saving filename - also some kind of "did you just save" check to keep
 # TODO people from running scripts on this to save a billion copies and flooding the server
 @app.route('/save', methods=['GET', 'POST'])
@@ -94,11 +99,6 @@ def uploaded_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
 
-@app.route('/')
-def index():
-    return render_template('index.html')
-
-
 @app.route('/features', methods=['GET', 'POST'])
 def select_features():
     if request.method == 'GET':
@@ -117,7 +117,7 @@ def dt_target_prediction():
     prediction_results_list.clear()
     target = dth.load_dataframe(dth.Path.path + 'test.csv')
     if not Data.recalibrate:
-        for x in range(1500):
+        for x in range(100):
             prediction_result, r2 = ml.target_predict_decision_tree(target, Data.recalibrate)
             prediction = pd.DataFrame({'Actual': target['years in vivo'], 'Predicted': prediction_result})
             result = pandas_to_json(prediction, r2)

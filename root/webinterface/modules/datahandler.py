@@ -71,13 +71,6 @@ def load_split_value_from_pickle():
         return split
 
 
-# Class variables allow for mutation
-class Data():
-    dataframe = load_dataframe_from_pickle()
-    split = load_split_value_from_pickle()
-    target = pd.DataFrame()
-
-
 # In case the system should be able to mutate the data, then it should be able to not overwrite the existing
 # datasets. Parameter to be passed need be pandas dataframe.
 # TODO error handling
@@ -180,3 +173,10 @@ def prune_features(df):
         if feature in df:
             df = df.drop(feature, axis=1)
     return df
+
+
+# Class variables allow for mutation
+class Data:
+    dataframe = load_dataframe_from_pickle()
+    split = load_split_value_from_pickle()
+    target = pd.DataFrame()

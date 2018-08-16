@@ -4,7 +4,6 @@ from sklearn.tree import DecisionTreeRegressor
 from sklearn.linear_model import LinearRegression
 from sklearn.neural_network.multilayer_perceptron import MLPRegressor
 from sklearn.model_selection import train_test_split, GridSearchCV
-import pandas as pd
 from sklearn import metrics
 from modules import datahandler, graph_factory
 
@@ -142,6 +141,8 @@ def target_predict_decision_tree(target, recalibrate=False, count=0):
         r2_pred = r2_prediction.reshape(-1, 1)
         r2 = metrics.r2_score(y_true, r2_pred)
 
+    graph.generate_graph(y_test, r2_pred, 'Ant', 'Predicted longevity', 'Oh no')
+
     return prediction, r2
     # return pd.DataFrame({'Actual': target['years in vivo'], 'Predicted': y_prediction}), r2
 
@@ -220,6 +221,6 @@ def target_predict_linear(target, recalibrate=False):
         r2_pred = r2_prediction.reshape(-1, 1)
         r2 = metrics.r2_score(y_true, r2_pred)
 
-    # graph_factory.save_regression_scatter_as_png(df['years in vivo'], y_prediction)
+    # graph_factory.generate_graph(df['years in vivo'], y_prediction)
 
     return prediction, r2

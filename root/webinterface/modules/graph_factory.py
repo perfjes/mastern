@@ -13,13 +13,15 @@ file_type = '.png'
 
 # TODO add functionality for multiple images being created without overwriting existing ones
 # TODO stop programming python like it's Java
-def save_regression_scatter_as_png(data1, data2, regressor=None):
+def generate_graph(x_data, y_data, x_label, y_label, title):
     file = '%s%s%s%s' % (dirname(dirname(path)), '/webinterface/static/img/', file_name, file_type)
     if os.path.isfile(file):
         os.remove(file)
-    plt.scatter(data1, data2)
-    plt.xlabel('True vivos')
-    plt.ylabel('Predictivivos')
+
+    plt.scatter(x_data, y_data, color='#b23000')
+    plt.xlabel(x_label)
+    plt.ylabel(y_label)
+    plt.title(title)
     plt.savefig(file)
     plt.clf()
 
@@ -29,28 +31,14 @@ def save_regression_scatter_as_png(data1, data2, regressor=None):
         return False
 
 
-# DEPRECATED (still want the code for reference though)
-def graph_factory(classifier):
-    from sklearn import tree
+def generate_line_plot_confidence_intervals(x_data, y_data, x_label, y_label, title):
+    _, ax = plt.subplots()
+    ax.plot(x_data, y_data, lw=2, color='#b23000', alpha=1)
 
-    dot_data = tree.export_graphviz(classifier,
-                                    feature_names=list(dth.Data.dataframe.drop('Case', axis=1)),
-                                    out_file=None,
-                                    filled=True,
-                                    rounded=True)
-    graph = pydotplus.graph_from_dot_data(dot_data)
+    # Label the axes and provide a title
+    ax.set_title(title)
+    ax.set_xlabel(x_label)
+    ax.set_ylabel(y_label)
 
-    colors = ('turquoise', 'orange')
-    edges = collections.defaultdict(list)
-
-    for edge in graph.get_edge_list():
-        edges[edge.get_source()].append(int(edge.get_destination()))
-
-    for edge in edges:
-        edges[edge].sort()
-        for i in range(2):
-            dest = graph.get_node(str(edges[edge][i]))[0]
-            dest.set_fillcolor(colors[i])
-    save_file = '%s%s' % (path, 'tree.png')
-    graph.write_png(save_file)
-    return graph
+    plt.savefig(ax)
+    plt.clf()  # Clears figure
