@@ -121,7 +121,7 @@ def dt_target_prediction():
     # FOR ACTUAL USE
     if not Data.recalibrate:
         for x in range(100):
-            prediction_result, r2 = ml.target_predict_decision_tree(target, Data.recalibrate)
+            prediction_result, r2, graphs = ml.target_predict_decision_tree(target, Data.recalibrate)
             r2 = float(r2)
             prediction_results_list.append(float(prediction_result))
 
@@ -146,7 +146,7 @@ def mlp_target_prediction():
     target = dth.load_dataframe(dth.Path.path + 'test.csv')
     if not Data.recalibrate:
         for x in range(50):
-            prediction_result, r2 = ml.target_predict_mlp(target, Data.recalibrate)
+            prediction_result, r2, _ = ml.target_predict_mlp(target, Data.recalibrate)
             prediction_results_list.append(float(prediction_result))
 
         prediction = pd.DataFrame(
@@ -167,7 +167,7 @@ def linear_target_prediction():
     target = dth.load_dataframe(dth.Path.path + 'test.csv')
     if not Data.recalibrate:
         for x in range(500):
-            prediction_result, r2 = ml.target_predict_linear(target, Data.recalibrate)
+            prediction_result, r2, _ = ml.target_predict_linear(target, Data.recalibrate)
             prediction_results_list.append(float(prediction_result))
             prediction = pd.DataFrame({'Actual': target['years in vivo'], 'Predicted': prediction_result})
             result = pandas_to_json(prediction, r2)
@@ -240,6 +240,10 @@ def pandas_to_json(dataframe, r2score=2.0):
     json_result['result'] = table_data
 
     return json.dumps(json_result)
+
+
+def populate_graph_section(graphs):
+
 
 
 # Attempt at fixing Chrome overaggressive caching

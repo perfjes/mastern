@@ -155,11 +155,4 @@ function displayImage() {
     document.getElementById('graphs').appendChild(img);
 
     $('#graphFiller').fadeIn();
-
-    /*
-    var img = document.createElement('img');
-    img.setAttribute('src', '../static/img/scatterplot.png');
-    img.setAttribute('class', 'graphImage');
-    document.getElementById('graphs').appendChild(img);
-    */
 }
