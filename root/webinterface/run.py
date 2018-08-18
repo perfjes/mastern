@@ -98,10 +98,13 @@ def select_features():
     pass
 
 
-@app.route('/updateTarget', methods=['POST'])
+@app.route('/updatetarget', methods=['GET', 'POST'])
 def update_features():
-    target = request.form.getlist('target')
-    pass
+    if request.method == 'POST':
+        target = request.form.getlist('target')
+        print(target)
+        return str(target)
+    return 'none'
 
 
 @app.route('/science')
@@ -188,7 +191,7 @@ def get_processed_list_of_predictions(results):
 
 # Populates a HTML page with a list of checkboxes containing the features (columns) from the dataset.
 def feature_selector():
-    html_list = ['<form name="feats" action="/features" methods="POST">']
+    html_list = ['<form name="feats" action="/features">']
     for feature in Data.original_features:
         if feature != 'case' and feature != 'years in vivo':
             if feature in Data.selected_features and feature not in dth.Features.initially_deactivated:

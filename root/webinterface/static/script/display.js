@@ -81,10 +81,6 @@ $(document).ready(function () {
     });
 
     $('#saveFeatures').click(function() {
-        $.each($('#feats'), function(feature) {
-            console.log(feature);
-            console.log(feature.attr('id'));
-        });
         $.ajax({
             url: '/features',
             data: $('.feat').serialize(),
@@ -103,6 +99,20 @@ $(document).ready(function () {
     $('#addtarget').click(function() {
         loading();
         enterPatientInfo();
+    });
+
+    $('#saveTarget').click(function() {
+        $.ajax({
+            url: '/updatetarget',
+            data: $('.patInfo').serialize(),
+            type: 'POST',
+            success: function(response) {
+                console.log(response);
+            },
+            error: function(response) {
+                console.log('Oh no, ' + response.valueOf());
+            }
+        });
     });
 
     $('#r2button').click(function() {

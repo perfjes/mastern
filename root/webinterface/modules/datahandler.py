@@ -166,6 +166,11 @@ def load_file(file):
         return None
 
 
+def create_csv_from_html_input(input_list):
+    # TODO create function to do this thing
+    pass
+
+
 def prune_features(df):
     for feature in Features.drop_features_regression:
         if feature in df:
