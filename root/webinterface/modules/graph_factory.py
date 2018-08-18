@@ -21,6 +21,7 @@ def generate_graph(x_data, y_data, x_label, y_label, title, filename):
     plt.title(title)
     plt.savefig(file)
     plt.clf()
+    return filename
 
 
 def generate_line_plot_confidence_intervals(x_data, y_data, x_label, y_label, title):

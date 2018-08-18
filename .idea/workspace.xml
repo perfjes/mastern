@@ -1,15 +1,94 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/root/webinterface/run.py" line="95" />
+    <bookmark url="file://$PROJECT_DIR$/root/webinterface/run.py" line="87" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3e93f87e-0a3c-431c-8be6-2f63de5c70bc" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/mastern.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/mastern.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/DTRegressionBestParams.sav" beforeDir="false" afterPath="$PROJECT_DIR$/root/data/DTRegressionBestParams.sav" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/db.csv" beforeDir="false" afterPath="$PROJECT_DIR$/root/data/db.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/df.csv" beforeDir="false" afterPath="$PROJECT_DIR$/root/data/df.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/dt-regressor.sav" beforeDir="false" afterPath="$PROJECT_DIR$/root/data/dt-regressor.sav" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/results2018-08-14_10-45-40.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/results2018-08-14_10-54-43.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/results2018-08-14_10-54-56.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/results2018-08-14_11-01-24.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/results2018-08-14_11-40-09.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/results2018-08-14_11-43-59.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/results2018-08-14_11-50-08.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/results2018-08-14_11-50-19.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/results2018-08-14_11-50-29.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/results2018-08-14_11-51-19.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/results2018-08-14_11-52-16.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/results2018-08-14_11-59-17.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/results2018-08-14_11-59-40.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/results2018-08-14_12-00-26.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/results2018-08-15_11-33-34.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/results2018-08-15_12-07-15.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/results2018-08-15_12-09-05.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/results2018-08-15_12-09-35.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/results2018-08-15_14-30-49.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/results2018-08-16_10-36-39.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/results2018-08-16_10-38-37.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/results2018-08-16_11-40-32.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/results2018-08-16_11-46-02.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/results2018-08-16_11-46-54.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/results2018-08-16_11-48-50.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/results2018-08-16_14-50-24.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/results2018-08-16_14-54-29.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/results2018-08-16_14-56-05.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/results2018-08-16_14-56-30.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/results2018-08-16_14-57-34.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/results2018-08-16_14-59-31.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/results2018-08-16_15-32-50.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/results2018-08-16_16-03-14.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/results2018-08-16_16-03-30.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/results2018-08-16_16-04-04.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/results2018-08-16_18-39-57.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/results2018-08-16_19-27-42.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/results2018-08-16_19-28-29.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/results2018-08-16_19-29-14.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/results2018-08-16_19-29-42.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/results2018-08-16_19-30-26.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/results2018-08-16_19-30-38.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/results2018-08-16_19-34-47.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/results2018-08-16_19-35-43.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/results2018-08-16_19-36-48.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/results2018-08-16_19-37-32.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/results2018-08-16_19-37-53.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/results2018-08-16_19-58-27.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/results2018-08-16_20-00-07.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/results2018-08-16_20-01-01.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/results2018-08-16_20-02-47.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/results2018-08-16_20-03-44.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/results2018-08-16_20-03-58.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/results2018-08-16_20-05-40.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/results2018-08-16_20-15-24.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/results2018-08-16_20-16-20.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/results2018-08-16_20-16-31.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/results2018-08-16_20-17-07.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/results2018-08-16_20-17-39.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/results2018-08-16_20-17-58.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/results2018-08-17_07-41-11.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/results2018-08-17_07-51-16.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/results2018-08-17_08-30-15.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/root/data/test.csv" beforeDir="false" afterPath="$PROJECT_DIR$/root/data/test.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/webinterface/modules/datahandler.py" beforeDir="false" afterPath="$PROJECT_DIR$/root/webinterface/modules/datahandler.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/root/webinterface/modules/graph_factory.py" beforeDir="false" afterPath="$PROJECT_DIR$/root/webinterface/modules/graph_factory.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/root/webinterface/modules/ml.py" beforeDir="false" afterPath="$PROJECT_DIR$/root/webinterface/modules/ml.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/root/webinterface/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/root/webinterface/run.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/webinterface/static/img/graph1.png" beforeDir="false" afterPath="$PROJECT_DIR$/root/webinterface/static/img/graph1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/webinterface/static/img/graph2.png" beforeDir="false" afterPath="$PROJECT_DIR$/root/webinterface/static/img/graph2.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/webinterface/static/img/graph3.png" beforeDir="false" afterPath="$PROJECT_DIR$/root/webinterface/static/img/graph3.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/webinterface/static/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/root/webinterface/static/main.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/webinterface/static/science.css" beforeDir="false" afterPath="$PROJECT_DIR$/root/webinterface/static/science.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/webinterface/static/script/display.js" beforeDir="false" afterPath="$PROJECT_DIR$/root/webinterface/static/script/display.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/root/webinterface/static/script/science.js" beforeDir="false" afterPath="$PROJECT_DIR$/root/webinterface/static/script/science.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/webinterface/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/root/webinterface/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/webinterface/templates/science.html" beforeDir="false" afterPath="$PROJECT_DIR$/root/webinterface/templates/science.html" afterDir="false" />
     </list>
     <ignored path="venv/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -28,51 +107,29 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="run.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="run.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/root/webinterface/run.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="372">
-              <caret line="226" column="34" lean-forward="true" selection-start-line="226" selection-start-column="34" selection-end-line="226" selection-end-column="34" />
-              <folding>
-                <element signature="e#0#15#0" expanded="true" />
-                <marker date="1534496393436" expanded="true" signature="8768:8772" ph="..." />
-              </folding>
+            <state relative-caret-position="374">
+              <caret line="102" column="41" selection-start-line="102" selection-start-column="41" selection-end-line="102" selection-end-column="41" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ml.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/root/webinterface/modules/ml.py">
+      <file leaf-file-name="main.css" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/root/webinterface/static/main.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="597">
-              <caret line="149" column="33" lean-forward="true" selection-start-line="149" selection-start-column="33" selection-end-line="149" selection-end-column="33" />
-              <folding>
-                <element signature="e#0#16#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="258">
+              <caret line="203" selection-start-line="203" selection-end-line="204" selection-end-column="13" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="graph_factory.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/root/webinterface/modules/graph_factory.py">
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/root/webinterface/templates/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="480">
-              <caret line="24" lean-forward="true" selection-start-line="24" selection-end-line="24" />
-              <folding>
-                <element signature="e#0#18#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="datahandler.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/root/webinterface/modules/datahandler.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3460">
-              <caret line="176" selection-start-line="176" selection-end-line="176" />
-              <folding>
-                <element signature="e#0#36#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="330">
+              <caret line="140" column="70" selection-start-line="140" selection-start-column="70" selection-end-line="140" selection-end-column="70" />
             </state>
           </provider>
         </entry>
@@ -80,17 +137,26 @@
       <file leaf-file-name="science.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/root/webinterface/templates/science.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="530">
-              <caret line="55" column="24" selection-start-line="55" selection-start-column="24" selection-end-line="57" selection-end-column="30" />
+            <state relative-caret-position="858">
+              <caret line="66" column="49" selection-start-line="66" selection-start-column="49" selection-end-line="66" selection-end-column="49" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="science.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/root/webinterface/static/science.css">
+      <file leaf-file-name="ml.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/root/webinterface/modules/ml.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="20">
-              <caret line="305" column="46" selection-start-line="305" selection-start-column="46" selection-end-line="305" selection-end-column="46" />
+            <state relative-caret-position="286">
+              <caret line="102" column="35" lean-forward="true" selection-start-line="102" selection-start-column="35" selection-end-line="102" selection-end-column="35" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="graph_factory.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/root/webinterface/modules/graph_factory.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="88">
+              <caret line="10" selection-start-line="10" selection-end-line="10" />
             </state>
           </provider>
         </entry>
@@ -98,8 +164,38 @@
       <file leaf-file-name="science.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/root/webinterface/static/script/science.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="711">
-              <caret line="155" lean-forward="true" selection-start-line="155" selection-end-line="155" />
+            <state relative-caret-position="22">
+              <caret line="124" column="23" selection-start-line="124" selection-start-column="23" selection-end-line="124" selection-end-column="23" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="display.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/root/webinterface/static/script/display.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="316">
+              <caret line="172" column="23" selection-start-line="172" selection-start-column="23" selection-end-line="172" selection-end-column="23" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="science.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/root/webinterface/static/science.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="242">
+              <caret line="168" column="16" selection-start-line="168" selection-start-column="16" selection-end-line="168" selection-end-column="16" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="datahandler.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/root/webinterface/modules/datahandler.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1804">
+              <caret line="85" column="42" selection-start-line="85" selection-start-column="42" selection-end-line="85" selection-end-column="42" />
+              <folding>
+                <element signature="e#0#36#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -192,16 +288,16 @@
         <option value="$PROJECT_DIR$/root/webinterface/static/alt.css" />
         <option value="$PROJECT_DIR$/root/deprecated/mainOrigin.css" />
         <option value="$PROJECT_DIR$/root/webinterface/static/main.sass" />
-        <option value="$PROJECT_DIR$/root/webinterface/static/main.css" />
+        <option value="$PROJECT_DIR$/root/webinterface/modules/graph_factory.py" />
         <option value="$PROJECT_DIR$/root/webinterface/modules/datahandler.py" />
-        <option value="$PROJECT_DIR$/root/webinterface/templates/index.html" />
+        <option value="$PROJECT_DIR$/root/webinterface/modules/ml.py" />
         <option value="$PROJECT_DIR$/root/webinterface/templates/science.html" />
         <option value="$PROJECT_DIR$/root/webinterface/static/science.css" />
-        <option value="$PROJECT_DIR$/root/webinterface/static/script/display.js" />
         <option value="$PROJECT_DIR$/root/webinterface/static/script/science.js" />
-        <option value="$PROJECT_DIR$/root/webinterface/modules/graph_factory.py" />
-        <option value="$PROJECT_DIR$/root/webinterface/modules/ml.py" />
         <option value="$PROJECT_DIR$/root/webinterface/run.py" />
+        <option value="$PROJECT_DIR$/root/webinterface/static/script/display.js" />
+        <option value="$PROJECT_DIR$/root/webinterface/templates/index.html" />
+        <option value="$PROJECT_DIR$/root/webinterface/static/main.css" />
       </list>
     </option>
   </component>
@@ -221,10 +317,10 @@
     <packageJsonPaths />
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="1036" />
-    <option name="y" value="-8" />
-    <option name="width" value="1936" />
-    <option name="height" value="1056" />
+    <option name="x" value="-10" />
+    <option name="y" value="-10" />
+    <option name="width" value="1940" />
+    <option name="height" value="1050" />
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -296,19 +392,19 @@
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\perni\Documents\mastern\root\webinterface\static" />
-      <recent name="C:\Users\perni\Documents\mastern\root\webinterface\templates" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Per-Niklas Longberg\Documents\mastern\root\webinterface\static" />
       <recent name="C:\Users\perni\Documents\mastern\root\deprecated" />
       <recent name="C:\Users\perni\Documents\mastern\root\webinterface\modules" />
       <recent name="C:\Users\perni\Documents\mastern\root\web_app" />
       <recent name="C:\Users\perni\Documents\mastern\root\webinterface" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\perni\Documents\mastern\root\webinterface\static" />
+      <recent name="C:\Users\perni\Documents\mastern\root\webinterface\templates" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -468,7 +564,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1912" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="5" />
@@ -476,26 +572,26 @@
       <window_info anchor="bottom" id="Database Changes" order="10" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.32965517" />
       <window_info anchor="bottom" id="Python Console" order="9" sideWeight="0.49938875" weight="0.32845894" />
-      <window_info anchor="bottom" id="Run" order="13" sideWeight="0.50183374" side_tool="true" weight="0.36887923" />
+      <window_info anchor="bottom" id="Run" order="13" sideWeight="0.5026846" side_tool="true" weight="0.36752138" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.32905984" />
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4856115" visible="true" weight="0.12473348" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4856115" visible="true" weight="0.13020134" />
       <window_info anchor="bottom" id="Docker" order="6" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="3" />
       <window_info anchor="right" id="SciView" order="4" sideWeight="0.49628055" weight="0.32877603" />
       <window_info id="Structure" order="1" sideWeight="0.5143885" side_tool="true" weight="0.13333334" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="2" sideWeight="0.4987775" weight="0.3975225" />
-      <window_info anchor="right" id="R Graphics" order="5" />
+      <window_info anchor="right" id="R Packages" order="6" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" visible="true" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="4" weight="0.4" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="Inspection Results" order="11" weight="0.32979852" />
-      <window_info anchor="right" id="R Packages" order="6" />
+      <window_info anchor="right" id="R Graphics" order="5" />
       <window_info anchor="right" x="0" y="0" width="434" height="856" id="Documentation" order="7" sideWeight="0.50371945" side_tool="true" weight="0.32916668" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="3" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49816626" weight="0.32094595" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49731544" weight="0.32051283" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -509,7 +605,7 @@
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="22" />
+      <option name="time" value="24" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
@@ -574,86 +670,76 @@
     <entry file="file://$PROJECT_DIR$/venv2/Lib/site-packages/flask/app.py" />
     <entry file="file://$PROJECT_DIR$/venv2/Lib/site-packages/sklearn/model_selection/_search.py" />
     <entry file="file://$PROJECT_DIR$/root/webinterface/static/main.sass" />
+    <entry file="file://$PROJECT_DIR$/root/webinterface/modules/graph_factory.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="88">
+          <caret line="10" selection-start-line="10" selection-end-line="10" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/root/webinterface/modules/datahandler.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3460">
-          <caret line="176" selection-start-line="176" selection-end-line="176" />
+        <state relative-caret-position="1804">
+          <caret line="85" column="42" selection-start-line="85" selection-start-column="42" selection-end-line="85" selection-end-column="42" />
           <folding>
             <element signature="e#0#36#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/root/webinterface/static/main.css">
+    <entry file="file://$PROJECT_DIR$/root/webinterface/static/script/science.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="660">
-          <caret line="33" column="29" selection-start-line="33" selection-start-column="23" selection-end-line="33" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/root/webinterface/templates/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1200">
-          <caret line="60" column="16" selection-start-line="60" selection-start-column="16" selection-end-line="63" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/root/webinterface/static/script/display.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1300">
-          <caret line="65" column="31" selection-start-line="65" selection-start-column="31" selection-end-line="65" selection-end-column="31" />
+        <state relative-caret-position="22">
+          <caret line="124" column="23" selection-start-line="124" selection-start-column="23" selection-end-line="124" selection-end-column="23" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/root/webinterface/static/science.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="20">
-          <caret line="305" column="46" selection-start-line="305" selection-start-column="46" selection-end-line="305" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/root/webinterface/templates/science.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="530">
-          <caret line="55" column="24" selection-start-line="55" selection-start-column="24" selection-end-line="57" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/root/webinterface/modules/graph_factory.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
-          <caret line="24" lean-forward="true" selection-start-line="24" selection-end-line="24" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="242">
+          <caret line="168" column="16" selection-start-line="168" selection-start-column="16" selection-end-line="168" selection-end-column="16" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/root/webinterface/modules/ml.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="597">
-          <caret line="149" column="33" lean-forward="true" selection-start-line="149" selection-start-column="33" selection-end-line="149" selection-end-column="33" />
-          <folding>
-            <element signature="e#0#16#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/root/webinterface/static/script/science.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="711">
-          <caret line="155" lean-forward="true" selection-start-line="155" selection-end-line="155" />
+        <state relative-caret-position="286">
+          <caret line="102" column="35" lean-forward="true" selection-start-line="102" selection-start-column="35" selection-end-line="102" selection-end-column="35" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/root/webinterface/run.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="372">
-          <caret line="226" column="34" lean-forward="true" selection-start-line="226" selection-start-column="34" selection-end-line="226" selection-end-column="34" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-            <marker date="1534496393436" expanded="true" signature="8768:8772" ph="..." />
-          </folding>
+        <state relative-caret-position="374">
+          <caret line="102" column="41" selection-start-line="102" selection-start-column="41" selection-end-line="102" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/root/webinterface/static/script/display.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="316">
+          <caret line="172" column="23" selection-start-line="172" selection-start-column="23" selection-end-line="172" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/root/webinterface/templates/science.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="858">
+          <caret line="66" column="49" selection-start-line="66" selection-start-column="49" selection-end-line="66" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/root/webinterface/templates/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="140" column="70" selection-start-line="140" selection-start-column="70" selection-end-line="140" selection-end-column="70" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/root/webinterface/static/main.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="258">
+          <caret line="203" selection-start-line="203" selection-end-line="204" selection-end-column="13" />
         </state>
       </provider>
     </entry>

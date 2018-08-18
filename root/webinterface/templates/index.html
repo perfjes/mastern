@@ -24,9 +24,7 @@
                 <div id="status">Website is loading (probably)</div>
 
                 <section id="input">
-                    <form id="buttons" method="post">
-                        <button type="button" id="start" class="button"> Start </button>
-                    </form>
+                    <button type="button" id="start" class="button"> Start </button>
                 </section>
             </div>
 
@@ -41,11 +39,109 @@
 
                     <section class="input">
                         <button type="button" id="featurebtn" class="button optional"> Select features (optional) </button>
+                        <button id="addtarget" class="button"> Enter patient information </button>
                         <button type="button" id="dt" class="button disabled"> Predict longevity </button>
                     </section>
                     <img src="../static/img/load.gif" id="loadinggif" title="Loading"/>
 
                     <table id="results_table"></table>
+
+                    <section id="patientInfoForm">
+                        <form action="/updateTarget">
+                            <div>
+                                <label for="case"> Case </label>
+                                <select id="case" name="target">
+                                    <option value="0"> Implant still there </option>
+                                    <option value="1"> Implant removed </option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label for="cuploose"> cupLoose </label>
+                                <select id="cuploose" name="target">
+                                    <option value="0"> No </option>
+                                    <option value="1"> Yes </option>
+                                </select>
+                            </div>
+
+                            <div>
+                            <label for="stemloose"> stemLoose </label>
+                                <select id="stemloose" name="target">
+                                    <option value="0"> No </option>
+                                    <option value="1"> Yes </option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label for="sex"> Sex / Gender </label>
+                                <select id="sex" name="target">
+                                    <option value="0"> Undefined </option>
+                                    <option value="1"> Male </option>
+                                    <option value="2"> Female </option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label for="cr"> Cr </label>
+                                <input id="cr" type="number" step="0.01" name="target">
+                            </div>
+
+                            <div>
+                                <label for="co"> Co </label>
+                                <input id="co" type="number" step="0.01" name="target">
+                            </div>
+
+                            <div>
+                                <label for="zr"> Zr </label>
+                                <input id="zr" type="number" step="0.01" name="target">
+                            </div>
+
+                            <div>
+                                <label for="ni"> Ni </label>
+                                <input id="ni" type="number" step="0.01" name="target">
+                            </div>
+
+                            <div>
+                                <label for="mb"> Mb </label>
+                                <input id="mb" type="number" step="0.01" name="target">
+                            </div>
+
+                            <div>
+                                <label for="linwear"> Linear wear </label>
+                                <input id="linwear" type="number" step="0.01" name="target">
+                            </div>
+
+                            <div>
+                                <label for="linwearrate"> Linear wear rate </label>
+                                <input id="linwearrate" type="number" step="0.01" name="target">
+                            </div>
+
+                            <div>
+                                <label for="volwear"> Volume wear </label>
+                                <input id="volwear" type="number" step="0.01" name="target">
+                            </div>
+
+                            <div>
+                                <label for="volwearrate"> Volume wear rate </label>
+                                <input id="volwearrate" type="number" step="0.01" name="target">
+                            </div>
+
+                            <div>
+                                <label for="inc"> Inclination </label>
+                                <input id="inc" type="number" step="0.01" name="target">
+                            </div>
+
+                            <div>
+                                <label for="ant"> Ant </label>
+                                <input id="ant" type="number" step="0.01" name="target">
+                            </div>
+
+                            <div>
+                                <label for="saveTarget"> Save patient information </label>
+                                <input id="saveTarget" class="button" type="submit">
+                            </div>
+                        </form>
+                    </section>
 
                     <p id="best"></p>
                     <p id="worst"></p>
@@ -53,20 +149,22 @@
 
                     <p id="savestatus"></p>
                     <p id="resultcontext"></p>
+
                     <section>
                         <ul id="features" class="feature"></ul>
                         <button type="button" id="saveFeatures" class="button feature"> Save </button>
                     </section>
                 </section>
+
                 <section id="graphFiller">
                     <h1>Graphs</h1>
                     <div id="graphs"></div>
                 </section>
             </section>
 
-            <section id="fileUpload">
-                <form action="submit"></form>
-            </section>
+            <form action="/science">
+                <button id="scienceToggle" name="science">Science</button>
+            </form>
         </div>
     </body>
 </html>

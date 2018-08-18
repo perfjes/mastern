@@ -36,7 +36,7 @@ body {
     height: -webkit-fit-content;
     height: -moz-fit-content;
     height: fit-content;
-    width: 33.3%;
+    width: 27%;
     padding: 0;
     margin: 0 auto;
     left: 33.3%;
@@ -190,6 +190,37 @@ body {
     *overflow: hidden;
 }
 
+#scienceToggle {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+#patientInfoForm {
+    width: 60%;
+}
+
+#patientInfoForm div {
+    display: block;
+    right: 0;
+}
+
+#patientInfoForm label {
+    display: inline-block;
+    font-family: 'Roboto Condensed', sans-serif;
+    margin: 5px 0;
+}
+
+#patientInfoForm input {
+    margin: 5px;
+    display: inline-block;
+    vertical-align: top;
+}
+
+#saveTarget {
+
+}
+
 /****************************** CENTER CONTENT ******************************/
 
 #centercontent {
@@ -200,6 +231,7 @@ body {
     display: -ms-flexbox;
     display: flex;
     position: relative;
+    left: -6.33%;
 }
 
 #data {

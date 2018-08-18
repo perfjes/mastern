@@ -1,4 +1,3 @@
-import datetime
 import os
 import statistics
 import pandas as pd
@@ -30,14 +29,7 @@ class Data:
 
 @app.route('/')
 def index():
-    return render_template('science.html')
-
-
-# TODO add functionality for user input when saving filename - also some kind of "did you just save" check to keep
-# TODO people from running scripts on this to save a billion copies and flooding the server
-@app.route('/save', methods=['GET', 'POST'])
-def save_dataframe_as_new():
-    return save_new_dataframe()
+    return render_template('index.html')
 
 
 # TODO maybe just remove this :)
@@ -67,9 +59,9 @@ def decision_tree_regressor():
     end_time = (time.time() - start_time)
     print('Runtime is: ' + str(end_time))
 
-    ts = time.time()
-    st = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d_%H-%M-%S')
-    dth.save_file(('results' + st + '.json'), dth.Test_data.result_dt)
+    if Data.recalibrate:
+        print(dth.save_results('decision-tree-gridsearchCV', dth.Test_data.result_dt))
+
     params = dth.Test_data.result_dt
     for res in params:
         print('Run ' + str(res), params[res])
@@ -95,11 +87,6 @@ def linear_regressor():
     return prediction_result
 
 
-@app.route('/uploads/<filename>')
-def uploaded_file(filename):
-    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
-
-
 @app.route('/features', methods=['GET', 'POST'])
 def select_features():
     if request.method == 'GET':
@@ -111,6 +98,17 @@ def select_features():
     pass
 
 
+@app.route('/updateTarget', methods=['POST'])
+def update_features():
+    target = request.form.getlist('target')
+    pass
+
+
+@app.route('/science')
+def turn_to_science():
+    return render_template('science.html')
+
+
 # TODO implement multiple runs if recalibrate is turned off - gather results of each run, present
 # best/worst/mean/standard deviation
 # Decision tree
@@ -120,22 +118,21 @@ def dt_target_prediction():
 
     # FOR ACTUAL USE
     if not Data.recalibrate:
-        for x in range(100):
+        for x in range(200):
             prediction_result, r2, graphs = ml.target_predict_decision_tree(target, Data.recalibrate)
             r2 = float(r2)
             prediction_results_list.append(float(prediction_result))
 
         prediction = pd.DataFrame(
             {'Actual': target['years in vivo'], 'Predicted': statistics.mean(prediction_results_list)})
-        result = pandas_to_json(prediction, r2)
+        result = format_results_into_json(prediction, r2, graphs)
         get_processed_list_of_predictions(prediction_results_list)
 
     # FOR TESTING
     else:
-        for x in range(5):
-            prediction_result, r2 = ml.target_predict_decision_tree(target, Data.recalibrate, x)
-            prediction = pd.DataFrame({'Actual': target['years in vivo'], 'Predicted': prediction_result})
-            result = pandas_to_json(prediction, r2)
+        prediction_result, r2, _ = ml.target_predict_decision_tree(target, Data.recalibrate)
+        prediction = pd.DataFrame({'Actual': target['years in vivo'], 'Predicted': prediction_result})
+        result = format_results_into_json(prediction, r2)
 
     return result
 
@@ -151,12 +148,12 @@ def mlp_target_prediction():
 
         prediction = pd.DataFrame(
             {'Actual': target['years in vivo'], 'Predicted':statistics.mean(prediction_results_list)})
-        result = pandas_to_json(prediction, r2)
+        result = format_results_into_json(prediction, r2)
         get_processed_list_of_predictions(prediction_results_list)
     else:
         prediction_result, r2 = ml.target_predict_mlp(target, Data.recalibrate)
         prediction = pd.DataFrame({'Actual': target['years in vivo'], 'Predicted': prediction_result})
-        result = pandas_to_json(prediction, r2)
+        result = format_results_into_json(prediction, r2)
 
     return result
 
@@ -170,16 +167,17 @@ def linear_target_prediction():
             prediction_result, r2, _ = ml.target_predict_linear(target, Data.recalibrate)
             prediction_results_list.append(float(prediction_result))
             prediction = pd.DataFrame({'Actual': target['years in vivo'], 'Predicted': prediction_result})
-            result = pandas_to_json(prediction, r2)
+            result = format_results_into_json(prediction, r2)
         get_processed_list_of_predictions(prediction_results_list)
     else:
         prediction_result, r2 = ml.target_predict_linear(target, Data.recalibrate)
         prediction = pd.DataFrame({'Actual': target['years in vivo'], 'Predicted': prediction_result})
-        result = pandas_to_json(prediction, r2)
+        result = format_results_into_json(prediction, r2)
 
     return result
 
 
+# Prints statistics from predictions.
 def get_processed_list_of_predictions(results):
     print(results)
     print('Standard deviation: ', statistics.stdev(results))
@@ -188,17 +186,7 @@ def get_processed_list_of_predictions(results):
     print('Average years: ', statistics.mean(results))
 
 
-# TODO deprecated
-def save_new_dataframe():
-    success, filename = dth.save_as_new(dth.Data.dataframe)
-    if success:
-        feedback = '%s%s%s' % ('<p id="success">success</p><p id="fname">', filename, '</p>')
-        return feedback
-    else:
-        feedback = '%s%s%s' % ('<p id="success">error</p><p id="fname">', 'file was not saved', '</p>')
-        return feedback
-
-
+# Populates a HTML page with a list of checkboxes containing the features (columns) from the dataset.
 def feature_selector():
     html_list = ['<form name="feats" action="/features" methods="POST">']
     for feature in Data.original_features:
@@ -215,6 +203,7 @@ def feature_selector():
     return " ".join(html_list)
 
 
+# Gets all features from the feature selection page, filters out the deselected features (on the page) from the dataset.
 def update_features(features):
     Data.selected_features = features
     for feature in Data.original_features:
@@ -229,11 +218,16 @@ def update_features(features):
     return feature_selector()
 
 
-# Turns a Pandas dataframe into a dict, then returns a properly formatted JSON string
-def pandas_to_json(dataframe, r2score=2.0):
+# Dataframe, R2 score and a list of graphs are passed and the function returns a dict formatted into a proper JSON
+# string.
+def format_results_into_json(dataframe, r2score=None, graphs=list()):
     json_result = {}
-    if r2score != 2:
+    if r2score is not None:
         json_result['r2'] = r2score
+
+    json_result['graphs'] = graphs
+
+    print(graphs)
 
     table_data = [dict([(column, row[i]) for i, column in enumerate(dataframe.columns)]) for row in
                   dataframe.values]
@@ -242,11 +236,7 @@ def pandas_to_json(dataframe, r2score=2.0):
     return json.dumps(json_result)
 
 
-def populate_graph_section(graphs):
-
-
-
-# Attempt at fixing Chrome overaggressive caching
+# Attempt at fixing Chrome overaggressive caching. It didn't work.
 @app.after_request
 def add_header(r):
     """

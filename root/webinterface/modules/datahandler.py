@@ -8,6 +8,7 @@ ROOT_DIRECTORY = dirname(dirname(dirname(abspath(__file__))))
 
 class Path:
     path = '%s%s' % (ROOT_DIRECTORY, r'/data/')
+    result_json = '%s/data/test-results/' % ROOT_DIRECTORY
     pickle_data = '%s%s' % (ROOT_DIRECTORY, r'/data/data.pkl')
     pickle_split = '%s%s' % (ROOT_DIRECTORY, r'/data/split.pkl')
 
@@ -24,6 +25,7 @@ class Features:
 
 class Test_data:
     result_dt = {}
+
 
 # ---------- OBJECT SAVING AND LOADING ----------
 # TODO - implement error handling on save/load, make sure values are correct etc
@@ -71,26 +73,22 @@ def load_split_value_from_pickle():
         return split
 
 
-# In case the system should be able to mutate the data, then it should be able to not overwrite the existing
-# datasets. Parameter to be passed need be pandas dataframe.
-# TODO error handling
-def save_as_new(data):
+# Saves the results from GridSearchCV hyperparameter tuning as JSON.
+def save_results(filename, data):
     counter = 1
-    save = 'df.csv'
-    data_directory = dirname(Path.path) + '/'
 
-    if not os.path.isfile(data_directory + save):
-        data.to_csv(os.path.join(data_directory + save), encoding='utf-8', index=False)
-        return True, save
-    if os.path.isfile(data_directory + save):
-        save = 'df' + str(counter) + '.csv'
-        while os.path.isfile(data_directory + save):
+    file_save = Path.result_json + filename + '.json'
+
+    if os.path.isfile(file_save):
+        file_save = Path.result_json + filename + str(counter) + '.json'
+        while os.path.isfile(file_save):
             counter += 1
-            save = 'df' + str(counter) + '.csv'
-    if not os.path.isfile(data_directory + save):
-        data.to_csv(os.path.join(data_directory + save), encoding='utf-8', index=False)
-        print(os.path.join(data_directory + save))
-        return True, save
+            file_save = Path.result_json + filename + str(counter) + '.json'
+
+    if not os.path.isfile(file_save):
+        with open(file_save, 'wb') as output_data:
+            pickle.dump(data, output_data)
+        return True, file_save
     else:
         return False
 

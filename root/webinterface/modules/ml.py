@@ -18,9 +18,9 @@ class Data:
     mlp_regressor = dth.load_file('mlp-regressor.sav')
 
 
-# Takes two parameters; dataframe contains the dataset to be split into testing and training datasets, and column is
-# the variable that determines the split
-# TODO manipulate split
+# Splits the dataset into two parts - one for training, one for testing, with a split of 65% of the dataset used for
+# training and the remaining 35% for testing. Returns training and testing data to be fitted by the model.
+# In order to ensure that a certain amont of test case subjects from the dataset (the first 20 or so) are evenly split
 def split_dataset_into_train_test(dataframe, column):
     x = dataframe.drop(column, axis=1)
     y = dataframe[column]
@@ -109,16 +109,12 @@ def target_predict_decision_tree(target, recalibrate=False, count=0):
             'criterion': ('mse', 'friedman_mse', 'mae'),
             'splitter': ('best', 'random'),
             'max_depth': (3, 5, 8, 12, 16, 18, 22),
-            #'min_samples_split': (4, 5, 6, 9, 11, 16, 21, 25),  # TODO need to make more iterations with less vlaues
-            #'max_leaf_nodes': range(4, 15),
-            # 'min_impurity_decrease': (0.0, 0.01, 0.02, 0.03, 0.05, 0.08, 0.12, 0.16, 0.2),
+            'min_samples_split': (2, 3, 4, 5, 6, 9, 11, 16, 21, 25),
+            'max_leaf_nodes': range(4, 15),
+            'min_impurity_decrease': (0.0, 0.01, 0.02, 0.03, 0.05, 0.08, 0.12, 0.16, 0.2),
             'presort': (True, False),
-            # 'random_state': range(0, 101)
         }
 
-        # Best and latest params
-        # criterion='friedman_mse', max_depth=12, min_samples_split=13, splitter='random', max_leaf_nodes=18, min_impurity_decrease=0.8, presort=False, random_state=33
-        # criterion='friedman_mse', max_depth=16, min_samples_split=9, splitter='random', max_leaf_nodes=8, min_impurity_decrease=0.05, presort=True, random_state=33
         regressor = GridSearchCV(DecisionTreeRegressor(criterion='friedman_mse', max_depth=12, min_samples_split=13, splitter='random', max_leaf_nodes=18, min_impurity_decrease=0.5, presort=False, random_state=83), parameters, refit=True)
         regressor.fit(x_train, y_train)
         print(regressor.best_params_)
@@ -141,11 +137,10 @@ def target_predict_decision_tree(target, recalibrate=False, count=0):
         r2_pred = r2_prediction.reshape(-1, 1)
         r2 = metrics.r2_score(y_true, r2_pred)
 
-    graphs = [
-        graph.generate_graph(dth.Data.dataframe['years in vivo'], dth.Data.dataframe['inc'], 'years in vivo', 'inc', 'Relation between longevity and inclination', 'graph1.png'),
-        graph.generate_graph(dth.Data.dataframe['years in vivo'], dth.Data.dataframe['ant'], 'years in vivo', 'ant', 'Relation between longevity and ant(something)', 'graph2.png'),
-        graph.generate_graph(dth.Data.dataframe['years in vivo'], dth.Data.dataframe['cr'], 'years in vivo', 'cr', 'I can\'t remember what cr is', 'graph3.png')
-    ]
+    graphs = []
+    graphs.append(graph.generate_graph(dth.Data.dataframe['years in vivo'], dth.Data.dataframe['inc'], 'years in vivo', 'inc', 'Relation between longevity and inclination', 'graph1.png'))
+    graphs.append(graph.generate_graph(dth.Data.dataframe['years in vivo'], dth.Data.dataframe['ant'], 'years in vivo', 'ant', 'Relation between longevity and ant(something)', 'graph2.png'))
+    graphs.append(graph.generate_graph(dth.Data.dataframe['years in vivo'], dth.Data.dataframe['cr'], 'years in vivo', 'cr', 'I can\'t remember what cr is', 'graph3.png'))
     
     return prediction, r2, graphs
     # return pd.DataFrame({'Actual': target['years in vivo'], 'Predicted': y_prediction}), r2

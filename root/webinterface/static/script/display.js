@@ -4,10 +4,7 @@ $(document).ready(function () {
     $('.disabled').css('background-color', 'gray');
 
     clearTable();
-
-    $('#resetmodel').click(function() {
-        // figure out how
-    });
+    $('#scienceToggle').hide();
 
     $('#start').show().click(function() {
         $('#menu').css('left', 0);
@@ -16,7 +13,7 @@ $(document).ready(function () {
         systemStatusGood();
         $('#status').show();
         setTimeout(displayInput, 1000);
-
+        $('#scienceToggle').fadeIn();
     });
 
     $('#linear').click(function() {
@@ -80,21 +77,7 @@ $(document).ready(function () {
             $('.feature').fadeIn();
             systemStatusGood();
         });
-        /*  The original Save File function - deprecated for now
-        $("#savestatus").load("../../save", function() {
-            $('#data').fadeIn();
-            if($('#success').text() == 'success'){
-                $('#resultheader').text('File saved as ' + $('#fname').text());
-                $('#resultcontext').text('The dataset was saved as a new file with the aforementioned name for ' +
-                    'future use.');
-                $('#loadinggif').hide();
-            } else {
-                $('#resultheader').text('An error occurred!');
-                $('#resultcontext').text('The dataset has not been saved.');
-                $('#loadinggif').hide();
-            }
-        });
-        */
+        $('#scienceToggle').fadeIn();
     });
 
     $('#saveFeatures').click(function() {
@@ -115,6 +98,11 @@ $(document).ready(function () {
         });
         $(this).css('background-color', '#004000').text('Successfully saved');
         setTimeout(displayInput, 2000);
+    });
+
+    $('#addtarget').click(function() {
+        loading();
+        enterPatientInfo();
     });
 
     $('#r2button').click(function() {
@@ -152,6 +140,7 @@ function clearTable() {
     $('.result_element').remove();
     $('#features').empty();
     $('.graphImage').remove();
+    $('#patientInfoForm').hide();
 }
 
 function loading() {
@@ -175,16 +164,25 @@ function displayInput() {
     $('#centercontent').slideDown();
 }
 
+function enterPatientInfo() {
+    $('#loadinggif').hide();
+     $('#resultheader').text('Patient information form');
+    $('#resultcontext').text('Enter the relevant medical information on your patient here. The more information ' +
+        'provided, the better.');
+    $('#patientInfoForm').show();
+    systemStatusGood();
+}
+
 function systemStatusGood() {
-    $('#status').css('background-color', '#142914').text('System is currently loaded and ready.');
+    $('#status').css('background-color', '#142914').text('System status: All good.');
 }
 
 function systemStatusLoading() {
-    $('#status').css('background-color', '#30310f').text('System is loading - please wait...');
+    $('#status').css('background-color', '#30310f').text('System status: Loading - please wait...');
 }
 
 function systemStatusBad() {
-    $('#status').css('background-color', 'red').text('System has stopped working - please refresh!');
+    $('#status').css('background-color', 'red').text('System status: Something stopped working - please refresh!');
 }
 
 function displayImage() {
@@ -194,11 +192,4 @@ function displayImage() {
     document.getElementById('graphs').appendChild(img);
 
     $('#graphs').slideDown();
-
-    /*
-    var img = document.createElement('img');
-    img.setAttribute('src', '../static/img/scatterplot.png');
-    img.setAttribute('class', 'graphImage');
-    document.getElementById('graphs').appendChild(img);
-    */
 }
