@@ -1,5 +1,6 @@
 from os.path import dirname, abspath
 import pandas as pd
+import numpy as np
 import os
 import _pickle as pickle
 
@@ -8,8 +9,24 @@ ROOT_DIRECTORY = dirname(dirname(dirname(abspath(__file__))))
 
 class Path:
     path = '%s%s' % (ROOT_DIRECTORY, r'/data/')
+    result_json = '%s/data/test-results/' % ROOT_DIRECTORY
     pickle_data = '%s%s' % (ROOT_DIRECTORY, r'/data/data.pkl')
     pickle_split = '%s%s' % (ROOT_DIRECTORY, r'/data/split.pkl')
+
+
+class Features:
+    drop_features_regression = ['id', 'volwear', 'volwearrate']
+    """
+        List of all features in the dataset
+        'id', 'case', 'cuploose', 'stemloose', 'years in vivo', 'cr', 'co', 'zr', 'ni', 'mb', 'linwear', 'linwearrate', 
+        'volwear', 'volwearrate', 'inc', 'ant', 'cupx', 'cupy', 'male', 'female'
+    """
+    initially_deactivated = ['zr', 'ni', 'mb', 'cupx', 'cupy']
+    original_dataset_features = []
+
+
+class Test_data:
+    result_dt = {}
 
 
 # ---------- OBJECT SAVING AND LOADING ----------
@@ -58,33 +75,22 @@ def load_split_value_from_pickle():
         return split
 
 
-# Class variables allow for mutation
-class Data():
-    dataframe = load_dataframe_from_pickle()
-    split = load_split_value_from_pickle()
-    target = pd.DataFrame()
-
-
-# In case the system should be able to mutate the data, then it should be able to not overwrite the existing
-# datasets. Parameter to be passed need be pandas dataframe.
-# TODO error handling
-def save_as_new(data):
+# Saves the results from GridSearchCV hyperparameter tuning as JSON.
+def save_results(filename, data):
     counter = 1
-    save = 'df.csv'
-    data_directory = dirname(Path.path) + '/'
 
-    if not os.path.isfile(data_directory + save):
-        data.to_csv(os.path.join(data_directory + save), encoding='utf-8', index=False)
-        return True, save
-    if os.path.isfile(data_directory + save):
-        save = 'df' + str(counter) + '.csv'
-        while os.path.isfile(data_directory + save):
+    file_save = Path.result_json + filename + '.json'
+
+    if os.path.isfile(file_save):
+        file_save = Path.result_json + filename + str(counter) + '.json'
+        while os.path.isfile(file_save):
             counter += 1
-            save = 'df' + str(counter) + '.csv'
-    if not os.path.isfile(data_directory + save):
-        data.to_csv(os.path.join(data_directory + save), encoding='utf-8', index=False)
-        print(os.path.join(data_directory + save))
-        return True, save
+            file_save = Path.result_json + filename + str(counter) + '.json'
+
+    if not os.path.isfile(file_save):
+        with open(file_save, 'wb') as output_data:
+            pickle.dump(data, output_data)
+        return True, file_save
     else:
         return False
 
@@ -115,6 +121,7 @@ def load_dataframe(path):
     # replace the original columns with the refactored ones.
     data = pd.read_csv(file, sep=',', encoding='utf-8')
     data = data.rename(str.lower, axis='columns')
+
     if 'sex' in data:
         refactored_columns = pd.get_dummies(data['sex'])
         refactored_columns = refactored_columns.rename(columns={1.0: 'male', 2.0: 'female'})
@@ -123,6 +130,10 @@ def load_dataframe(path):
 
     if 'id' in data:
         data = data.drop('id', axis=1)
+
+    Features.original_dataset_features = list(data)
+
+    data = prune_features(data)
 
     # Fill in the blanks (with mean values for the mean time)
     if data.isnull().values.any():
@@ -149,7 +160,7 @@ def save_file(file, item):
         pickle.dump(item, output_data)
 
 
-def load_pickle_file(file):
+def load_file(file):
     file = '%s%s' % (Path.path, file)
     if os.path.isfile(file):
         with open(file, 'rb') as input_data:
@@ -157,3 +168,23 @@ def load_pickle_file(file):
     else:
         print('The file couldn\'t be loaded')
         return None
+
+
+def generate_dataframe_from_html(input_list):
+    columns = Features.original_dataset_features
+    target_dataframe = pd.DataFrame([input_list], columns=columns)
+    return target_dataframe
+
+
+def prune_features(df):
+    for feature in Features.drop_features_regression:
+        if feature in df:
+            df = df.drop(feature, axis=1)
+    return df
+
+
+# Class variables allow for mutation
+class Data:
+    dataframe = load_dataframe_from_pickle()
+    split = load_split_value_from_pickle()
+    target = pd.DataFrame()

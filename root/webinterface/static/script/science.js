@@ -1,22 +1,9 @@
 $(document).ready(function () {
-    $('#status').hide();
-    $('#buttons button').hide();
-    $('.disabled').css('background-color', 'gray');
-
+    $('#status').text('System is currently loaded and ready.');
     clearTable();
-    $('#scienceToggle').hide();
 
-    $('#start').show().click(function() {
-        $('#menu').css('left', 0);
-        $('#buttons button').fadeIn();
-        $(this).fadeOut();
-        systemStatusGood();
-        $('#status').show();
-        setTimeout(displayInput, 1000);
-        $('#scienceToggle').fadeIn();
-        $('#title h1').text('Main menu');
-        $('#title p').text('This is the main menu. To get started, select one of the options available in the center ' +
-            'of the screen.');
+    $('#resetmodel').click(function() {
+        // figure out how
     });
 
     $('#linear').click(function() {
@@ -52,41 +39,54 @@ $(document).ready(function () {
     });
 
     $('#dt').click(function() {
-        if(!$(this).hasClass('disabled')) {
-            loading();
-            $('.result_element').remove();
-            $.getJSON('/dt', function (data) {
-                if(data == null){
-                    systemStatusBad();
-                }
-                $('#data').show();
-                $('#r2button').show();
-                updateTable(data);
-                $('#resultheader').text('Results - Target prediction');
-                $('#resultcontext').text('The predicted \'years in vivo\' value represent the years that the implant is ' +
-                    'predicted to last in the patient.');
-                $('#loadinggif').hide();
-                displayImage();
-            });
-        }
+        loading();
+        $('.result_element').remove();
+        $.getJSON('/dt', function(data) {
+            $('#data').show();
+            $('#r2button').show();
+            updateTable(data);
+            $('#resultheader').text('Results - Target prediction');
+            $('#resultcontext').text('The predicted \'years in vivo\' value represent the years that the implant is ' +
+                'predicted to last in the patient.');
+            $('#loadinggif').hide();
+            displayImage(data['graphs']);
+        });
     });
 
     $('#featurebtn').click(function() {
         clearTable();
         loading();
-        systemStatusBad();
+        $('#status').text('System may have stopped working.');
         $.get('/features', function(input) {
             $('#features').append(input);
             $('#resultheader').text('Dataset features');
             $('#resultcontext').text('These are the features (or columns) of the dataset - also known as the categories of information gathered from each patient.').append("<br /><br />").append('The checkboxes indicate whether or not a feature will be included when the system predicts how long an implant will last in the given patient, by checking a box you include that feature in the prediction.');
             $('#loadinggif').hide();
             $('.feature').fadeIn();
-            systemStatusGood();
+            $('#status').text('System is currently loaded and ready.');
         });
-        $('#scienceToggle').fadeIn();
+        /*  The original Save File function - deprecated for now
+        $("#savestatus").load("../../save", function() {
+            $('#data').fadeIn();
+            if($('#success').text() == 'success'){
+                $('#resultheader').text('File saved as ' + $('#fname').text());
+                $('#resultcontext').text('The dataset was saved as a new file with the aforementioned name for ' +
+                    'future use.');
+                $('#loadinggif').hide();
+            } else {
+                $('#resultheader').text('An error occurred!');
+                $('#resultcontext').text('The dataset has not been saved.');
+                $('#loadinggif').hide();
+            }
+        });
+        */
     });
 
     $('#saveFeatures').click(function() {
+        $.each($('#feats'), function(feature) {
+            console.log(feature);
+            console.log(feature.attr('id'));
+        });
         $.ajax({
             url: '/features',
             data: $('.feat').serialize(),
@@ -96,33 +96,8 @@ $(document).ready(function () {
             },
             error: function(response) {
                 console.log('Oh no, ' + response.valueOf());
-                systemStatusBad();
             }
-        });
-        $(this).css('background-color', '#004000').text('Successfully saved');
-        setTimeout(displayInput, 2000);
-    });
-
-    $('#addtarget').click(function() {
-        loading();
-        enterPatientInfo();
-    });
-
-    $('#saveTarget').click(function() {
-        $.ajax({
-            url: '/updatetarget',
-            data: $('.patInfo').serialize(),
-            type: 'POST',
-            success: function(response) {
-                console.log(response);
-            },
-            error: function(response) {
-                console.log('Oh no, ' + response.valueOf());
-                systemStatusBad();
-            }
-        });
-        $(this).css('background-color', '#004000').text('Successfully saved');
-        setTimeout(displayInput, 2000);
+        })
     });
 
     $('#r2button').click(function() {
@@ -131,7 +106,7 @@ $(document).ready(function () {
 });
 
 function updateTable(json, type) {
-    systemStatusGood();
+    $('#status').text('System is currently loaded and ready.');
     if ('r2' in json) {
         $('#r2info').text('This prediction model has an R2 score of ' + parseFloat(json.r2).toFixed(7));
     }
@@ -140,7 +115,6 @@ function updateTable(json, type) {
     });
 }
 
-// TODO THIS FUNCTION BREAKS - NEED TO REMAKE THE ENTIRE DISPLAY FUNCTIONLAITY
 function appendDataToTable(rowdata) {
     $('#results_table').append(function () {
         return '<tr class="result_element"><td>Actual: ' + rowdata['Actual'].toFixed(5) + '</td>' + '\n' +
@@ -149,8 +123,7 @@ function appendDataToTable(rowdata) {
 }
 
 function clearTable() {
-    $('#centercontent .input').hide();
-    $('#centercontent').hide();
+    $('#results').hide();
     $('#graphFiller').hide();
     $('#r2info').hide();
     $('#r2button').hide();
@@ -161,11 +134,10 @@ function clearTable() {
     $('.result_element').remove();
     $('#features').empty();
     $('.graphImage').remove();
-    $('#patientInfoForm').hide();
 }
 
 function loading() {
-    systemStatusLoading();
+    $('#status').text('System is running predictions');
 
     clearTable();
     $('#loadinggif').fadeIn();
@@ -173,49 +145,17 @@ function loading() {
     $('#resultcontext').text('We\'re doing some heavy lifting, this shouldn\'t take too long');
     $('#data').show();
 
-    $('#centercontent').slideDown();
+    $('#results').slideDown();
 }
 
-function displayInput() {
-    $('#saveFeatures').css('background-color', '#b23000').text('Save feature selection');
-    $('#saveTarget').css('background-color', '#b23000').text('Save patient information');
-    clearTable();
+function displayImage(images) {
 
-    $('#data').show();
-    $('#centercontent .input').show();
-    $('#centercontent').slideDown();
-}
+    for(var image in images) {
+        var img = document.createElement('img');
+        img.setAttribute('src', '../static/img/' + images[image]);
+        img.setAttribute('class', 'graphImage');
+        document.getElementById('graphs').appendChild(img);
+    }
 
-function enterPatientInfo() {
-    $('#loadinggif').hide();
-     $('#resultheader').text('Patient information form');
-    $('#resultcontext').text('Enter the relevant medical information on your patient here. The more information ' +
-        'provided, the better.');
-    $('#patientInfoForm').show();
-    systemStatusGood();
-}
-
-function systemStatusGood() {
-    $('#status').css('background-color', '#142914').text('System status: All good.');
-}
-
-function systemStatusLoading() {
-    $('#status').css('background-color', '#30310f').text('System status:    Loading - please wait...');
-}
-
-function systemStatusBad() {
-    $('#status').css('background-color', 'red').text('System status: Something stopped working - please refresh!');
-}
-
-function displayImage() {
-    var img = document.createElement('img');
-    img.setAttribute('src', '../static/img/graph.png');
-    img.setAttribute('class', 'graphImage');
-    document.getElementById('graphs').appendChild(img);
-
-    $('#graphs').slideDown();
-}
-
-function validateForm() {
-    
+    $('#graphFiller').fadeIn();
 }

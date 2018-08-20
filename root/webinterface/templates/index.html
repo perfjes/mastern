@@ -15,44 +15,169 @@
         <div id="gridwrapper">
             <div id='menu'>
                 <section id="title">
-                    <h1>Machine learning<br>in progress</h1>
-                    <p>This is the web framework for my master thesis project.</p>
-                    <p id="status">Website is loading (probably)</p>
+                    <h1>Predict implant longevity</h1>
+                    <p>This is a system designed to provide predictions on the longevity of a hip arthroplasty implant.
+                        The system uses machine learning techniques based on previous patient data to predict how many
+                        years a given patient will be able to live with their hip implant before corrective surgery.</p>
                 </section>
 
+                <div id="status">You need to enable JavaScript.</div>
+
                 <section id="input">
-                    <form id="buttons" method="post">
-                        <button type="button" id="featurebtn" class="button"> Choose feature set </button>
-                        <button type="button" id="dt" class="button"> Decision Tree </button>
-                        <button type="button" id="mlp" class="button"> MLP </button>
-                        <button type="button" id="linear" class="button"> Linear </button>
-                    </form>
+                    <button type="button" id="start" class="button"> Start </button>
                 </section>
             </div>
 
-            <section id="results">
+            <section id="centercontent">
                 <section id="data">
                     <h1 id="resultheader"></h1>
-                    <button id="r2button"> R2 score </button>
-                    <div id="r2info"> You shouldn't be able to see this. </div>
+
+                    <section>
+                        <button id="r2button"> R2 score </button>
+                        <div id="r2info"> You shouldn't be able to see this. </div>
+                    </section>
+
+                    <section class="input">
+                        <button type="button" id="featurebtn" class="button optional"> Select features (optional) </button>
+                        <button id="addtarget" class="button"> Enter patient information </button>
+                        <button type="button" id="dt" class="button"> Predict longevity </button>
+                    </section>
                     <img src="../static/img/load.gif" id="loadinggif" title="Loading"/>
-                    <table id="results_table">
-                        {{ data | safe }}
-                        {{ r2 | safe }}
-                    </table>
+
+                    <table id="results_table"></table>
                     <p id="savestatus"></p>
                     <p id="resultcontext"></p>
-                    <ul id="features" class="feature"></ul>
-                    <button type="button" id="saveFeatures" class="button feature"> Save </button>
-                </section>
-                <section id="graphs">
-                    <h1>Graphs</h1>
+
+                    <section id="patientInfoForm">
+                        <form action="/updatetarget">
+                            <div>
+                                <label for="case"> Case </label>
+                                <select id="case" name="target" class="patInfo">
+                                    <option value="0"> Implant still there </option>
+                                    <option value="1"> Implant removed </option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label for="cuploose"> cupLoose </label>
+                                <select id="cuploose" name="target" class="patInfo">
+                                    <option value="0"> No </option>
+                                    <option value="1"> Yes </option>
+                                </select>
+                            </div>
+
+                            <div>
+                            <label for="stemloose"> stemLoose </label>
+                                <select id="stemloose" name="target" class="patInfo">
+                                    <option value="0"> No </option>
+                                    <option value="1"> Yes </option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label for="yearsinvivo"> Years in vivo </label>
+                                <input id="yearsinvivo" type="number" step="0.01" name="target" class="patInfo">
+                            </div>
+
+                            <div>
+                                <label for="cr"> Cr </label>
+                                <input id="cr" type="number" step="0.01" name="target" class="patInfo">
+                            </div>
+
+                            <div>
+                                <label for="co"> Co </label>
+                                <input id="co" type="number" step="0.01" name="target" class="patInfo">
+                            </div>
+
+                            <div>
+                                <label for="zr"> Zr </label>
+                                <input id="zr" type="number" step="0.01" name="target" class="patInfo">
+                            </div>
+
+                            <div>
+                                <label for="ni"> Ni </label>
+                                <input id="ni" type="number" step="0.01" name="target" class="patInfo">
+                            </div>
+
+                            <div>
+                                <label for="mb"> Mb </label>
+                                <input id="mb" type="number" step="0.01" name="target" class="patInfo">
+                            </div>
+
+                            <div>
+                                <label for="linwear"> Linear wear </label>
+                                <input id="linwear" type="number" step="0.01" name="target" class="patInfo">
+                            </div>
+
+                            <div>
+                                <label for="linwearrate"> Linear wear rate </label>
+                                <input id="linwearrate" type="number" step="0.01" name="target" class="patInfo">
+                            </div>
+
+                            <div>
+                                <label for="volwear"> Volume wear </label>
+                                <input id="volwear" type="number" step="0.01" name="target" class="patInfo">
+                            </div>
+
+                            <div>
+                                <label for="volwearrate"> Volume wear rate </label>
+                                <input id="volwearrate" type="number" step="0.01" name="target" class="patInfo">
+                            </div>
+
+                            <div>
+                                <label for="inc"> Inclination </label>
+                                <input id="inc" type="number" step="0.01" name="target" class="patInfo">
+                            </div>
+
+                            <div>
+                                <label for="ant"> Ant </label>
+                                <input id="ant" type="number" step="0.01" name="target" class="patInfo">
+                            </div>
+
+                            <div>
+                                <label for="cupx"> Cup X </label>
+                                <input id="cupx" type="number" step="0.01" name="target" class="patInfo">
+                            </div>
+
+                            <div>
+                                <label for="cupy"> Cup Y </label>
+                                <input id="cupy" type="number" step="0.01" name="target" class="patInfo">
+                            </div>
+
+                            <div>
+                                <label for="sex"> Sex / Gender </label>
+                                <select id="sex" name="target" class="patInfo">
+                                    <option value="0"> Undefined </option>
+                                    <option value="1"> Male </option>
+                                    <option value="2"> Female </option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <button type="button" id="saveTarget" class="button"> Save patient information </button>
+                            </div>
+                        </form>
+                    </section>
+
+                    <p id="best"></p>
+                    <p id="worst"></p>
+                    <p id="mean"></p>
+
+                    <section>
+                        <ul id="features" class="feature"></ul>
+                        <button type="button" id="saveFeatures" class="button feature"> Save </button>
+                    </section>
+
+                    <section id="graphFiller">
+                        <h1>Graphs</h1>
+                        <div id="graphs"></div>
+                    </section>
                 </section>
             </section>
 
-            <section id="fileUpload">
-                <form action="submit"></form>
-            </section>
+            <form action="/science">
+                <button id="scienceToggle" name="science">Science</button>
+            </form>
         </div>
     </body>
 </html>
