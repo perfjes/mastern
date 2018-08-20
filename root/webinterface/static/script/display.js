@@ -14,6 +14,9 @@ $(document).ready(function () {
         $('#status').show();
         setTimeout(displayInput, 1000);
         $('#scienceToggle').fadeIn();
+        $('#title h1').text('Main menu');
+        $('#title p').text('This is the main menu. To get started, select one of the options available in the center ' +
+            'of the screen.');
     });
 
     $('#linear').click(function() {
@@ -53,6 +56,9 @@ $(document).ready(function () {
             loading();
             $('.result_element').remove();
             $.getJSON('/dt', function (data) {
+                if(data == null){
+                    systemStatusBad();
+                }
                 $('#data').show();
                 $('#r2button').show();
                 updateTable(data);
@@ -90,6 +96,7 @@ $(document).ready(function () {
             },
             error: function(response) {
                 console.log('Oh no, ' + response.valueOf());
+                systemStatusBad();
             }
         });
         $(this).css('background-color', '#004000').text('Successfully saved');
@@ -111,6 +118,7 @@ $(document).ready(function () {
             },
             error: function(response) {
                 console.log('Oh no, ' + response.valueOf());
+                systemStatusBad();
             }
         });
         $(this).css('background-color', '#004000').text('Successfully saved');
@@ -132,6 +140,7 @@ function updateTable(json, type) {
     });
 }
 
+// TODO THIS FUNCTION BREAKS - NEED TO REMAKE THE ENTIRE DISPLAY FUNCTIONLAITY
 function appendDataToTable(rowdata) {
     $('#results_table').append(function () {
         return '<tr class="result_element"><td>Actual: ' + rowdata['Actual'].toFixed(5) + '</td>' + '\n' +
@@ -142,7 +151,7 @@ function appendDataToTable(rowdata) {
 function clearTable() {
     $('#centercontent .input').hide();
     $('#centercontent').hide();
-    $('#graphs').hide();
+    $('#graphFiller').hide();
     $('#r2info').hide();
     $('#r2button').hide();
     $('.feature').hide();
@@ -191,7 +200,7 @@ function systemStatusGood() {
 }
 
 function systemStatusLoading() {
-    $('#status').css('background-color', '#30310f').text('System status: Loading - please wait...');
+    $('#status').css('background-color', '#30310f').text('System status:    Loading - please wait...');
 }
 
 function systemStatusBad() {
@@ -205,4 +214,8 @@ function displayImage() {
     document.getElementById('graphs').appendChild(img);
 
     $('#graphs').slideDown();
+}
+
+function validateForm() {
+    
 }

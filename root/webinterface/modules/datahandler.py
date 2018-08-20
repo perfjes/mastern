@@ -22,6 +22,7 @@ class Features:
         'volwear', 'volwearrate', 'inc', 'ant', 'cupx', 'cupy', 'male', 'female'
     """
     initially_deactivated = ['zr', 'ni', 'mb', 'cupx', 'cupy']
+    original_dataset_features = []
 
 
 class Test_data:
@@ -130,6 +131,8 @@ def load_dataframe(path):
     if 'id' in data:
         data = data.drop('id', axis=1)
 
+    Features.original_dataset_features = list(data)
+
     data = prune_features(data)
 
     # Fill in the blanks (with mean values for the mean time)
@@ -168,17 +171,8 @@ def load_file(file):
 
 
 def generate_dataframe_from_html(input_list):
-    a_dict = dict()
-    input_list.insert(0, len(Data.dataframe.index))
-    labels = list(Data.dataframe)
-    print(len(labels), len(input_list))
-    for index in range(len(input_list)):
-        print(labels[index], input_list[index])
-        a_dict[labels[index]] = input_list[index]
-
-    print(a_dict)
-    target_dataframe = pd.DataFrame.from_records(np.asarray(input_list).T, labels)
-    print(target_dataframe)
+    columns = Features.original_dataset_features
+    target_dataframe = pd.DataFrame([input_list], columns=columns)
     return target_dataframe
 
 

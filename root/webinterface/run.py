@@ -92,7 +92,7 @@ def update_target():
             target.pop()
             target.append(0)
             target.append(1)
-        dth.Data.target = dth.generate_dataframe_from_html(target)
+        dth.Data.target = dth.prune_features(dth.generate_dataframe_from_html(target))
         return str(target)
     return 'none'
 

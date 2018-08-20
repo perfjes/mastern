@@ -54,7 +54,7 @@ body {
 
 #title h1 {
     width: 84%;
-    margin: 40px auto;
+    margin: 9% auto;
 }
 
 #title p {
@@ -196,25 +196,36 @@ body {
     right: 10px;
 }
 
+/****************************** PATIENT INFO FORM ******************************/
+
 #patientInfoForm {
-    width: 60%;
+    width: 50%;
+    margin: 0 auto;
 }
 
 #patientInfoForm div {
     display: block;
-    right: 0;
 }
 
 #patientInfoForm label {
     display: inline-block;
     font-family: 'Roboto Condensed', sans-serif;
-    margin: 5px 0;
+    margin: 8px;
+    text-align: right;
+    width: 130px;
+}
+
+#patientInfoForm input, select {
+    right: 0;
+    width: fit-content;
+    height: auto;
+    display: inline-block;
+    vertical-align: top;
+    margin: 8px;
 }
 
 #patientInfoForm input {
-    margin: 5px;
-    display: inline-block;
-    vertical-align: top;
+    width: 90px;
 }
 
 #saveTarget {
@@ -279,13 +290,13 @@ body {
 #resultheader {
     width: 70%;
     height: auto;
-    margin: 25px;
+    margin: 7% auto 1% 7%;
 }
 
 #data p {
     width: auto;
     height: auto;
-    margin: 25px;
+    margin: 0 7% 1% 7%;
 }
 
 #loadinggif {
