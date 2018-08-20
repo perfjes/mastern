@@ -113,6 +113,8 @@ $(document).ready(function () {
                 console.log('Oh no, ' + response.valueOf());
             }
         });
+        $(this).css('background-color', '#004000').text('Successfully saved');
+        setTimeout(displayInput, 2000);
     });
 
     $('#r2button').click(function() {
@@ -166,7 +168,8 @@ function loading() {
 }
 
 function displayInput() {
-    $('#saveFeatures').css('background-color', '#b23000').text('Save');
+    $('#saveFeatures').css('background-color', '#b23000').text('Save feature selection');
+    $('#saveTarget').css('background-color', '#b23000').text('Save patient information');
     clearTable();
 
     $('#data').show();

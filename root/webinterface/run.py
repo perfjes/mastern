@@ -35,25 +35,8 @@ def index():
 # TODO maybe just remove this :)
 
 
-@app.route('/dt', methods=['GET', 'POST'])
+@app.route('/dt', methods=['GET'])
 def decision_tree_regressor():
-    if request.method == 'POST':
-        if 'file' not in request.files:
-            flash('No file part')
-            return redirect(request.url)
-        file = request.files['file']
-        # if user does not select file, browser also
-        # submit a empty part without filename
-        if file.filename == '':
-            flash('No selected file')
-            return redirect(request.url)
-        name = file.filename.split('/')
-        print(name)
-        if file and name[(len(name) - 1)].lower().endswith('.csv'):
-            filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            return redirect(url_for('uploaded_file', filename=filename))
-
     start_time = time.time()
     prediction_result = dt_target_prediction()
     end_time = (time.time() - start_time)
@@ -61,10 +44,9 @@ def decision_tree_regressor():
 
     if Data.recalibrate:
         print(dth.save_results('decision-tree-gridsearchCV', dth.Test_data.result_dt))
-
-    params = dth.Test_data.result_dt
-    for res in params:
-        print('Run ' + str(res), params[res])
+        params = dth.Test_data.result_dt
+        for res in params:
+            print('Run ' + str(res), params[res])
 
     return prediction_result
 
@@ -99,10 +81,18 @@ def select_features():
 
 
 @app.route('/updatetarget', methods=['GET', 'POST'])
-def update_features():
+def update_target():
     if request.method == 'POST':
         target = request.form.getlist('target')
-        print(target)
+        if target[-1] == '0':
+            target.append(0)
+        elif target[-1] == '1':
+            target.append(0)
+        elif target[-1] == '2':
+            target.pop()
+            target.append(0)
+            target.append(1)
+        dth.Data.target = dth.generate_dataframe_from_html(target)
         return str(target)
     return 'none'
 
@@ -117,7 +107,10 @@ def turn_to_science():
 # Decision tree
 def dt_target_prediction():
     prediction_results_list.clear()
-    target = dth.load_dataframe(dth.Path.path + 'test.csv')
+    target = dth.Data.target
+    if len(list(target)) < 3:
+        print('Target features are too short, what is going on')
+        return 'none'
 
     # FOR ACTUAL USE
     if not Data.recalibrate:

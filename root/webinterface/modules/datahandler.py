@@ -1,5 +1,6 @@
 from os.path import dirname, abspath
 import pandas as pd
+import numpy as np
 import os
 import _pickle as pickle
 
@@ -166,9 +167,19 @@ def load_file(file):
         return None
 
 
-def create_csv_from_html_input(input_list):
-    # TODO create function to do this thing
-    pass
+def generate_dataframe_from_html(input_list):
+    a_dict = dict()
+    input_list.insert(0, len(Data.dataframe.index))
+    labels = list(Data.dataframe)
+    print(len(labels), len(input_list))
+    for index in range(len(input_list)):
+        print(labels[index], input_list[index])
+        a_dict[labels[index]] = input_list[index]
+
+    print(a_dict)
+    target_dataframe = pd.DataFrame.from_records(np.asarray(input_list).T, labels)
+    print(target_dataframe)
+    return target_dataframe
 
 
 def prune_features(df):
