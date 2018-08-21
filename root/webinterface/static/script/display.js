@@ -1,22 +1,9 @@
 $(document).ready(function () {
-    $('#status').hide();
-    $('#buttons button').hide();
-    $('.disabled').css('background-color', 'gray');
-
     clearTable();
-    $('#scienceToggle').hide();
+    loadPage();
 
     $('#start').show().click(function() {
-        $('#menu').css('left', 0);
-        $('#buttons button').fadeIn();
-        $(this).fadeOut();
-        systemStatusGood();
-        $('#status').show();
-        setTimeout(displayInput, 1000);
-        $('#scienceToggle').fadeIn();
-        $('#title h1').text('Main menu');
-        $('#title p').text('This is the main menu. To get started, select one of the options available in the center ' +
-            'of the screen.');
+        start();
     });
 
     $('#linear').click(function() {
@@ -52,22 +39,25 @@ $(document).ready(function () {
     });
 
     $('#dt').click(function() {
-        if(!$(this).hasClass('disabled')) {
-            loading();
-            $('.result_element').remove();
-            $.getJSON('/dt', function (data) {
-                if(data == null){
-                    systemStatusBad();
-                }
-                $('#data').show();
-                $('#r2button').show();
-                updateTable(data);
-                $('#resultheader').text('Results - Target prediction');
-                $('#resultcontext').text('The predicted \'years in vivo\' value represent the years that the implant is ' +
-                    'predicted to last in the patient.');
-                $('#loadinggif').hide();
-                displayImage();
-            });
+        if (validateForm()) {
+            if (!$(this).hasClass('disabled')) {
+                $(this).fadeOut();
+                loading();
+                $('.result_element').remove();
+                $.getJSON('/dt', function (data) {
+                    if(data == null){
+                        systemStatusBad();
+                    }
+                    $('#data').show();
+                    $('#r2button').show();
+                    updateTable(data);
+                    $('#resultheader').text('Results - Target prediction');
+                    $('#resultcontext').text('The predicted \'years in vivo\' value represent the years that the implant is ' +
+                        'predicted to last in the patient.');
+                    $('#loadinggif').hide();
+                    displayImage();
+                });
+            }
         }
     });
 
@@ -104,6 +94,7 @@ $(document).ready(function () {
     });
 
     $('#addtarget').click(function() {
+        hideAllElements();
         loading();
         enterPatientInfo();
     });
@@ -122,19 +113,19 @@ $(document).ready(function () {
             }
         });
         $(this).css('background-color', '#004000').text('Successfully saved');
-        setTimeout(displayInput, 2000);
+        setTimeout(nextStep, 2000);
     });
 
-    $('#r2button').click(function() {
-        $('#r2info').fadeToggle();
-    });
+    // $('#r2button').click(function() {
+    //     $('#r2info').fadeToggle();
+    // });
 });
 
 function updateTable(json, type) {
     systemStatusGood();
-    if ('r2' in json) {
-        $('#r2info').text('This prediction model has an R2 score of ' + parseFloat(json.r2).toFixed(7));
-    }
+    // if ('r2' in json) {
+    //     $('#r2info').text('This prediction model has an R2 score of ' + parseFloat(json.r2).toFixed(7));
+    // }
     $.each(json.result, function (index, item) {
         appendDataToTable(item, type);
     });
@@ -149,19 +140,11 @@ function appendDataToTable(rowdata) {
 }
 
 function clearTable() {
-    $('#centercontent .input').hide();
-    $('#centercontent').hide();
-    $('#graphFiller').hide();
-    $('#r2info').hide();
-    $('#r2button').hide();
-    $('.feature').hide();
-    $('#loadinggif').hide();
     $('#resultheader').text('');
     $('#resultcontext').text('');
     $('.result_element').remove();
     $('#features').empty();
     $('.graphImage').remove();
-    $('#patientInfoForm').hide();
 }
 
 function loading() {
@@ -184,11 +167,13 @@ function displayInput() {
     $('#data').show();
     $('#centercontent .input').show();
     $('#centercontent').slideDown();
+    systemStatusGood();
 }
 
 function enterPatientInfo() {
     $('#loadinggif').hide();
-     $('#resultheader').text('Patient information form');
+    $('#centercontent').slideDown();
+    $('#resultheader').text('Patient information form');
     $('#resultcontext').text('Enter the relevant medical information on your patient here. The more information ' +
         'provided, the better.');
     $('#patientInfoForm').show();
@@ -196,15 +181,30 @@ function enterPatientInfo() {
 }
 
 function systemStatusGood() {
-    $('#status').css('background-color', '#142914').text('System status: All good.');
+    var status = $('#status');
+
+    if (!status.is(':visible')) {
+        status.show();
+    }
+    status.css('background-color', '#142914').text('System status: All good.');
 }
 
 function systemStatusLoading() {
-    $('#status').css('background-color', '#30310f').text('System status:    Loading - please wait...');
+    var status = $('#status');
+
+    if (!status.is(':visible')) {
+        status.show();
+    }
+     status.css('background-color', '#30310f').text('System status:    Loading - please wait...');
 }
 
 function systemStatusBad() {
-    $('#status').css('background-color', 'red').text('System status: Something stopped working - please refresh!');
+    var status = $('#status');
+
+    if (!status.is(':visible')) {
+        status.show();
+    }
+     status.css('background-color', 'red').text('System status: Something stopped working - please refresh!');
 }
 
 function displayImage() {
@@ -214,8 +214,50 @@ function displayImage() {
     document.getElementById('graphs').appendChild(img);
 
     $('#graphs').slideDown();
+    systemStatusGood();
 }
 
 function validateForm() {
-    
+
+    return false;
+}
+
+function loadPage() {
+    hideAllElements();
+    $('#input, #start').fadeIn();
+}
+
+function start() {
+    $('#menu').css('left', 0);
+    $('#buttons button').fadeIn();
+    $('#start').fadeOut();
+    systemStatusGood();
+    $('#status').show();
+    setTimeout(displayInput, 1000);
+    $('#scienceToggle').fadeIn();
+    $('#addtarget').fadeIn();
+    $('#title h1').text('Main menu');
+    $('#title p').text('This is the main menu. To get started, select one of the options available in the center ' +
+        'of the screen.');
+}
+
+function nextStep() {
+    hideAllElements();
+    displayInput();
+    $('#dt').fadeIn();
+}
+
+function hideAllElements() {
+    $('#centercontent').hide();
+    $('#data').hide();
+    $('#input, #input button, .input, .input button').hide();
+    $('#patientInfoForm').hide();
+    $('#graphFiller').hide();
+    $('#graphs').hide();
+    $('#status').hide();
+    $('#scienceToggle').hide();
+    $('.feature').hide();
+    $('#loadinggif').hide();
+    $('#r2info').hide();
+    $('#r2button').hide();
 }
