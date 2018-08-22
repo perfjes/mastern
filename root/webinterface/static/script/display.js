@@ -41,19 +41,18 @@ $(document).ready(function () {
     });
 
     $('#dt').click(function() {
-        if (validateForm()) {
-            if (!$(this).hasClass('disabled')) {
-                $(this).fadeOut();
-                loading();
-                $('.result_element').remove();
-                $.getJSON('/dt', function (data) {
-                    if(data == null){
-                        systemStatusBad();
-                    }
-                    updateTable(data);
-                    displayResults();
-                });
-            }
+        if (!$(this).hasClass('disabled')) {
+            $(this).fadeOut();
+            hideAllElements();
+            loading();
+            $('.result_element').remove();
+            $.getJSON('/dt', function (data) {
+                if(data == null) {
+                    systemStatusBad();
+                }
+                updateTable(data);
+                displayResults();
+            });
         }
     });
 
@@ -64,7 +63,11 @@ $(document).ready(function () {
         $.get('/features', function(input) {
             $('#features').append(input);
             $('#resultheader').text('Dataset features');
-            $('#resultcontext').text('These are the features (or columns) of the dataset - also known as the categories of information gathered from each patient.').append("<br /><br />").append('The checkboxes indicate whether or not a feature will be included when the system predicts how long an implant will last in the given patient, by checking a box you include that feature in the prediction.');
+            $('#resultcontext').text('These are the features (or columns) of the dataset - also known as the ' +
+                'categories of information gathered from each patient.').append("<br /><br />").append('The ' +
+                'checkboxes indicate whether or not a feature will be included when the system predicts how long ' +
+                'an implant will last in the given patient, by checking a box you include that feature in the ' +
+                'prediction.');
             $('#loadinggif').hide();
             $('.feature').fadeIn();
             systemStatusGood();
@@ -94,14 +97,27 @@ $(document).ready(function () {
         enterPatientInfo();
     });
 
+    $('#case').change(function() {
+        if ($(this).val() == '1') {
+            $('.hidden').slideDown();
+        } else if ($(this).val() == '0') {
+            $('.hidden').slideUp();
+        }
+    });
+
     $('#saveTarget').click(function() {
         var formValid = true;
 
         $('#patientInfoForm form input').each(function() {
-            if ($(this).val() === ""){
+            if ($(this).val() === "") {
                 formValid = false;
                 console.log('Missing value!');
-                $('#patientInfoForm input').addClass('emptyForm');
+                $(this).addClass('emptyForm');
+            } else {
+                if ($(this).hasClass('emptyForm')) {
+                    console.log('yes');
+                    $(this).removeClass('emptyForm');
+                }
             }
         });
         if (formValid) {
@@ -129,7 +145,6 @@ $(document).ready(function () {
 });
 
 function updateTable(json) {
-    console.log(json);
     $.each(json, function(index, item) {
         console.log(json[item]);
         console.log(item);
@@ -146,8 +161,8 @@ function updateTable(json) {
 // TODO THIS FUNCTION BREAKS - NEED TO REMAKE THE ENTIRE DISPLAY FUNCTIONLAITY
 function appendDataToTable(rowdata) {
     $('#results_table').append(function () {
-        return '<tr class="result_element"><td>Actual: ' + rowdata['Actual'].toFixed(5) + '</td>' + '\n' +
-            '<td>Predicted: ' + rowdata['Predicted'].toFixed(5) + '</td></tr>';
+        return '<tr class="result_element"><td>Actual: ' + rowdata['Actual'] + '</td>' + '\n' +
+            '<td>Predicted: ' + rowdata['Predicted'] + '</td></tr>';
     });
 }
 
@@ -164,14 +179,20 @@ function loading() {
 
     clearTable();
     $('#loadinggif').fadeIn();
-    $('#resultheader').text('Loading...');
-    $('#resultcontext').text('We\'re doing some heavy lifting, this shouldn\'t take too long');
+    $('#resultheader').text('Loading...').fadeIn();
+    $('#resultcontext').text('We\'re doing some heavy lifting, this shouldn\'t take too long').fadeIn();
     $('#data').show();
 
     $('#centercontent').slideDown();
 }
 
+function doneLoading() {
+    $('#resultheader, #resultcontext').hide();
+    $('#loadinggif').hide();
+}
+
 function displayInput() {
+    doneLoading();
     $('#saveFeatures').removeClass('success').text('Save feature selection');
     $('#saveTarget').removeClass('success').text('Save patient information');
     clearTable();
@@ -179,7 +200,7 @@ function displayInput() {
     $('#data').show();
     $('#centercontent .input').show();
 
-    if (direction == 'up'){
+    if (direction == 'up') {
         console.log('haha');
         $('#centercontent').fadeIn();
     } else {
@@ -190,11 +211,11 @@ function displayInput() {
 }
 
 function enterPatientInfo() {
-    $('#loadinggif').hide();
+    doneLoading();
     $('#centercontent').slideDown();
-    $('#resultheader').text('Patient information form');
-    $('#resultcontext').text('Enter the relevant medical information on your patient here. The more information ' +
-        'provided, the better.');
+    $('#title h1').text('Patient information form');
+    $('#title p').text('We need you to enter all the information on your patient here. If you\'re missing some ' +
+        'data, please enter -1.');
     $('#patientInfoForm').show();
     systemStatusGood();
 }
@@ -203,7 +224,7 @@ function systemStatusGood() {
     var status = $('#status');
 
     if (!status.is(':visible')) {
-        status.show();
+        status.fadeIn();
     }
     status.css('background-color', '#142914').text('System status: All good.');
 }
@@ -212,7 +233,7 @@ function systemStatusLoading() {
     var status = $('#status');
 
     if (!status.is(':visible')) {
-        status.show();
+        status.fadeIn();
     }
      status.css('background-color', '#30310f').text('System status:    Loading - please wait...');
 }
@@ -221,7 +242,7 @@ function systemStatusBad() {
     var status = $('#status');
 
     if (!status.is(':visible')) {
-        status.show();
+        status.fadeIn();
     }
      status.css('background-color', 'red').text('System status: Something stopped working - please refresh!');
 }
@@ -236,11 +257,6 @@ function displayImage() {
     systemStatusGood();
 }
 
-function validateForm() {
-
-    return true;
-}
-
 function loadPage() {
     hideAllElements();
     $('#input, #start').fadeIn();
@@ -248,30 +264,42 @@ function loadPage() {
 }
 
 function start() {
+    doneLoading();
+    $('#start').hide();
     direction = 'down';
     $('#menu').css('left', 0);
     $('#buttons button').fadeIn();
-    $('#start').fadeOut();
-    systemStatusGood();
     $('#status').show();
-    setTimeout(displayInput, 1000);
-    $('#scienceToggle').fadeIn();
-    $('#addtarget').fadeIn();
+    setTimeout(systemStatusGood, 800);
     $('#title h1').text('Main menu');
     $('#title p').text('This is the main menu. To get started, we\'re going to need some information about the ' +
         'patient - if you press the big orange button in the middle of the screen you\'ll be able to enter all the ' +
         'necessary patient details.');
+    setTimeout(displayInput, 1000);
+    $('#scienceToggle').fadeIn();
+    $('#addtarget').fadeIn();
 }
 
 function nextStep() {
+    doneLoading();
     hideAllElements();
+    $('#title h1').text('One last thing...');
+    $('#title p').text('We\'re ready to start predicting! The prediction usually takes a minute to run, but that ' +
+        'depends on how beefy your computer processor is. It might take longer. If you want, you can specify which ' +
+        'parts of the patient information will be taken into consideration - after all, you\'re the most qualified to ' +
+        'decide what matters and what doesn\'t.');
     direction = 'up';
     displayInput();
     $('#dt, #featurebtn').fadeIn();
 }
 
-function displayResults(){
-
+function displayResults() {
+    doneLoading();
+    $('#title h1').text('Prediction results');
+    $('#title p').text('Presented to you in the center part of the page are the results from ' +
+        'running your data into the machine learning prediction magician.');
+    $('#results_table, #graphFiller, #graphs').fadeIn();
+    $('#r2button').fadeIn();
 }
 
 function hideAllElements() {

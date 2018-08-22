@@ -207,9 +207,15 @@ body {
 
 /****************************** PATIENT INFO FORM ******************************/
 
-#patientInfoForm {
-    width: 50%;
-    margin: 0 auto;
+#patientInfoForm form {
+    -webkit-columns: 1;
+       -moz-columns: 1;
+            columns: 1;
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+    height: fit-content;
+    margin: 50px auto;
 }
 
 #patientInfoForm div {
@@ -221,20 +227,19 @@ body {
     font-family: 'Roboto Condensed', sans-serif;
     margin: 8px;
     text-align: right;
-    width: 130px;
+    width: 200px;
 }
 
 #patientInfoForm input, select {
     right: 0;
-    width: fit-content;
+    min-width: 110px;
     height: auto;
     display: inline-block;
-    vertical-align: top;
     margin: 8px;
 }
 
 #patientInfoForm input {
-    width: 90px;
+    width: 110px;
 }
 
 #saveTarget:hover {
@@ -247,8 +252,12 @@ body {
     cursor: pointer;
 }
 
+#patientInfoForm .hidden {
+    display: none;
+}
+
 .emptyForm {
-    border: 2px red;
+    border: red 2px solid;
 }
 
 #caseinfo {
@@ -349,7 +358,7 @@ body {
     height: -moz-fit-content;
     height: fit-content;
     padding: 10px;
-    margin: auto;
+    margin: 17% auto 30px auto;
 }
 
 #results_table td {
@@ -431,8 +440,11 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 
-#graphs h1 {
-    margin: 25px;
+#graphFiller h1 {
+    width: fit-content;
+    height: fit-content;
+    font-size: 18px;
+    margin: 25px auto;
 }
 
 .graphImage {

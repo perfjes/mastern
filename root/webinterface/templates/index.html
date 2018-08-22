@@ -30,6 +30,9 @@
                 <section id="data">
                     <h1 id="resultheader"></h1>
 
+                    <button id="r2button"> R2 score </button>
+                    <div id="r2info"> You shouldn't be able to see this. </div>
+
                     <section class="input">
                         <button id="featurebtn" class="button optional"> ( Optional ) <br/> Select dataset features </button>
                         <button id="addtarget" class="button"> Get started </button>
@@ -46,21 +49,21 @@
                                 <div>
                                     <label for="case"> Has the implant been removed? </label>
                                     <select id="case" name="target" class="patInfo">
-                                        <option value="0"> Implant still there </option>
-                                        <option value="1"> Implant removed </option>
+                                        <option value="0"> No - still there </option>
+                                        <option value="1"> Yes - removed </option>
                                     </select>
                                 </div>
 
-                                <div>
-                                    <label for="cuploose"> Was the cup loose? (if removed) </label>
+                                <div class="hidden">
+                                    <label for="cuploose"> Was the cup loose?<br/>(if it was removed) </label>
                                     <select id="cuploose" name="target" class="patInfo">
                                         <option value="0"> No </option>
                                         <option value="1"> Yes </option>
                                     </select>
                                 </div>
 
-                                <div>
-                                <label for="stemloose"> Was the stem loose? (if removed) </label>
+                                <div class="hidden">
+                                <label for="stemloose"> Was the stem loose?<br/>(if it was removed) </label>
                                     <select id="stemloose" name="target" class="patInfo">
                                         <option value="0"> No </option>
                                         <option value="1"> Yes </option>
@@ -146,11 +149,11 @@
                                     <option value="2"> Female </option>
                                 </select>
                             </div>
-
-                            <div>
-                                <button type="button" id="saveTarget" class="button"> Save patient information </button>
-                            </div>
                         </form>
+                        <div>
+                            <button type="button" id="saveTarget" class="button"> Save patient information </button>
+                        </div>
+                    </section>
 
                     <section>
                         <ul id="features" class="feature"></ul>
