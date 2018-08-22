@@ -94,7 +94,7 @@ def update_target():
             target.append(1)
         dth.Data.target = dth.prune_features(dth.generate_dataframe_from_html(target))
         return str(target)
-    return 'none'
+    pass
 
 
 @app.route('/science')
@@ -106,10 +106,11 @@ def turn_to_science():
 # best/worst/mean/standard deviation
 # Decision tree
 def dt_target_prediction():
+    r2_list = []
     prediction_results_list.clear()
     target = dth.Data.target
-    if len(list(target)) < 3:
-        print('Target features are too short, what is going on')
+    if target is None:
+        print('Target features are too few, what is going on')
         return 'none'
 
     # FOR ACTUAL USE
@@ -122,6 +123,7 @@ def dt_target_prediction():
         prediction = pd.DataFrame(
             {'Actual': target['years in vivo'], 'Predicted': statistics.mean(prediction_results_list)})
         result = format_results_into_json(prediction, r2, graphs)
+        r2_list.append(r2)
         get_processed_list_of_predictions(prediction_results_list)
 
     # FOR TESTING
@@ -129,6 +131,8 @@ def dt_target_prediction():
         prediction_result, r2, _ = ml.target_predict_decision_tree(target, Data.recalibrate)
         prediction = pd.DataFrame({'Actual': target['years in vivo'], 'Predicted': prediction_result})
         result = format_results_into_json(prediction, r2)
+
+    print(statistics.mean(r2_list))
 
     return result
 
@@ -232,7 +236,7 @@ def format_results_into_json(dataframe, r2score=None, graphs=list()):
     return json.dumps(json_result)
 
 
-# Attempt at fixing Chrome overaggressive caching. It didn't work.
+# Attempt at fixing Chrome overaggressive caching. It work.
 @app.after_request
 def add_header(r):
     """

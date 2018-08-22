@@ -173,6 +173,8 @@ def load_file(file):
 def generate_dataframe_from_html(input_list):
     columns = Features.original_dataset_features
     target_dataframe = pd.DataFrame([input_list], columns=columns)
+    if len(list(target_dataframe)) < 5:
+        return None
     return target_dataframe
 
 

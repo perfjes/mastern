@@ -109,14 +109,14 @@ body {
 
 .button {
     display: block;
-    width: 200px;
-    margin: 30px auto;
+    width: 300px;
+    margin: 5% auto;
     border-radius: 9px;
     font-family: 'Roboto Condensed', sans-serif;
     color: white;
-    font-size: 16px;
+    font-size: 19px;
     background: #b23000;
-    padding: 10px 22px;
+    padding: 22px 45px;
     text-decoration: none;
     -webkit-transition: 0.4s ease;
     -o-transition: 0.4s ease;
@@ -156,11 +156,6 @@ body {
     transform: translateY(-50%);
 }
 
-.input .button {
-    margin: 15px auto;
-    bottom: 0;
-}
-
 #features {
     -webkit-columns: 3;
        -moz-columns: 3;
@@ -196,6 +191,20 @@ body {
     right: 10px;
 }
 
+#start {
+    margin-top: 50%;
+}
+
+.success {
+    background-color: #004000;
+    color: white;
+}
+
+#saveTarget .success:hover {
+    background-color: #004000;
+    color: white;
+}
+
 /****************************** PATIENT INFO FORM ******************************/
 
 #patientInfoForm {
@@ -228,8 +237,34 @@ body {
     width: 90px;
 }
 
-#saveTarget {
+#saveTarget:hover {
+    background: #ffc7b2;
+    color: black;
+    text-decoration: none;
+    -webkit-transition: 0.4s ease;
+    -o-transition: 0.4s ease;
+    transition: 0.4s ease;
+    cursor: pointer;
+}
 
+.emptyForm {
+    border: 2px red;
+}
+
+#caseinfo {
+    background: #EFEFFF;
+}
+
+#bloodinfo {
+    background: #FFEFEF;
+}
+
+#wearinfo {
+    background: #ffffef;
+}
+
+#angleinfo {
+    background: #EFFFEF;
 }
 
 /****************************** CENTER CONTENT ******************************/

@@ -1,3 +1,5 @@
+var direction = 'down';
+
 $(document).ready(function () {
     clearTable();
     loadPage();
@@ -48,21 +50,15 @@ $(document).ready(function () {
                     if(data == null){
                         systemStatusBad();
                     }
-                    $('#data').show();
-                    $('#r2button').show();
                     updateTable(data);
-                    $('#resultheader').text('Results - Target prediction');
-                    $('#resultcontext').text('The predicted \'years in vivo\' value represent the years that the implant is ' +
-                        'predicted to last in the patient.');
-                    $('#loadinggif').hide();
-                    displayImage();
+                    displayResults();
                 });
             }
         }
     });
 
     $('#featurebtn').click(function() {
-        clearTable();
+        hideAllElements();
         loading();
         systemStatusBad();
         $.get('/features', function(input) {
@@ -73,7 +69,6 @@ $(document).ready(function () {
             $('.feature').fadeIn();
             systemStatusGood();
         });
-        $('#scienceToggle').fadeIn();
     });
 
     $('#saveFeatures').click(function() {
@@ -89,8 +84,8 @@ $(document).ready(function () {
                 systemStatusBad();
             }
         });
-        $(this).css('background-color', '#004000').text('Successfully saved');
-        setTimeout(displayInput, 2000);
+        $(this).addClass('success').text('Successfully saved');
+        setTimeout(nextStep, 2000);
     });
 
     $('#addtarget').click(function() {
@@ -100,34 +95,51 @@ $(document).ready(function () {
     });
 
     $('#saveTarget').click(function() {
-        $.ajax({
-            url: '/updatetarget',
-            data: $('.patInfo').serialize(),
-            type: 'POST',
-            success: function(response) {
-                console.log(response);
-            },
-            error: function(response) {
-                console.log('Oh no, ' + response.valueOf());
-                systemStatusBad();
+        var formValid = true;
+
+        $('#patientInfoForm form input').each(function() {
+            if ($(this).val() === ""){
+                formValid = false;
+                console.log('Missing value!');
+                $('#patientInfoForm input').addClass('emptyForm');
             }
         });
-        $(this).css('background-color', '#004000').text('Successfully saved');
-        setTimeout(nextStep, 2000);
+        if (formValid) {
+            console.log('running post request');
+            $.ajax({
+                url: '/updatetarget',
+                data: $('.patInfo').serialize(),
+                type: 'POST',
+                success: function (response) {
+                    console.log(response);
+                },
+                error: function (response) {
+                    console.log('Oh no, ' + response.valueOf());
+                    systemStatusBad();
+                }
+            });
+            $(this).addClass('success').text('Successfully saved');
+            setTimeout(nextStep, 2000);
+        }
     });
 
-    // $('#r2button').click(function() {
-    //     $('#r2info').fadeToggle();
-    // });
+    $('#r2button').click(function() {
+        $('#r2info').fadeToggle();
+    });
 });
 
-function updateTable(json, type) {
+function updateTable(json) {
+    console.log(json);
+    $.each(json, function(index, item) {
+        console.log(json[item]);
+        console.log(item);
+    });
     systemStatusGood();
-    // if ('r2' in json) {
-    //     $('#r2info').text('This prediction model has an R2 score of ' + parseFloat(json.r2).toFixed(7));
-    // }
+    if ('r2' in json) {
+        $('#r2info').text('This prediction model has an R2 score of ' + parseFloat(json.r2).toFixed(7));
+    }
     $.each(json.result, function (index, item) {
-        appendDataToTable(item, type);
+        appendDataToTable(item);
     });
 }
 
@@ -160,13 +172,20 @@ function loading() {
 }
 
 function displayInput() {
-    $('#saveFeatures').css('background-color', '#b23000').text('Save feature selection');
-    $('#saveTarget').css('background-color', '#b23000').text('Save patient information');
+    $('#saveFeatures').removeClass('success').text('Save feature selection');
+    $('#saveTarget').removeClass('success').text('Save patient information');
     clearTable();
 
     $('#data').show();
     $('#centercontent .input').show();
-    $('#centercontent').slideDown();
+
+    if (direction == 'up'){
+        console.log('haha');
+        $('#centercontent').fadeIn();
+    } else {
+        $('#centercontent').slideDown();
+    }
+
     systemStatusGood();
 }
 
@@ -219,15 +238,17 @@ function displayImage() {
 
 function validateForm() {
 
-    return false;
+    return true;
 }
 
 function loadPage() {
     hideAllElements();
     $('#input, #start').fadeIn();
+    $('#scienceToggle').fadeIn();
 }
 
 function start() {
+    direction = 'down';
     $('#menu').css('left', 0);
     $('#buttons button').fadeIn();
     $('#start').fadeOut();
@@ -237,25 +258,30 @@ function start() {
     $('#scienceToggle').fadeIn();
     $('#addtarget').fadeIn();
     $('#title h1').text('Main menu');
-    $('#title p').text('This is the main menu. To get started, select one of the options available in the center ' +
-        'of the screen.');
+    $('#title p').text('This is the main menu. To get started, we\'re going to need some information about the ' +
+        'patient - if you press the big orange button in the middle of the screen you\'ll be able to enter all the ' +
+        'necessary patient details.');
 }
 
 function nextStep() {
     hideAllElements();
+    direction = 'up';
     displayInput();
-    $('#dt').fadeIn();
+    $('#dt, #featurebtn').fadeIn();
+}
+
+function displayResults(){
+
 }
 
 function hideAllElements() {
     $('#centercontent').hide();
     $('#data').hide();
-    $('#input, #input button, .input, .input button').hide();
+    $('#input, #input button, .input, .input button, .optional').hide();
     $('#patientInfoForm').hide();
     $('#graphFiller').hide();
     $('#graphs').hide();
     $('#status').hide();
-    $('#scienceToggle').hide();
     $('.feature').hide();
     $('#loadinggif').hide();
     $('#r2info').hide();
