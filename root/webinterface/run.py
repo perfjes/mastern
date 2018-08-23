@@ -122,8 +122,8 @@ def dt_target_prediction():
 
         prediction = pd.DataFrame(
             {'Actual': target['years in vivo'], 'Predicted': statistics.mean(prediction_results_list)})
-        result = format_results_into_json(prediction, r2, graphs)
         r2_list.append(r2)
+        result = format_results_into_json(prediction, statistics.mean(r2_list), graphs)
         get_processed_list_of_predictions(prediction_results_list)
 
     # FOR TESTING

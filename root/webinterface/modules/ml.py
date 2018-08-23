@@ -69,14 +69,14 @@ def validate_or_create_regressor(filename):
             regressor = update_regression_model(filename, x_train, y_train)
             return regressor
     else:
-        # regressor = update_regression_model(filename, x_train, y_train)
+        regressor = update_regression_model(filename, x_train, y_train)
         return regressor
 
 
 def update_regression_model(filename, x_train, y_train):
     if filename == 'dt-regressor.sav':
-        regressor = DecisionTreeRegressor(criterion='mae', max_depth=8, min_samples_split=8, splitter='best',
-                                          max_leaf_nodes=15, min_impurity_decrease=0.0, presort=True)
+        regressor = DecisionTreeRegressor(criterion='mae', max_depth=4, min_samples_split=11, splitter='random',
+                                          max_leaf_nodes=5, min_impurity_decrease=0.05, presort=False)
         regressor.fit(x_train, y_train)
         dth.save_file(filename, regressor)
         print('Saved new regression model as', filename)
