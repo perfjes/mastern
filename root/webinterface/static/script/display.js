@@ -139,6 +139,11 @@ $(document).ready(function () {
         }
     });
 
+    $('#cancel').click(function() {
+        hideAllElements();
+        start();
+    });
+
     $('#r2button').click(function() {
         $('#r2info').fadeToggle();
     });
@@ -178,7 +183,7 @@ function loading() {
     systemStatusLoading();
 
     clearTable();
-    $('#loadinggif').fadeIn();
+    $('#loadinggif, #cancel').fadeIn();
     $('#resultheader').text('Loading...').fadeIn();
     $('#resultcontext').text('We\'re doing some heavy lifting, this shouldn\'t take too long').fadeIn();
     $('#data').show();
@@ -265,7 +270,7 @@ function loadPage() {
 
 function start() {
     doneLoading();
-    $('#start').hide();
+    $('#start, #cancel').hide();
     direction = 'down';
     $('#menu').css('left', 0);
     $('#buttons button').fadeIn();

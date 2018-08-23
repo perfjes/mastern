@@ -26,7 +26,7 @@ def split_dataset_into_train_test(dataframe, column):
     y = dataframe[column]
 
     # Create a training/testing split
-    x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.35, random_state=55)
+    x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.35)
 
     # TODO might not be necessary - just in case there's too little or too much of control cases in the
     # TODO training/testing subset. Not optimal by any means, just a temporary solution.
@@ -75,8 +75,8 @@ def validate_or_create_regressor(filename):
 
 def update_regression_model(filename, x_train, y_train):
     if filename == 'dt-regressor.sav':
-        regressor = DecisionTreeRegressor(criterion='mae', splitter='random', presort=False, max_depth=1,
-                                          max_leaf_nodes=3, min_impurity_decrease=0.0, min_samples_split=12)
+        regressor = DecisionTreeRegressor(criterion='mae', max_depth=8, min_samples_split=8, splitter='best',
+                                          max_leaf_nodes=15, min_impurity_decrease=0.0, presort=True)
         regressor.fit(x_train, y_train)
         dth.save_file(filename, regressor)
         print('Saved new regression model as', filename)
@@ -115,7 +115,7 @@ def target_predict_decision_tree(target, recalibrate=False, count=0):
             'presort': (True, False),
         }
 
-        regressor = GridSearchCV(DecisionTreeRegressor(criterion='friedman_mse', max_depth=12, min_samples_split=13, splitter='random', max_leaf_nodes=18, min_impurity_decrease=0.5, presort=False, random_state=83), parameters, refit=True)
+        regressor = GridSearchCV(DecisionTreeRegressor(criterion='mae', max_depth=8, min_samples_split=8, splitter='best', max_leaf_nodes=15, min_impurity_decrease=0.0, presort=True, random_state=83), parameters, refit=True)
         regressor.fit(x_train, y_train)
         print(regressor.best_params_)
         print('R2 is: ' + str(regressor.best_score_))

@@ -205,7 +205,30 @@ body {
     color: white;
 }
 
+#cancel {
+    position: absolute;
+    top: 1.8%;
+    right: 1.3%;
+    width: 46.6px;
+    height: 34px;
+    max-width: 125px;
+    max-height: 100px;
+    transition: 0.6s ease;
+}
+
+#cancel:hover {
+    filter: brightness(150%);
+    cursor: pointer;
+}
+
 /****************************** PATIENT INFO FORM ******************************/
+
+#patientInfoForm {
+    height: 96%;
+    width: 100%;
+    top: 4%;
+    position: absolute;
+}
 
 #patientInfoForm form {
     -webkit-columns: 1;
@@ -382,7 +405,7 @@ body {
 #r2button {
     width: 100px;
     padding: 8px;
-    margin: 0;
+    margin: 1% auto;
     border-radius: 9px;
     font-family: 'Roboto Condensed', sans-serif;
     color: white;
@@ -393,9 +416,9 @@ body {
     -webkit-transition: 0.4s ease;
     -o-transition: 0.4s ease;
     transition: 0.4s ease;
-    top: 25px;
-    right: 25px;
     position: absolute;
+    top: 1%;
+    right: 9%;
 }
 
 #r2button:hover {
