@@ -109,9 +109,9 @@ def target_predict_decision_tree(target, recalibrate=False, count=0):
             'criterion': ('mse', 'friedman_mse', 'mae'),
             'splitter': ('best', 'random'),
             'max_depth': (3, 5, 8, 12, 16, 18, 22),
-            'min_samples_split': (2, 3, 4, 5, 6, 9, 11, 16, 21, 25),
-            'max_leaf_nodes': range(4, 15),
-            'min_impurity_decrease': (0.0, 0.01, 0.02, 0.03, 0.05, 0.08, 0.12, 0.16, 0.2),
+            #'min_samples_split': (2, 3, 4, 5, 6, 9, 11, 16, 21, 25),
+            #'max_leaf_nodes': range(4, 15),
+            #'min_impurity_decrease': (0.0, 0.01, 0.02, 0.03, 0.05, 0.08, 0.12, 0.16, 0.2),
             'presort': (True, False),
         }
 
@@ -131,22 +131,15 @@ def target_predict_decision_tree(target, recalibrate=False, count=0):
 
     if recalibrate:
         dth.Test_data.result_dt[str(count)] = {"R2": str(regressor.best_score_), "prediction": str(prediction[0]), "parameters": regressor.best_params_}
-
-    if not recalibrate:
+    else:
         y_true = y_test.values.reshape(-1, 1)
         r2_pred = r2_prediction.reshape(-1, 1)
         r2 = metrics.r2_score(y_true, r2_pred)
 
-    graphs = []
-    graphs.append(graph.generate_graph(dth.Data.dataframe['years in vivo'], dth.Data.dataframe['inc'], 'years in vivo', 'inc', 'Relation between longevity and inclination', 'graph1.png'))
-    graphs.append(graph.generate_graph(dth.Data.dataframe['years in vivo'], dth.Data.dataframe['ant'], 'years in vivo', 'ant', 'Relation between longevity and ant(something)', 'graph2.png'))
-    graphs.append(graph.generate_graph(dth.Data.dataframe['years in vivo'], dth.Data.dataframe['cr'], 'years in vivo', 'cr', 'I can\'t remember what cr is', 'graph3.png'))
-    
-    return prediction, r2, graphs
-    # return pd.DataFrame({'Actual': target['years in vivo'], 'Predicted': y_prediction}), r2
+    return prediction, r2, make_some_graphs()
 
 
-def target_predict_mlp(target, recalibrate=False):
+def target_predict_mlp(target, recalibrate=False, count=0):
     x_train, x_test, y_train, y_test = split_dataset_into_train_test(dth.Data.dataframe, 'years in vivo')
     target_pred = target.drop('years in vivo', axis=1)
 
@@ -159,12 +152,12 @@ def target_predict_mlp(target, recalibrate=False):
         # - hidden_layer_sizes=(50, 50, 70, 60) for processed (pruned) dataset
         parameters = {
             # 'hidden_layer_sizes': [x for x in itertools.product((10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60), repeat=1)],
-            # 'hidden_layer_sizes': [x for x in itertools.product((10, 20, 25, 30, 40, 45, 50, 55, 60), repeat=2)],
+            'hidden_layer_sizes': [x for x in itertools.product((10, 20, 25, 30, 40, 45, 50, 55, 60), repeat=3)],
             # 'hidden_layer_sizes': [x for x in itertools.product((30, 40, 50, 60, 70, 80), repeat=4)],
-            # 'activation': ('identity', 'logistic', 'tanh', 'relu'),
-            # 'max_iter': range(150, 300),
-            # 'alpha': (0.0000, 0.0001, 0.0002, 0.0003, 0.0004, 0.0005, 0.0006, 0.0007),
-            # 'early_stopping': (True, False)
+            'activation': ('identity', 'logistic', 'tanh', 'relu'),
+            'max_iter': range(100, 300),
+            'alpha': (0.0000, 0.0001, 0.0002, 0.0003, 0.0004, 0.0005, 0.0006, 0.0007),
+            'early_stopping': (True, False)
         }
         regressor = GridSearchCV(MLPRegressor(activation='logistic', early_stopping=True, alpha=0.0001,
                                               hidden_layer_sizes=(50, 50, 70, 60), solver='lbfgs', max_iter=195),
@@ -182,15 +175,17 @@ def target_predict_mlp(target, recalibrate=False):
     r2_prediction = regressor.predict(x_test)
     prediction = regressor.predict(target_pred)
 
-    if not recalibrate:
+    if recalibrate:
+        dth.Test_data.result_dt[str(count)] = {"R2": str(regressor.best_score_), "prediction": str(prediction[0]), "parameters": regressor.best_params_}
+    else:
         y_true = y_test.values.reshape(-1, 1)
         r2_pred = r2_prediction.reshape(-1, 1)
         r2 = metrics.r2_score(y_true, r2_pred)
 
-    return prediction, r2
+    return prediction, r2, make_some_graphs()
 
 
-def target_predict_linear(target, recalibrate=False):
+def target_predict_linear(target, recalibrate=False, count=0):
     # Preprocessing the data
     target_pred = target.drop('years in vivo', axis=1)
     x_train, x_test, y_train, y_test = split_dataset_into_train_test(dth.Data.dataframe, 'years in vivo')
@@ -215,11 +210,22 @@ def target_predict_linear(target, recalibrate=False):
     r2_prediction = regressor.predict(x_test)
     prediction = regressor.predict(target_pred)
 
-    if not recalibrate:
+    if recalibrate:
+        dth.Test_data.result_dt[str(count)] = {"R2": str(regressor.best_score_), "prediction": str(prediction[0]), "parameters": regressor.best_params_}
+    else:
         y_true = y_test.values.reshape(-1, 1)
         r2_pred = r2_prediction.reshape(-1, 1)
         r2 = metrics.r2_score(y_true, r2_pred)
 
-    # graph_factory.generate_graph(df['years in vivo'], y_prediction)
+    return prediction, r2, make_some_graphs()
 
-    return prediction, r2
+
+def make_some_graphs():
+    graphs = [
+        graph.generate_graph(dth.Data.dataframe['years in vivo'], dth.Data.dataframe['inc'], 'years in vivo', 'inc',
+                             'Relation between longevity and inclination', 'graph1.png'),
+        graph.generate_graph(dth.Data.dataframe['years in vivo'], dth.Data.dataframe['ant'], 'years in vivo', 'ant',
+                             'Relation between longevity and ant(something)', 'graph2.png'),
+        graph.generate_graph(dth.Data.dataframe['years in vivo'], dth.Data.dataframe['cr'], 'years in vivo', 'cr',
+                             'I can\'t remember what cr is', 'graph3.png')]
+    return graphs

@@ -51,6 +51,7 @@ $(document).ready(function () {
                     systemStatusBad();
                 }
                 updateTable(data);
+                displayImage(data['graphs']);
                 displayResults();
             });
         }
@@ -252,13 +253,15 @@ function systemStatusBad() {
      status.css('background-color', 'red').text('System status: Something stopped working - please refresh!');
 }
 
-function displayImage() {
-    var img = document.createElement('img');
-    img.setAttribute('src', '../static/img/graph.png');
-    img.setAttribute('class', 'graphImage');
-    document.getElementById('graphs').appendChild(img);
+function displayImage(images) {
+    for(var image in images) {
+        var img = document.createElement('img');
+        img.setAttribute('src', '../static/img/' + images[image]);
+        img.setAttribute('class', 'graphImage');
+        document.getElementById('graphs').appendChild(img);
+    }
 
-    $('#graphs').slideDown();
+    $('#graphFiller').fadeIn();
     systemStatusGood();
 }
 

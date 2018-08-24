@@ -29,6 +29,7 @@ class Data:
 
 @app.route('/')
 def index():
+    Data.recalibrate = False
     return render_template('index.html')
 
 
@@ -84,6 +85,7 @@ def select_features():
 def update_target():
     if request.method == 'POST':
         target = request.form.getlist('target')
+
         if target[-1] == '0':
             target.append(0)
         elif target[-1] == '1':
@@ -99,19 +101,22 @@ def update_target():
 
 @app.route('/science')
 def turn_to_science():
+    Data.recalibrate = True
     return render_template('science.html')
 
 
-# TODO implement multiple runs if recalibrate is turned off - gather results of each run, present
-# best/worst/mean/standard deviation
 # Decision tree
 def dt_target_prediction():
     r2_list = []
     prediction_results_list.clear()
-    target = dth.Data.target
-    if target is None:
-        print('Target features are too few, what is going on')
-        return 'none'
+
+    if Data.recalibrate:
+        target = dth.load_dataframe('test.csv')
+    else:
+        target = dth.Data.target
+        if target is None:
+            print('Target features are too few, what is going on')
+            return 'none'
 
     # FOR ACTUAL USE
     if not Data.recalibrate:
@@ -130,48 +135,77 @@ def dt_target_prediction():
     else:
         prediction_result, r2, _ = ml.target_predict_decision_tree(target, Data.recalibrate)
         prediction = pd.DataFrame({'Actual': target['years in vivo'], 'Predicted': prediction_result})
-        result = format_results_into_json(prediction, statistics.mean(r2_list))
-    print(result)
+        result = format_results_into_json(prediction, r2_list)
 
     return result
 
 
 # Multi-Layer Perceptron
 def mlp_target_prediction():
+    r2_list = []
     prediction_results_list.clear()
-    target = dth.load_dataframe(dth.Path.path + 'test.csv')
+
+    if Data.recalibrate:
+        target = dth.load_dataframe('test.csv')
+    else:
+        target = dth.Data.target
+        if target is None:
+            print('Target features are too few, what is going on')
+            return 'none'
+
+    # FOR ACTUAL USE
     if not Data.recalibrate:
         for x in range(50):
-            prediction_result, r2, _ = ml.target_predict_mlp(target, Data.recalibrate)
+            prediction_result, r2, graphs = ml.target_predict_mlp(target, Data.recalibrate)
+            r2 = float(r2)
             prediction_results_list.append(float(prediction_result))
 
         prediction = pd.DataFrame(
-            {'Actual': target['years in vivo'], 'Predicted':statistics.mean(prediction_results_list)})
-        result = format_results_into_json(prediction, r2)
+            {'Actual': target['years in vivo'], 'Predicted': statistics.mean(prediction_results_list)})
+        r2_list.append(r2)
+        result = format_results_into_json(prediction, statistics.mean(r2_list), graphs)
         get_processed_list_of_predictions(prediction_results_list)
+
+    # FOR TESTING
     else:
-        prediction_result, r2 = ml.target_predict_mlp(target, Data.recalibrate)
+        prediction_result, r2, _ = ml.target_predict_mlp(target, Data.recalibrate)
         prediction = pd.DataFrame({'Actual': target['years in vivo'], 'Predicted': prediction_result})
-        result = format_results_into_json(prediction, r2)
+        result = format_results_into_json(prediction, r2_list)
 
     return result
 
 
 # Linear regression
 def linear_target_prediction():
+    r2_list = []
     prediction_results_list.clear()
-    target = dth.load_dataframe(dth.Path.path + 'test.csv')
-    if not Data.recalibrate:
-        for x in range(500):
-            prediction_result, r2, _ = ml.target_predict_linear(target, Data.recalibrate)
-            prediction_results_list.append(float(prediction_result))
-            prediction = pd.DataFrame({'Actual': target['years in vivo'], 'Predicted': prediction_result})
-            result = format_results_into_json(prediction, r2)
-        get_processed_list_of_predictions(prediction_results_list)
+
+    if Data.recalibrate:
+        target = dth.load_dataframe('test.csv')
     else:
-        prediction_result, r2 = ml.target_predict_linear(target, Data.recalibrate)
+        target = dth.Data.target
+        if target is None:
+            print('Target features are too few, what is going on')
+            return 'none'
+
+    # FOR ACTUAL USE
+    if not Data.recalibrate:
+        for x in range(50):
+            prediction_result, r2, graphs = ml.target_predict_linear(target, Data.recalibrate)
+            r2 = float(r2)
+            prediction_results_list.append(float(prediction_result))
+
+        prediction = pd.DataFrame(
+            {'Actual': target['years in vivo'], 'Predicted': statistics.mean(prediction_results_list)})
+        r2_list.append(r2)
+        result = format_results_into_json(prediction, statistics.mean(r2_list), graphs)
+        get_processed_list_of_predictions(prediction_results_list)
+
+    # FOR TESTING
+    else:
+        prediction_result, r2, _ = ml.target_predict_linear(target, Data.recalibrate)
         prediction = pd.DataFrame({'Actual': target['years in vivo'], 'Predicted': prediction_result})
-        result = format_results_into_json(prediction, r2)
+        result = format_results_into_json(prediction, r2_list)
 
     return result
 
