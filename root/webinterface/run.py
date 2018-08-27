@@ -212,7 +212,6 @@ def linear_target_prediction():
 
 # Prints statistics from predictions.
 def get_processed_list_of_predictions(results):
-    print(results)
     print('Standard deviation: ', statistics.stdev(results))
     print('Maximum years: ', max(results))
     print('Minimum years: ', min(results))
