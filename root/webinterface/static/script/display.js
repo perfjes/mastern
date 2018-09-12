@@ -311,7 +311,7 @@ function displayResults() {
 }
 
 function hideAllElements() {
-    $('#centercontent').hide();
+    $('.hideContent').hide();
     $('#data').hide();
     $('#input, #input button, .input, .input button, .optional').hide();
     $('#patientInfoForm').hide();

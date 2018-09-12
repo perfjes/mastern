@@ -26,12 +26,12 @@
                 <button type="button" id="start" class="button"> Start </button>
             </div>
 
-            <section id="centercontent">
-                <section id="data">
+            <section id="centercontent" class="hideContent">
+                <section id="data" class="hideContent">
                     <img id="cancel" src="../static/img/x.png">
                     <h1 id="resultheader"></h1>
 
-                    <button id="r2button"> R2 score </button>
+                    <button id="r2button" class="hideContent"> R2 score </button>
                     <div id="r2info"> You shouldn't be able to see this. </div>
 
                     <section class="input">
@@ -41,11 +41,11 @@
                     </section>
                     <img src="../static/img/load.gif" id="loadinggif" title="Loading"/>
 
-                    <table id="results_table"></table>
+                    <table id="results_table" class="hideContent"></table>
                     <p id="savestatus"></p>
                     <p id="resultcontext"></p>
 
-                    <section id="patientInfoForm">
+                    <section id="patientInfoForm" class="hideContent">
                         <form action="/updatetarget">
                                 <div>
                                     <label for="case"> Has the implant been removed? </label>
@@ -156,12 +156,12 @@
                         </div>
                     </section>
 
-                    <section>
+                    <section class="hideContent">
                         <ul id="features" class="feature"></ul>
                         <button type="button" id="saveFeatures" class="button feature"> Save </button>
                     </section>
 
-                    <section id="graphFiller">
+                    <section id="graphFiller" class="hideContent">
                         <h1>Graphs</h1>
                         <div id="graphs"></div>
                     </section>
@@ -169,7 +169,7 @@
             </section>
 
             <form action="/science">
-                <button id="scienceToggle" name="science">Science</button>
+                <button id="scienceToggle" class="button guitoggle">Science</button>
             </form>
         </div>
     </body>

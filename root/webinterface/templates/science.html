@@ -14,13 +14,13 @@
     <body>
         <div id="gridwrapper">
             <div id='menu'>
-                <section id="title">
+                <section id="title" class="hideSection">
                     <h1>Machine learning<br>in progress</h1>
                     <p>This is the web framework for my master thesis project.</p>
                     <p id="status">Website is loading (probably)</p>
                 </section>
 
-                <section id="input">
+                <section id="input" class="hideSection">
                     <form id="buttons" method="post">
                         <button type="button" id="featurebtn" class="button"> Choose feature set </button>
                         <button type="button" id="dt" class="button"> Decision Tree </button>
@@ -30,7 +30,7 @@
                 </section>
             </div>
 
-            <section id="results">
+            <section id="results" class="hideSection">
                 <section id="data">
                     <h1 id="resultheader"></h1>
 
@@ -50,9 +50,12 @@
                     <p id="savestatus"></p>
                     <p id="resultcontext"></p>
 
-                    <ul id="features" class="feature"></ul>
-                    <button type="button" id="saveFeatures" class="button feature"> Save </button>
-                    <section id="graphFiller">
+                    <section class="hideSection">
+                        <ul id="features" class="feature"></ul>
+                        <button type="button" id="saveFeatures" class="button feature"> Save </button>
+                    </section>
+
+                    <section id="graphFiller" class="hideSection">
                         <h1>Graphs</h1>
                         <div id="graphs"></div>
                     </section>
@@ -64,7 +67,7 @@
             </section>
 
             <form action="/">
-                <button id="scienceToggle">Normal</button>
+                <button id="scienceToggle" class="button guitoggle">Normal</button>
             </form>
         </div>
     </body>
