@@ -459,18 +459,6 @@ body {
 /****************************** GRAPH IMAGES ******************************/
 
 #graphs {
-    -webkit-box-flex: 1;
-            -ms-flex: 1;
-                flex: 1;
-    min-height: 100%;
-    height: -webkit-fit-content;
-    height: -moz-fit-content;
-    height: fit-content;
-    background: white;
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    border: 5px #1e1e1e;
     margin: 0 3px;
     font-family: 'Roboto', sans-serif;
 }

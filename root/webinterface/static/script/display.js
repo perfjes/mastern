@@ -1,4 +1,5 @@
 var direction = 'down';
+var patientInfo;
 
 $(document).ready(function () {
     clearTable();
@@ -6,38 +7,6 @@ $(document).ready(function () {
 
     $('#start').show().click(function() {
         start();
-    });
-
-    $('#linear').click(function() {
-        loading();
-        $('.result_element').remove();
-        $.getJSON('/linear', function(data) {
-            $('#r2button').show();
-            updateTable(data);
-            $('#resultheader').text('Results - Training the model');
-            $('#resultcontext').text('The training function randomly selects a subset of test cases and training' +
-                'cases, fitting the training data to the model. The model is then used to predict each test case ' +
-                ', the results being displayed above. \"Actual\" represents the actual years in vivo value ' +
-                'from the test set, while \"Predicted\" represents the value predicted by the model.');
-            $('#loadinggif').hide();
-            displayImage();
-        });
-    });
-
-    $('#mlp').click(function() {
-        loading();
-        $('.result_element').remove();
-        $.getJSON('/mlp', function(data) {
-            $('#data').fadeIn();
-            $('#r2button').show();
-            updateTable(data);
-            $('#resultheader').text('Results - Training the MLP regression model');
-            $('#resultcontext').text('These are the results from training and testing the Multi-Layer Perceptron ' +
-                'regression model on the dataset - not very important results, but the information is useful when ' +
-                'comparing different regression models..');
-            $('#loadinggif').hide();
-            displayImage();
-        });
     });
 
     $('#dt').click(function() {
@@ -123,6 +92,8 @@ $(document).ready(function () {
         });
         if (formValid) {
             console.log('running post request');
+            patientInfo = $('.patInfo').val();
+            console.log(patientInfo);
             $.ajax({
                 url: '/updatetarget',
                 data: $('.patInfo').serialize(),

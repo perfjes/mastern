@@ -121,7 +121,7 @@ def target_predict_decision_tree(target, recalibrate=False, count=0):
             'presort': (True, False),
         }
 
-        regressor = GridSearchCV(DecisionTreeRegressor(criterion='mae', max_depth=8, min_samples_split=8, splitter='best', max_leaf_nodes=15, min_impurity_decrease=0.0, presort=True, random_state=83), parameters, refit=True)
+        regressor = GridSearchCV(DecisionTreeRegressor(criterion='mae', max_depth=8, min_samples_split=8, splitter='best', max_leaf_nodes=15, min_impurity_decrease=0.0, presort=True, random_state=83), parameters, n_jobs=-1)
         regressor.fit(x_train, y_train)
         print(regressor.best_params_)
         print('R2 is: ' + str(regressor.best_score_))
