@@ -5,8 +5,30 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3e93f87e-0a3c-431c-8be6-2f63de5c70bc" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/mastern.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/mastern.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/DTRegressionBestParams.sav" beforeDir="false" afterPath="$PROJECT_DIR$/root/data/DTRegressionBestParams.sav" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/LinearRegressionBestParams.sav" beforeDir="false" afterPath="$PROJECT_DIR$/root/data/LinearRegressionBestParams.sav" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/MLPRegressionBestParams.sav" beforeDir="false" afterPath="$PROJECT_DIR$/root/data/MLPRegressionBestParams.sav" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/dt-regressor.sav" beforeDir="false" afterPath="$PROJECT_DIR$/root/data/dt-regressor.sav" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/deprecated/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/deprecated/classifier.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/deprecated/example.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/deprecated/gui/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/deprecated/gui/main.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/deprecated/gui/tree.dot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/deprecated/heavy.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/deprecated/index2.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/deprecated/mainOrigin.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/deprecated/predictlongevity.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/deprecated/predictriskoffailure.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/deprecated/regressor.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/webinterface/modules/datahandler.py" beforeDir="false" afterPath="$PROJECT_DIR$/root/webinterface/modules/datahandler.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/root/webinterface/modules/ml.py" beforeDir="false" afterPath="$PROJECT_DIR$/root/webinterface/modules/ml.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/webinterface/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/root/webinterface/run.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/webinterface/static/img/graph2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/webinterface/static/img/x.png" beforeDir="false" afterPath="$PROJECT_DIR$/root/webinterface/static/img/x.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/root/webinterface/static/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/root/webinterface/static/main.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/root/webinterface/static/script/display.js" beforeDir="false" afterPath="$PROJECT_DIR$/root/webinterface/static/script/display.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/root/webinterface/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/root/webinterface/templates/index.html" afterDir="false" />
@@ -19,123 +41,84 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/mastern$main__1_.coverage" NAME="main (1) Coverage Results" MODIFIED="1527155792833" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/compute/modules/gui" />
-    <SUITE FILE_PATH="coverage/mastern$web_gui.coverage" NAME="web_gui Coverage Results" MODIFIED="1530103466170" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/compute/webinterface" />
-    <SUITE FILE_PATH="coverage/mastern$run__1_.coverage" NAME="run (1) Coverage Results" MODIFIED="1533803853842" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/root" />
-    <SUITE FILE_PATH="coverage/mastern$main.coverage" NAME="main Coverage Results" MODIFIED="1527244973276" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/compute/modules" />
-    <SUITE FILE_PATH="coverage/mastern$html__1_.coverage" NAME="html (1) Coverage Results" MODIFIED="1527502416361" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/compute/webinterface" />
-  </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.5">
-      <split-first>
-        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="run.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/root/webinterface/run.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="4260">
-                  <caret line="220" column="26" selection-start-line="220" selection-start-column="26" selection-end-line="220" selection-end-column="26" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/root/webinterface/templates/index.html">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="500">
-                  <caret line="34" column="19" selection-start-line="34" selection-start-column="19" selection-end-line="34" selection-end-column="19" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="display.js" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/root/webinterface/static/script/display.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="5500">
-                  <caret line="278" column="18" selection-start-line="278" selection-start-column="18" selection-end-line="278" selection-end-column="18" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="main.css" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/root/webinterface/static/main.css">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="430">
-                  <caret line="460" column="9" selection-start-line="460" selection-start-column="9" selection-end-line="460" selection-end-column="9" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="ml.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/root/webinterface/modules/ml.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="2440">
-                  <caret line="129" selection-start-line="129" selection-end-line="129" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="datahandler.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/root/webinterface/modules/datahandler.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="3420">
-                  <caret line="175" column="39" selection-start-line="175" selection-start-column="39" selection-end-line="175" selection-end-column="39" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="graph_factory.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/root/webinterface/modules/graph_factory.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="200">
-                  <caret line="16" column="23" selection-start-line="16" selection-start-column="23" selection-end-line="16" selection-end-column="23" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="science.html" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/root/webinterface/templates/science.html">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1440">
-                  <caret line="72" column="11" selection-start-line="72" selection-start-column="11" selection-end-line="72" selection-end-column="11" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="science.js" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/root/webinterface/static/script/science.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="960">
-                  <caret line="48" column="50" selection-start-line="48" selection-start-column="50" selection-end-line="48" selection-end-column="50" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="science.css" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/root/webinterface/static/science.css">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="3700">
-                  <caret line="185" column="10" selection-start-line="185" selection-start-column="10" selection-end-line="185" selection-end-column="10" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-first>
-      <split-second>
-        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="display.js" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/root/webinterface/static/script/display.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-4720">
-                  <caret line="1" column="16" selection-start-line="1" selection-start-column="16" selection-end-line="1" selection-end-column="16" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-second>
-    </splitter>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="run.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/root/webinterface/run.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1376">
+              <caret line="136" column="9" selection-start-line="136" selection-start-column="9" selection-end-line="136" selection-end-column="9" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/root/webinterface/static/main.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="180">
+              <caret line="232" column="4" selection-start-line="232" selection-start-column="4" selection-end-line="232" selection-end-column="4" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/root/webinterface/templates/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="299">
+              <caret line="41" column="28" lean-forward="true" selection-start-line="41" selection-start-column="28" selection-end-line="41" selection-end-column="28" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="datahandler.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/root/webinterface/modules/datahandler.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="598">
+              <caret line="30" lean-forward="true" selection-start-line="30" selection-end-line="30" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ml.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/root/webinterface/modules/ml.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2227">
+              <caret line="120" column="14" selection-start-line="120" selection-start-column="14" selection-end-line="120" selection-end-column="14" />
+              <folding>
+                <element signature="e#0#16#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="graph_factory.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/root/webinterface/modules/graph_factory.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="345">
+              <caret line="21" column="21" lean-forward="true" selection-start-line="21" selection-start-column="21" selection-end-line="21" selection-end-column="21" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="science.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/root/webinterface/templates/science.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-23">
+              <caret line="11" column="42" selection-start-line="11" selection-start-column="42" selection-end-line="11" selection-end-column="42" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="display.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/root/webinterface/static/script/display.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="245">
+              <caret line="160" column="22" lean-forward="true" selection-start-line="160" selection-start-column="22" selection-end-line="160" selection-end-column="22" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -143,23 +126,13 @@
         <option value="Python Script" />
         <option value="HTML File" />
         <option value="JavaScript File" />
-        <option value="Sass File" />
         <option value="CSS File" />
+        <option value="Sass File" />
       </list>
     </option>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>stupidass</find>
-      <find>start</find>
-      <find>feat</find>
-      <find>print(type</find>
-      <find>haha</find>
-      <find>)4</find>
-      <find>print</find>
-      <find>list of</find>
-      <find>load_pickle_file</find>
-      <find>status</find>
       <find>-ms-</find>
       <find>results</find>
       <find>main</find>
@@ -180,6 +153,16 @@
       <find>science</find>
       <find>displayImage</find>
       <find>saved</find>
+      <find>target</find>
+      <find>target_predict_</find>
+      <find>dth.data.target</find>
+      <find>haha</find>
+      <find>TestData</find>
+      <find>Test_data</find>
+      <find>test_data</find>
+      <find>refit</find>
+      <find>cancle</find>
+      <find>cancel</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -188,9 +171,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/compute/modules/classifier.py" />
-        <option value="$PROJECT_DIR$/compute/modules/predictlongevity.py" />
-        <option value="$PROJECT_DIR$/compute/modules/regressor.py" />
         <option value="$PROJECT_DIR$/compute/modules/main.py" />
         <option value="$PROJECT_DIR$/compute/modules/dataset.py" />
         <option value="$PROJECT_DIR$/compute/modules/gui/datahandler.py" />
@@ -231,13 +211,16 @@
         <option value="$PROJECT_DIR$/root/webinterface/static/main.sass" />
         <option value="$PROJECT_DIR$/root/webinterface/modules/graph_factory.py" />
         <option value="$PROJECT_DIR$/root/webinterface/static/script/science.js" />
+        <option value="$PROJECT_DIR$/root/webinterface/static/styles.sass" />
+        <option value="$PROJECT_DIR$/.idea/misc.xml" />
         <option value="$PROJECT_DIR$/root/webinterface/modules/datahandler.py" />
         <option value="$PROJECT_DIR$/root/webinterface/run.py" />
-        <option value="$PROJECT_DIR$/root/webinterface/templates/science.html" />
-        <option value="$PROJECT_DIR$/root/webinterface/static/science.css" />
         <option value="$PROJECT_DIR$/root/webinterface/modules/ml.py" />
-        <option value="$PROJECT_DIR$/root/webinterface/static/main.css" />
         <option value="$PROJECT_DIR$/root/webinterface/templates/index.html" />
+        <option value="$PROJECT_DIR$/root/webinterface/templates/index.html" />
+        <option value="$PROJECT_DIR$/root/webinterface/static/main.css" />
+        <option value="$PROJECT_DIR$/root/webinterface/static/main.css" />
+        <option value="$PROJECT_DIR$/root/webinterface/static/script/display.js" />
         <option value="$PROJECT_DIR$/root/webinterface/static/script/display.js" />
       </list>
     </option>
@@ -263,14 +246,12 @@
     <option name="width" value="1940" />
     <option name="height" value="1050" />
   </component>
-  <component name="ProjectLevelVcsManager">
-    <ConfirmationsSetting value="2" id="Add" />
-  </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -311,11 +292,17 @@
               <item name="static" type="462c0819:PsiDirectoryNode" />
               <item name="script" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="mastern" type="b2602c69:ProjectViewProjectNode" />
+              <item name="mastern" type="462c0819:PsiDirectoryNode" />
+              <item name="root" type="462c0819:PsiDirectoryNode" />
+              <item name="webinterface" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -323,7 +310,7 @@
     <property name="JavaScriptWeakerCompletionTypeGuess" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="list.type.of.created.stylesheet" value="CSS" />
+    <property name="list.type.of.created.stylesheet" value="Sass" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
@@ -498,7 +485,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-8" y="-8" width="1696" height="1026" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="5" />
@@ -506,53 +493,52 @@
       <window_info anchor="bottom" id="Database Changes" order="10" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.32965517" />
       <window_info anchor="bottom" id="Python Console" order="9" sideWeight="0.4978678" weight="0.3278867" />
-      <window_info anchor="bottom" id="Run" order="13" sideWeight="0.5021322" side_tool="true" weight="0.3242655" />
+      <window_info anchor="bottom" id="Run" order="13" sideWeight="0.5021322" side_tool="true" weight="0.32170978" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.32905984" />
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4856115" visible="true" weight="0.14179105" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4856115" visible="true" weight="0.14792176" />
+      <window_info anchor="right" id="R Packages" order="6" />
       <window_info anchor="bottom" id="Docker" order="6" show_stripe_button="false" />
+      <window_info anchor="right" id="R Graphics" order="5" />
       <window_info anchor="right" id="Database" order="3" />
       <window_info anchor="right" id="SciView" order="4" sideWeight="0.49628055" weight="0.32877603" />
       <window_info id="Structure" order="1" sideWeight="0.5143885" side_tool="true" weight="0.13333334" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="2" sideWeight="0.4987775" weight="0.3975225" />
-      <window_info anchor="right" id="R Graphics" order="5" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" visible="true" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="4" weight="0.4" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="Inspection Results" order="11" weight="0.32979852" />
-      <window_info anchor="right" id="R Packages" order="6" />
       <window_info anchor="right" x="0" y="0" width="434" height="856" id="Documentation" order="7" sideWeight="0.50371945" side_tool="true" weight="0.32916668" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="3" weight="0.25" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.4966443" weight="0.32051283" />
     </layout>
     <layout-to-restore>
+      <window_info anchor="bottom" id="Version Control" order="8" weight="0.32965517" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" visible="true" weight="0.25" />
       <window_info anchor="bottom" id="Docker" order="6" show_stripe_button="false" />
       <window_info anchor="bottom" id="Run" order="13" sideWeight="0.5033557" side_tool="true" weight="0.45331833" />
-      <window_info anchor="bottom" id="Cvs" order="3" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4856115" visible="true" weight="0.13630807" />
       <window_info id="Structure" order="1" sideWeight="0.5143885" side_tool="true" weight="0.13333334" />
-      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="bottom" id="TODO" order="5" />
       <window_info anchor="right" id="R Graphics" order="5" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="bottom" id="Database Changes" order="10" show_stripe_button="false" />
+      <window_info anchor="bottom" id="TODO" order="5" />
       <window_info anchor="bottom" id="Inspection Results" order="11" weight="0.32979852" />
       <window_info anchor="right" id="R Packages" order="6" />
-      <window_info anchor="bottom" id="Python Console" order="9" sideWeight="0.4986577" weight="0.32763532" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Inspection" order="4" weight="0.4" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.4966443" weight="0.32051283" />
       <window_info anchor="right" x="0" y="0" width="434" height="856" id="Documentation" order="7" sideWeight="0.50371945" side_tool="true" weight="0.32916668" />
       <window_info anchor="bottom" id="Debug" order="2" sideWeight="0.4987775" weight="0.3975225" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.32905984" />
       <window_info anchor="bottom" id="Event Log" order="12" sideWeight="0.50535715" side_tool="true" weight="0.47806525" />
-      <window_info anchor="bottom" id="Database Changes" order="10" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="8" weight="0.32965517" />
+      <window_info anchor="bottom" id="Inspection" order="4" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="3" weight="0.25" />
       <window_info anchor="right" id="SciView" order="4" sideWeight="0.49628055" weight="0.32877603" />
-      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.4966443" weight="0.32051283" />
+      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Database" order="3" />
-      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Python Console" order="9" sideWeight="0.4986577" weight="0.32763532" />
     </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -570,12 +556,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/requirements.txt" />
-    <entry file="file://$PROJECT_DIR$/compute/webinterface/templates/regress.html" />
-    <entry file="file://$PROJECT_DIR$/compute/modules/classification_report.csv" />
-    <entry file="file://$PROJECT_DIR$/compute/webinterface/templates/index.html" />
-    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36/Lib/socketserver.py" />
-    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36/Lib/selectors.py" />
     <entry file="file://$PROJECT_DIR$/venv/Lib/site-packages/werkzeug/_reloader.py" />
     <entry file="file://$PROJECT_DIR$/compute/webinterface/static/img/load.gif" />
     <entry file="file://$PROJECT_DIR$/compute/deprecated/heavy.csv" />
@@ -633,71 +613,112 @@
     <entry file="file://$PROJECT_DIR$/root/webinterface/static/main.sass" />
     <entry file="file://$PROJECT_DIR$/root/webinterface/modules/datahandler.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3420">
-          <caret line="175" column="39" selection-start-line="175" selection-start-column="39" selection-end-line="175" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/root/webinterface/modules/graph_factory.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="200">
-          <caret line="16" column="23" selection-start-line="16" selection-start-column="23" selection-end-line="16" selection-end-column="23" />
+        <state relative-caret-position="4140">
+          <caret line="180" column="1" selection-start-line="180" selection-start-column="1" selection-end-line="180" selection-end-column="1" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/root/webinterface/static/script/science.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="960">
+        <state relative-caret-position="1104">
           <caret line="48" column="50" selection-start-line="48" selection-start-column="50" selection-end-line="48" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/root/webinterface/templates/science.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1440">
-          <caret line="72" column="11" selection-start-line="72" selection-start-column="11" selection-end-line="72" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/root/webinterface/static/science.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3700">
-          <caret line="185" column="10" selection-start-line="185" selection-start-column="10" selection-end-line="185" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/root/webinterface/run.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4260">
-          <caret line="220" column="26" selection-start-line="220" selection-start-column="26" selection-end-line="220" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/root/webinterface/modules/ml.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2440">
-          <caret line="129" selection-start-line="129" selection-end-line="129" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/root/webinterface/static/main.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="430">
-          <caret line="460" column="9" selection-start-line="460" selection-start-column="9" selection-end-line="460" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/root/webinterface/templates/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="500">
-          <caret line="34" column="19" selection-start-line="34" selection-start-column="19" selection-end-line="34" selection-end-column="19" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/root/webinterface/static/script/display.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-4720">
-          <caret line="1" column="16" selection-start-line="1" selection-start-column="16" selection-end-line="1" selection-end-column="16" />
+        <state relative-caret-position="1104">
+          <caret line="48" column="26" selection-start-line="48" selection-start-column="26" selection-end-line="48" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/root/webinterface/static/styles.sass">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4677">
+          <caret line="361" column="12" lean-forward="true" selection-start-line="361" selection-start-column="12" selection-end-line="361" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="702">
+          <caret line="643" column="10" lean-forward="true" selection-start-line="643" selection-start-column="10" selection-end-line="643" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/misc.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="16" selection-start-column="16" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/mastern.iml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="368">
+          <caret line="16" column="14" lean-forward="true" selection-start-line="16" selection-start-column="14" selection-end-line="16" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/root/webinterface/static/science.css">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/root/webinterface/modules/datahandler.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="598">
+          <caret line="30" lean-forward="true" selection-start-line="30" selection-end-line="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/root/webinterface/modules/ml.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2227">
+          <caret line="120" column="14" selection-start-line="120" selection-start-column="14" selection-end-line="120" selection-end-column="14" />
+          <folding>
+            <element signature="e#0#16#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/root/webinterface/run.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1376">
+          <caret line="136" column="9" selection-start-line="136" selection-start-column="9" selection-end-line="136" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/root/webinterface/static/main.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="232" column="4" selection-start-line="232" selection-start-column="4" selection-end-line="232" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/root/webinterface/modules/graph_factory.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="21" column="21" lean-forward="true" selection-start-line="21" selection-start-column="21" selection-end-line="21" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/root/webinterface/templates/science.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-23">
+          <caret line="11" column="42" selection-start-line="11" selection-start-column="42" selection-end-line="11" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/root/webinterface/templates/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="299">
+          <caret line="41" column="28" lean-forward="true" selection-start-line="41" selection-start-column="28" selection-end-line="41" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/root/webinterface/static/script/display.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="245">
+          <caret line="160" column="22" lean-forward="true" selection-start-line="160" selection-start-column="22" selection-end-line="160" selection-end-column="22" />
         </state>
       </provider>
     </entry>

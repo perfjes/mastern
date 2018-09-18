@@ -25,7 +25,7 @@ class Features:
     original_dataset_features = []
 
 
-class Test_data:
+class TestData:
     result_dt = {}
 
 
@@ -131,7 +131,8 @@ def load_dataframe(path):
     if 'id' in data:
         data = data.drop('id', axis=1)
 
-    Features.original_dataset_features = list(data)
+    if path != 'test.csv':
+        Features.original_dataset_features = list(data)
 
     data = prune_features(data)
 

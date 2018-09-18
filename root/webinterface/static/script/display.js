@@ -155,7 +155,7 @@ function loading() {
     systemStatusLoading();
 
     clearTable();
-    $('#loadinggif, #cancel').fadeIn();
+    $('#loadinggif, #cancel, #back').fadeIn();
     $('#resultheader').text('Loading...').fadeIn();
     $('#resultcontext').text('We\'re doing some heavy lifting, this shouldn\'t take too long').fadeIn();
     $('#data').show();
@@ -244,7 +244,7 @@ function loadPage() {
 
 function start() {
     doneLoading();
-    $('#start, #cancel').hide();
+    $('#start, #cancel, #back').hide();
     direction = 'down';
     $('#menu').css('left', 0);
     $('#buttons button').fadeIn();
@@ -282,15 +282,6 @@ function displayResults() {
 }
 
 function hideAllElements() {
-    $('.hideContent').hide();
-    $('#data').hide();
-    $('#input, #input button, .input, .input button, .optional').hide();
-    $('#patientInfoForm').hide();
-    $('#graphFiller').hide();
-    $('#graphs').hide();
-    $('#status').hide();
-    $('.feature').hide();
-    $('#loadinggif').hide();
-    $('#r2info').hide();
-    $('#r2button').hide();
+    $('.hideContent, #data, #patientInfoForm, #graphFiller, #graphs, #status, .feature, #loadinggif, #r2info, ' +
+        '#r2button, #input, #input button, .input, .input button, .optional').hide();
 }
