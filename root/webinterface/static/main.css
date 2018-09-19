@@ -472,6 +472,7 @@ body {
 
 .graphImage {
     width: 90%;
-    height: auto;
-    margin: 0 auto 5% auto;
+    height: 90%;
+    margin: 20px auto;
+    display: block;
 }

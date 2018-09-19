@@ -151,13 +151,6 @@ def target_predict_mlp(target, recalibrate=False, count=0):
     target_pred = target.drop('years in vivo', axis=1)
 
     if recalibrate:
-        # According to the dataset I've been given, these are the best parameters for MLP
-        # activation='logistic', alpha=0.0001, early_stopping=True, hidden_layer_sizes=(50, 40, 60, 80), solver='lbfgs,
-        # max_iter=195'
-
-        # - hidden_layer_sizes=(50, 40, 60, 80) when full unprocessed dataset
-        # - hidden_layer_sizes=(50, 50, 70, 60) for processed (pruned) dataset
-        # - activation='tanh', alpha=0.0, early_stopping=True, hidden_layer_sizes=(10,50,45)
         parameters = {
             # 'hidden_layer_sizes': [x for x in itertools.product((10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60), repeat=1)],
             # 'hidden_layer_sizes': [x for x in itertools.product((10, 20, 25, 30, 40, 45, 50, 55, 60), repeat=3)],
@@ -228,11 +221,14 @@ def target_predict_linear(target, recalibrate=False, count=0):
 
 
 def make_some_graphs():
-    graphs = [
-        graph.generate_graph(dth.Data.dataframe['years in vivo'], dth.Data.dataframe['inc'], 'years in vivo', 'inc',
-                             'Relation between longevity and inclination', 'graph1.png'),
-        graph.generate_graph(dth.Data.dataframe['years in vivo'], dth.Data.dataframe['ant'], 'years in vivo', 'ant',
-                             'Relation between longevity and ant(something)', 'graph2.png'),
-        graph.generate_graph(dth.Data.dataframe['years in vivo'], dth.Data.dataframe['cr'], 'years in vivo', 'cr',
-                             'I can\'t remember what cr is', 'graph3.png')]
+    graphs = []
+    count = 1
+    for feature in list(dth.Data.dataframe):
+
+        if feature != 'years in vivo':
+            graphs.append(graph.generate_graph(dth.Data.dataframe['years in vivo'], dth.Data.dataframe[feature],
+                                               'years in vivo', feature, 'Relation between longevity and ' + feature,
+                                               'graph' + str(count) + '.png'))
+            count += 1
+
     return graphs
