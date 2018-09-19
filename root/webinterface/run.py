@@ -44,8 +44,8 @@ def decision_tree_regressor():
     print('Runtime is: ' + str(end_time))
 
     if Data.recalibrate:
-        print(dth.save_results('decision-tree-gridsearchCV', dth.Test_data.result_dt))
-        params = dth.Test_data.result_dt
+        print(dth.save_results('decision-tree-gridsearchCV', dth.TestData.result_dt))
+        params = dth.TestData.result_dt
         for res in params:
             print('Run ' + str(res), params[res])
 
@@ -94,7 +94,7 @@ def update_target():
             target.pop()
             target.append(0)
             target.append(1)
-        dth.Data.target = dth.prune_features(dth.generate_dataframe_from_html(target))
+        dth.Data.target = dth.generate_dataframe_from_html(target)
         return str(target)
     pass
 
@@ -110,10 +110,12 @@ def dt_target_prediction():
     r2_list = []
     prediction_results_list.clear()
 
+    print('Are we testing?', Data.recalibrate)
+
     if Data.recalibrate:
         target = dth.load_dataframe('test.csv')
     else:
-        target = dth.Data.target
+        target = dth.prune_features(dth.Data.target)
         if target is None:
             print('Target features are too few, what is going on')
             return 'none'
@@ -135,7 +137,7 @@ def dt_target_prediction():
     else:
         prediction_result, r2, _ = ml.target_predict_decision_tree(target, Data.recalibrate)
         prediction = pd.DataFrame({'Actual': target['years in vivo'], 'Predicted': prediction_result})
-        result = format_results_into_json(prediction, r2_list)
+        result = format_results_into_json(prediction, r2)
 
     return result
 
@@ -170,7 +172,7 @@ def mlp_target_prediction():
     else:
         prediction_result, r2, _ = ml.target_predict_mlp(target, Data.recalibrate)
         prediction = pd.DataFrame({'Actual': target['years in vivo'], 'Predicted': prediction_result})
-        result = format_results_into_json(prediction, r2_list)
+        result = format_results_into_json(prediction, r2)
 
     return result
 
@@ -205,7 +207,7 @@ def linear_target_prediction():
     else:
         prediction_result, r2, _ = ml.target_predict_linear(target, Data.recalibrate)
         prediction = pd.DataFrame({'Actual': target['years in vivo'], 'Predicted': prediction_result})
-        result = format_results_into_json(prediction, r2_list)
+        result = format_results_into_json(prediction, r2)
 
     return result
 
@@ -238,15 +240,17 @@ def feature_selector():
 # Gets all features from the feature selection page, filters out the deselected features (on the page) from the dataset.
 def update_features(features):
     Data.selected_features = features
+
     for feature in Data.original_features:
         if feature in Data.selected_features and feature in dth.Features.drop_features_regression:
             dth.Features.drop_features_regression.remove(feature)
         if feature != 'years in vivo' and feature != 'case':
             if feature not in Data.selected_features and feature not in dth.Features.drop_features_regression:
                 dth.Features.drop_features_regression.append(feature)
+
     print('Drop features: ', dth.Features.drop_features_regression)
-    dth.Data.dataframe = dth.load_dataframe('df.csv')
-    print('Dataframe columns: ', list(dth.Data.dataframe))
+    dth.Data.target = dth.prune_features(dth.Data.target)
+    print('target features: ', list(dth.Data.target))
     return feature_selector()
 
 

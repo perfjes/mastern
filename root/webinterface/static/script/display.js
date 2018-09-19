@@ -146,26 +146,21 @@ function appendDataToTable(rowdata) {
 function clearTable() {
     $('#resultheader').text('');
     $('#resultcontext').text('');
-    $('.result_element').remove();
+    $('.result_element, .graphImage').remove();
     $('#features').empty();
-    $('.graphImage').remove();
 }
 
 function loading() {
     systemStatusLoading();
-
     clearTable();
-    $('#loadinggif, #cancel').fadeIn();
+    $('#loadinggif, #cancel, #back, #data').fadeIn();
     $('#resultheader').text('Loading...').fadeIn();
     $('#resultcontext').text('We\'re doing some heavy lifting, this shouldn\'t take too long').fadeIn();
-    $('#data').show();
-
     $('#centercontent').slideDown();
 }
 
 function doneLoading() {
-    $('#resultheader, #resultcontext').hide();
-    $('#loadinggif').hide();
+    $('#resultheader, #resultcontext, #loadinggif').hide();
 }
 
 function displayInput() {
@@ -173,17 +168,13 @@ function displayInput() {
     $('#saveFeatures').removeClass('success').text('Save feature selection');
     $('#saveTarget').removeClass('success').text('Save patient information');
     clearTable();
-
-    $('#data').show();
-    $('#centercontent .input').show();
-
+    $('#centercontent .input, #data').show();
     if (direction == 'up') {
         console.log('haha');
         $('#centercontent').fadeIn();
     } else {
         $('#centercontent').slideDown();
     }
-
     systemStatusGood();
 }
 
@@ -199,7 +190,6 @@ function enterPatientInfo() {
 
 function systemStatusGood() {
     var status = $('#status');
-
     if (!status.is(':visible')) {
         status.fadeIn();
     }
@@ -208,7 +198,6 @@ function systemStatusGood() {
 
 function systemStatusLoading() {
     var status = $('#status');
-
     if (!status.is(':visible')) {
         status.fadeIn();
     }
@@ -217,7 +206,6 @@ function systemStatusLoading() {
 
 function systemStatusBad() {
     var status = $('#status');
-
     if (!status.is(':visible')) {
         status.fadeIn();
     }
@@ -238,25 +226,21 @@ function displayImage(images) {
 
 function loadPage() {
     hideAllElements();
-    $('#input, #start').fadeIn();
-    $('#scienceToggle').fadeIn();
+    $('#input, #start, #scienceToggle').fadeIn();
 }
 
 function start() {
     doneLoading();
-    $('#start, #cancel').hide();
+    $('#start, #cancel, #back').hide();
     direction = 'down';
     $('#menu').css('left', 0);
-    $('#buttons button').fadeIn();
-    $('#status').show();
     setTimeout(systemStatusGood, 800);
     $('#title h1').text('Main menu');
     $('#title p').text('This is the main menu. To get started, we\'re going to need some information about the ' +
         'patient - if you press the big orange button in the middle of the screen you\'ll be able to enter all the ' +
         'necessary patient details.');
     setTimeout(displayInput, 1000);
-    $('#scienceToggle').fadeIn();
-    $('#addtarget').fadeIn();
+    $('#scienceToggle, #addtarget, #buttons button, #status').fadeIn();
 }
 
 function nextStep() {
@@ -277,20 +261,10 @@ function displayResults() {
     $('#title h1').text('Prediction results');
     $('#title p').text('Presented to you in the center part of the page are the results from ' +
         'running your data into the machine learning prediction magician.');
-    $('#results_table, #graphFiller, #graphs').fadeIn();
-    $('#r2button').fadeIn();
+    $('#results_table, #graphFiller, #graphs, #r2button').fadeIn();
 }
 
 function hideAllElements() {
-    $('.hideContent').hide();
-    $('#data').hide();
-    $('#input, #input button, .input, .input button, .optional').hide();
-    $('#patientInfoForm').hide();
-    $('#graphFiller').hide();
-    $('#graphs').hide();
-    $('#status').hide();
-    $('.feature').hide();
-    $('#loadinggif').hide();
-    $('#r2info').hide();
-    $('#r2button').hide();
+    $('.hideContent, #data, #patientInfoForm, #graphFiller, #graphs, #status, .feature, #loadinggif, #r2info, ' +
+        '#r2button, #input, #input button, .input, .input button, .optional').hide();
 }
