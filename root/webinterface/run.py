@@ -235,11 +235,12 @@ def feature_selector():
         if feature != 'case' and feature != 'years in vivo':
             if feature in Data.selected_features and feature not in dth.Features.initially_deactivated:
                 html_list.append(
-                    '<li><input type="checkbox" name="ff" class="feat" value="' + feature + '" checked="checked"/>' +
-                    feature + '</li>')
+                    '<li class="featureSelector"><input type="checkbox" name="ff" class="feat" value="' + feature +
+                    '" checked="checked"/>' + feature + '</li>')
             else:
                 html_list.append(
-                    '<li><input type="checkbox" name="ff" class="feat" value="' + feature + '"/>' + feature + '</li>')
+                    '<li class="featureSelector"><input type="checkbox" name="ff" class="feat" value="' + feature +
+                    '"/>' + feature + '</li>')
     html_list.append('</form>')
 
     return " ".join(html_list)

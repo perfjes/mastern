@@ -158,6 +158,10 @@ body {
     transform: translateY(-50%);
 }
 
+#featureWrapper {
+    margin: 50px auto;
+}
+
 #features {
     -webkit-columns: 3;
        -moz-columns: 3;
@@ -219,15 +223,20 @@ body {
     color: white;
 }
 
+#centerNav {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    justify-content: space-between;
+}
+
 #back {
-    position: absolute;
-    left: 0;
-    top: 0;
+    width: fit-content;
     padding: 0 15px 0 0;
     display: flex;
     align-items: center;
     border-radius: 50px;
-    margin: 3px;
+    margin: 8px;
     transition: 0.6s ease;
     color: #660100;
     font-weight: bold;
@@ -251,11 +260,9 @@ body {
 }
 
 #cancel {
-    position: absolute;
-    right: 0;
-    top: 0;
+    width: fit-content;
     padding: 0 0 0 15px;
-    margin: 3px;
+    margin: 8px;
     display: flex;
     align-items: center;
     border-radius: 50px;
@@ -285,7 +292,7 @@ body {
 #patientInfoForm {
     height: 100%;
     width: 100%;
-    top: 4%;
+    margin: auto;
 }
 
 #patientInfoForm form {
@@ -366,8 +373,13 @@ body {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
+    width: 75%;
+    height: fit-content;
+    min-height: 100%;
     position: relative;
     left: -6.33%;
+    box-shadow: gray 3px 1px 3px;
+    background-color: white;
 }
 
 #data {
@@ -380,10 +392,8 @@ body {
     height: fit-content;
     min-height: 100%;
     width: 100%;
-    max-width: 800px;
     margin: 0;
     font-family: 'Roboto', sans-serif;
-    position: relative;
 }
 
 .dataframe {

@@ -36,14 +36,16 @@
 
             <section id="centercontent" class="hideContent">
                 <section id="data" class="hideContent">
-                    <div id="back">
-                        <img id="backimg" src="../static/img/back.png">
-                        Back
-                    </div>
-                    <div id="cancel">
-                        Restart
-                        <img id="cancelimg" src="../static/img/x.png">
-                    </div>
+                    <section id="centerNav">
+                        <div id="back" class="navigation">
+                            <img id="backimg" src="../static/img/back.png">
+                            Back
+                        </div>
+                        <div id="cancel" class="navigation">
+                            Restart
+                            <img id="cancelimg" src="../static/img/x.png">
+                        </div>
+                    </section>
                     <h1 id="resultheader"></h1>
 
                     <button id="r2button" class="hideContent"> R2 score </button>
@@ -51,7 +53,6 @@
 
                     <section class="input">
                         <button id="featurebtn" class="button optional"> ( Optional ) <br/> Select dataset features </button>
-                        <button id="addtarget" class="button"> Get started </button>
                         <button id="dt" class="button"> Run prediction </button>
                     </section>
                     <img src="../static/img/load.gif" id="loadinggif" title="Loading"/>
@@ -171,7 +172,7 @@
                         </div>
                     </section>
 
-                    <section class="hideContent">
+                    <section id="featureWrapper" class="feature hideContent">
                         <ul id="features" class="feature"></ul>
                         <button type="button" id="saveFeatures" class="button feature"> Save </button>
                     </section>
