@@ -247,6 +247,7 @@ def feature_selector():
 
 
 # Gets all features from the feature selection page, filters out the deselected features (on the page) from the dataset.
+# TODO this broken, need to fix it AGAIN! GOD DAMMIT
 def update_features(features):
     Data.selected_features = features
 

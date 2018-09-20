@@ -1,7 +1,7 @@
-var direction = 'down',
+var slide = true,
     cancelled,
     patientInfo,
-    previousWindow;
+    previousWindow; //TODO implement as list instead, enable multiple backs
 
 $(document).ready(function () {
     $('#scienceToggle').hide();
@@ -34,7 +34,8 @@ $(document).ready(function () {
                     displayResults();
                 }
             }).fail(function() {
-                console.log('JSON request was terminated: ');
+                console.log('JSON request was terminated');
+                systemStatusBad();
             });
         }
     });
@@ -51,7 +52,7 @@ $(document).ready(function () {
         });
 
         // TODO DOESN'T WORK!
-        $('.featureSelector').click(function() {
+        $('.featureSelector').on('click', function() {
             console.log('lo0l');
             var checked = $(this).prop('checked');
             if (checked) {
@@ -68,7 +69,7 @@ $(document).ready(function () {
                 type: 'POST',
                 success: function() {
                     $('#saveFeatures').addClass('success').text('Successfully saved');
-                    previousWindow = enterPatientInfo;
+                    previousWindow = featureSelection;
                     setTimeout(nextStep, 2000);
                 },
                 error: function(response) {
@@ -109,6 +110,7 @@ $(document).ready(function () {
                 }
             });
             $(this).addClass('success').text('Successfully saved');
+            previousWindow = enterPatientInfo;
             setTimeout(nextStep, 2000);
         }
     });
@@ -146,19 +148,14 @@ function doneLoading() {
 
 function loadPage() {
     hideAllElements();
-    $('#input, #start').fadeIn();
+    $('#input, #start').show();
 }
 
 var start = function () {
     doneLoading();
     $('#start, #cancel, #back').hide();
-    direction = 'down';
+    slide = 'down';
     $('#menu').css('left', 0);
-    setTimeout(systemStatusGood, 800);
-    $('#title h1').text('Main menu');
-    $('#title p').text('This is the main menu. To get started, we\'re going to need some information about the ' +
-        'patient - if you press the big orange button in the middle of the screen you\'ll be able to enter all the ' +
-        'necessary patient details.');
     $('#saveFeatures').removeClass('success').text('Save feature selection');
     $('#saveTarget').removeClass('success').text('Save patient information');
     setTimeout(function() {
@@ -169,16 +166,15 @@ var start = function () {
 var enterPatientInfo = function () {
     doneLoading();
     clearTable();
-    $('.input, #data, #status').show();
-    if (direction == 'up') {
-        $('#centercontent').fadeIn();
-    } else {
-        $('#centercontent').slideDown();
-    }
+    $('#patientInfoForm, .input, #data, #status').show();
     $('#title h1').text('Patient information form');
     $('#title p').text('We need you to enter all the information on your patient here. If you\'re missing some ' +
         'data, please enter -1.');
-    $('#patientInfoForm').show();
+    if (slide) {
+        $('#centercontent').slideDown();
+    } else {
+        $('#centercontent').fadeIn();
+    }
     systemStatusGood();
 };
 
