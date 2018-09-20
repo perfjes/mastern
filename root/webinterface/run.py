@@ -25,6 +25,7 @@ class Data:
     original_features = list(dth.Data.dataframe)
     selected_features = original_features
     recalibrate = False
+    stop_process = False
 
 
 @app.route('/')
@@ -33,11 +34,9 @@ def index():
     return render_template('index.html')
 
 
-# TODO maybe just remove this :)
-
-
 @app.route('/dt', methods=['GET'])
 def decision_tree_regressor():
+    Data.stop_process = False
     start_time = time.time()
     prediction_result = dt_target_prediction()
     end_time = (time.time() - start_time)
@@ -105,6 +104,12 @@ def turn_to_science():
     return render_template('science.html')
 
 
+@app.route('/stopProcess', methods=['POST'])
+def cancel():
+    Data.stop_process = True
+    return 'stopped'
+
+
 # Decision tree
 def dt_target_prediction():
     r2_list = []
@@ -126,6 +131,9 @@ def dt_target_prediction():
             prediction_result, r2, graphs = ml.target_predict_decision_tree(target, Data.recalibrate)
             r2 = float(r2)
             prediction_results_list.append(float(prediction_result))
+            if Data.stop_process:
+                print('Process stopped, system made ', len(prediction_results_list), ' predictions')
+                break
 
         prediction = pd.DataFrame(
             {'Actual': target['years in vivo'], 'Predicted': statistics.mean(prediction_results_list)})

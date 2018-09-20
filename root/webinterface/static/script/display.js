@@ -1,12 +1,21 @@
-var direction = 'down';
-var patientInfo;
+var direction = 'down',
+    cancelled,
+    patientInfo,
+    previousWindow,
+    previousWindowButtons;
 
 $(document).ready(function () {
+    $('#scienceToggle').hide();
     clearTable();
     loadPage();
 
     $('#start').show().click(function() {
         start();
+        cancelled = false;
+    });
+
+    $('#title h1').dblclick(function() {
+        $('#scienceToggle').fadeToggle();
     });
 
     $('#dt').click(function() {
@@ -21,7 +30,9 @@ $(document).ready(function () {
                 }
                 updateTable(data);
                 displayImage(data['graphs']);
-                displayResults();
+                if (!cancelled) {
+                    displayResults();
+                }
             });
         }
     });
@@ -112,43 +123,21 @@ $(document).ready(function () {
     });
 
     $('#cancel').click(function() {
+        stopProcess();
         hideAllElements();
         start();
+    });
+
+    $('#back').click(function() {
+        stopProcess();
+        hideAllElements();
+        previousWindow(previousWindowButtons);
     });
 
     $('#r2button').click(function() {
         $('#r2info').fadeToggle();
     });
 });
-
-function updateTable(json) {
-    $.each(json, function(index, item) {
-        console.log(json[item]);
-        console.log(item);
-    });
-    systemStatusGood();
-    if ('r2' in json) {
-        $('#r2info').text('This prediction model has an R2 score of ' + parseFloat(json.r2).toFixed(7));
-    }
-    $.each(json.result, function (index, item) {
-        appendDataToTable(item);
-    });
-}
-
-// TODO THIS FUNCTION BREAKS - NEED TO REMAKE THE ENTIRE DISPLAY FUNCTIONLAITY
-function appendDataToTable(rowdata) {
-    $('#results_table').append(function () {
-        return '<tr class="result_element"><td>Actual: ' + rowdata['Actual'] + '</td>' + '\n' +
-            '<td>Predicted: ' + rowdata['Predicted'] + '</td></tr>';
-    });
-}
-
-function clearTable() {
-    $('#resultheader').text('');
-    $('#resultcontext').text('');
-    $('.result_element, .graphImage').remove();
-    $('#features').empty();
-}
 
 function loading() {
     systemStatusLoading();
@@ -163,14 +152,34 @@ function doneLoading() {
     $('#resultheader, #resultcontext, #loadinggif').hide();
 }
 
-function displayInput() {
+function loadPage() {
+    hideAllElements();
+    $('#input, #start').fadeIn();
+}
+
+function start() {
+    doneLoading();
+    $('#start, #cancel, #back').hide();
+    direction = 'down';
+    $('#menu').css('left', 0);
+    setTimeout(systemStatusGood, 800);
+    $('#title h1').text('Main menu');
+    $('#title p').text('This is the main menu. To get started, we\'re going to need some information about the ' +
+        'patient - if you press the big orange button in the middle of the screen you\'ll be able to enter all the ' +
+        'necessary patient details.');
+    setTimeout(function() {
+        displayInput($('#addtarget, #buttons button, #status'));
+    }, 1000);
+}
+
+function displayInput(buttons) {
+    buttons.fadeIn();
     doneLoading();
     $('#saveFeatures').removeClass('success').text('Save feature selection');
     $('#saveTarget').removeClass('success').text('Save patient information');
     clearTable();
     $('#centercontent .input, #data').show();
     if (direction == 'up') {
-        console.log('haha');
         $('#centercontent').fadeIn();
     } else {
         $('#centercontent').slideDown();
@@ -186,6 +195,74 @@ function enterPatientInfo() {
         'data, please enter -1.');
     $('#patientInfoForm').show();
     systemStatusGood();
+}
+
+function nextStep() {
+    doneLoading();
+    hideAllElements();
+    $('#title h1').text('One last thing...');
+    $('#title p').text('We\'re ready to start predicting! The prediction usually takes a minute to run, but that ' +
+        'depends on how beefy your computer processor is. It might take longer. If you want, you can specify which ' +
+        'parts of the patient information will be taken into consideration - after all, you\'re the most qualified to ' +
+        'decide what matters and what doesn\'t.');
+    direction = 'up';
+    displayInput($('#dt, #featurebtn'));
+}
+
+function displayResults() {
+    doneLoading();
+    $('#title h1').text('Prediction results');
+    $('#title p').text('Presented to you in the center part of the page are the results from ' +
+        'running your data into the machine learning prediction magician.');
+    $('#results_table, #graphFiller, #graphs, #r2button').fadeIn();
+}
+
+function displayImage(images) {
+    for(var image in images) {
+        var img = document.createElement('img');
+        img.setAttribute('src', '../static/img/' + images[image]);
+        img.setAttribute('class', 'graphImage');
+        document.getElementById('graphs').appendChild(img);
+    }
+
+    $('#graphFiller').fadeIn();
+    systemStatusGood();
+}
+
+function updateTable(json) {
+    $.each(json, function(index, item) {
+        console.log(json[item]);
+        console.log(item);
+    });
+    systemStatusGood();
+    if ('r2' in json) {
+        $('#r2info').text('This prediction model has an R2 score of ' + parseFloat(json.r2).toFixed(7));
+    }
+    $.each(json.result, function (index, item) {
+        appendDataToTable(item);
+    });
+}
+
+function appendDataToTable(rowdata) {
+    $('#results_table').append(function () {
+        return '<tr class="result_element"><td>Actual: ' + rowdata['Actual'] + '</td>' + '\n' +
+            '<td>Predicted: ' + rowdata['Predicted'] + '</td></tr>';
+    });
+}
+
+function stopProcess() {
+    $.ajax({
+        url: '/stopProcess',
+        type: 'POST',
+        success: function (response) {
+            console.log(response);
+            cancelled = true;
+        },
+        error: function (response) {
+            console.log(response);
+            systemStatusBad();
+        }
+    })
 }
 
 function systemStatusGood() {
@@ -212,59 +289,14 @@ function systemStatusBad() {
      status.css('background-color', 'red').text('System status: Something stopped working - please refresh!');
 }
 
-function displayImage(images) {
-    for(var image in images) {
-        var img = document.createElement('img');
-        img.setAttribute('src', '../static/img/' + images[image]);
-        img.setAttribute('class', 'graphImage');
-        document.getElementById('graphs').appendChild(img);
-    }
-
-    $('#graphFiller').fadeIn();
-    systemStatusGood();
-}
-
-function loadPage() {
-    hideAllElements();
-    $('#input, #start, #scienceToggle').fadeIn();
-}
-
-function start() {
-    doneLoading();
-    $('#start, #cancel, #back').hide();
-    direction = 'down';
-    $('#menu').css('left', 0);
-    setTimeout(systemStatusGood, 800);
-    $('#title h1').text('Main menu');
-    $('#title p').text('This is the main menu. To get started, we\'re going to need some information about the ' +
-        'patient - if you press the big orange button in the middle of the screen you\'ll be able to enter all the ' +
-        'necessary patient details.');
-    setTimeout(displayInput, 1000);
-    $('#scienceToggle, #addtarget, #buttons button, #status').fadeIn();
-}
-
-function nextStep() {
-    doneLoading();
-    hideAllElements();
-    $('#title h1').text('One last thing...');
-    $('#title p').text('We\'re ready to start predicting! The prediction usually takes a minute to run, but that ' +
-        'depends on how beefy your computer processor is. It might take longer. If you want, you can specify which ' +
-        'parts of the patient information will be taken into consideration - after all, you\'re the most qualified to ' +
-        'decide what matters and what doesn\'t.');
-    direction = 'up';
-    displayInput();
-    $('#dt, #featurebtn').fadeIn();
-}
-
-function displayResults() {
-    doneLoading();
-    $('#title h1').text('Prediction results');
-    $('#title p').text('Presented to you in the center part of the page are the results from ' +
-        'running your data into the machine learning prediction magician.');
-    $('#results_table, #graphFiller, #graphs, #r2button').fadeIn();
-}
-
 function hideAllElements() {
     $('.hideContent, #data, #patientInfoForm, #graphFiller, #graphs, #status, .feature, #loadinggif, #r2info, ' +
         '#r2button, #input, #input button, .input, .input button, .optional').hide();
+}
+
+function clearTable() {
+    $('#resultheader').text('');
+    $('#resultcontext').text('');
+    $('.result_element, .graphImage').remove();
+    $('#features').empty();
 }
