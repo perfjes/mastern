@@ -190,4 +190,5 @@ def prune_features(df):
 class Data:
     dataframe = load_dataframe_from_pickle()
     split = load_split_value_from_pickle()
+    unprocessed_target = pd.DataFrame()
     target = pd.DataFrame()

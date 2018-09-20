@@ -23,7 +23,7 @@ prediction_results_list = []
 
 class Data:
     original_features = list(dth.Data.dataframe)
-    selected_features = original_features
+    selected_features = [feature for feature in original_features if feature not in dth.Features.initially_deactivated]
     recalibrate = False
     stop_process = False
 
@@ -31,6 +31,7 @@ class Data:
 @app.route('/')
 def index():
     Data.recalibrate = False
+    print(Data.selected_features)
     return render_template('index.html')
 
 
@@ -93,7 +94,7 @@ def update_target():
             target.pop()
             target.append(0)
             target.append(1)
-        dth.Data.target = dth.generate_dataframe_from_html(target)
+        dth.Data.unprocessed_target = dth.generate_dataframe_from_html(target)
         return str(target)
     pass
 
@@ -233,7 +234,7 @@ def feature_selector():
     html_list = ['<form name="feats" action="/features">']
     for feature in Data.original_features:
         if feature != 'case' and feature != 'years in vivo':
-            if feature in Data.selected_features and feature not in dth.Features.initially_deactivated:
+            if feature in Data.selected_features:
                 html_list.append(
                     '<li class="featureSelector"><input type="checkbox" name="ff" class="feat" value="' + feature +
                     '" checked="checked"/>' + feature + '</li>')
@@ -258,10 +259,9 @@ def update_features(features):
             if feature not in Data.selected_features and feature not in dth.Features.drop_features_regression:
                 dth.Features.drop_features_regression.append(feature)
 
-    print('Drop features: ', dth.Features.drop_features_regression)
-    dth.Data.target = dth.prune_features(dth.Data.target)
-    print('target features: ', list(dth.Data.target))
-    return feature_selector()
+    dth.Data.target = dth.prune_features(dth.Data.unprocessed_target)
+
+    return "yes"
 
 
 # Dataframe, R2 score and a list of graphs are passed and the function returns a dict formatted into a proper JSON
