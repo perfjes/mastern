@@ -115,7 +115,7 @@ def target_predict_decision_tree(target, recalibrate=False, count=0):
     if recalibrate:
         parameters = {
             'criterion': ('mse', 'friedman_mse', 'mae'),
-            'splitter': ('best', 'random'),
+            # 'splitter': ('best', 'random'),
             # 'max_depth': (3, 5, 8, 12, 16, 18, 22),
             # 'min_samples_split': (2, 3, 4, 5, 6, 9, 11, 16, 21, 25),
             # 'max_leaf_nodes': range(4, 15),

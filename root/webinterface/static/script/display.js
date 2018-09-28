@@ -1,7 +1,7 @@
 var slide = true,
     cancelled,
     patientInfo,
-    previousWindow; //TODO implement as list instead, enable multiple backs
+    previousWindow = []; //TODO implement as list instead, enable multiple backs
 
 $(document).ready(function () {
     $('#scienceToggle').hide();
@@ -9,6 +9,7 @@ $(document).ready(function () {
     loadPage();
 
     $('#start').show().click(function() {
+        previousWindow.push(start);
         start();
         cancelled = false;
     });
@@ -18,7 +19,7 @@ $(document).ready(function () {
     });
 
     $('#dt').click(function() {
-        previousWindow = nextStep;
+        previousWindow.push(nextStep);
         if (!$(this).hasClass('disabled')) {
             $(this).fadeOut();
             hideAllElements();
@@ -46,7 +47,8 @@ $(document).ready(function () {
         systemStatusBad();
         $.get('/features', function(input) {
             featureSelection(input);
-            previousWindow = nextStep;
+            previousWindow.push(nextStep);
+            nextStep();
         }).fail(function() {
             console.log('Couldn\'t get list of features!');
         });
@@ -68,8 +70,10 @@ $(document).ready(function () {
                 data: $('.feat').serialize(),
                 type: 'POST',
                 success: function() {
-                    $('#saveFeatures').addClass('success').text('Successfully saved');
-                    previousWindow = featureSelection;
+                    $('#features').slideUp();
+                    $('#saveFeatures').addClass('success').text('Successfully saved').css('margin-top', '15%');
+                    previousWindow.push(featureSelection);
+                    featureSelection();
                     setTimeout(nextStep, 2000);
                 },
                 error: function(response) {
@@ -110,7 +114,10 @@ $(document).ready(function () {
                 }
             });
             $(this).addClass('success').text('Successfully saved');
-            previousWindow = enterPatientInfo;
+            previousWindow.push(featureSelection);
+            enterPatientInfo();
+            $('#patientInfoForm form').slideUp();
+            $('#saveTarget').css('margin-top', '45%');
             setTimeout(nextStep, 2000);
         }
     });
@@ -124,7 +131,15 @@ $(document).ready(function () {
     $('#back').click(function() {
         stopProcess();
         hideAllElements();
-        previousWindow();
+        console.log(previousWindow.length);
+        console.log(previousWindow[0]);
+
+        // Bugged
+        if (previousWindow.length > 0) {
+            previousWindow[previousWindow.length - 1]();
+        } else {
+            start();
+        }
     });
 
     $('#r2button').click(function() {
@@ -135,25 +150,30 @@ $(document).ready(function () {
 function loading() {
     systemStatusLoading();
     clearTable();
+    $('#title h1').text('Loading...');
+    $('#title p').text('We\'re doing some heavy lifting. This shouldn\'t take more than a minute or a few.').append('' +
+        '<br/><br/>').append('If the loading takes more than a few minutes, please check if the status bar below is ' +
+        'loading as well. If it is, your computer is slow and there\'s not an awul lot to do about that.');
     $('#loadinggif, #cancel, #back, #data').fadeIn();
-    $('#resultheader').text('Loading...').fadeIn();
-    $('#resultcontext').text('We\'re doing some heavy lifting, this shouldn\'t take too long').fadeIn();
     $('#centercontent').slideDown();
 }
 
 function doneLoading() {
     $('#resultheader, #resultcontext, #loadinggif').hide();
     $('.success').removeClass('success');
+    $('#saveFeatures').text('Save features');
+    $('#saveTarget, #saveFeatures').css('margin-top', '');
 }
 
 function loadPage() {
     hideAllElements();
-    $('#input, #start').show();
+    $('#input, #start').fadeIn();
 }
 
 var start = function () {
+    console.log('run');
     doneLoading();
-    $('#start, #cancel, #back').hide();
+    $('#start').hide();
     slide = 'down';
     $('#menu').css('left', 0);
     $('#saveFeatures').removeClass('success').text('Save feature selection');
@@ -166,10 +186,10 @@ var start = function () {
 var enterPatientInfo = function () {
     doneLoading();
     clearTable();
-    $('#patientInfoForm, .input, #data, #status').show();
     $('#title h1').text('Patient information form');
     $('#title p').text('We need you to enter all the information on your patient here. If you\'re missing some ' +
         'data, please enter -1.');
+    $('#patientInfoForm, #patientInfoForm form, .input, #data, #status').slideDown();
     if (slide) {
         $('#centercontent').slideDown();
     } else {
@@ -184,8 +204,7 @@ var nextStep = function () {
     $('#title h1').text('One last thing...');
     $('#title p').text('We\'re ready to start predicting! The prediction usually takes a minute to run, but that ' +
         'depends on how beefy your computer processor is. It might take longer. If you want, you can specify which ' +
-        'parts of the patient information will be taken into consideration - after all, you\'re the most qualified to ' +
-        'decide what matters and what doesn\'t.');
+        'parts of the patient information will be taken into consideration.');
     $('#centercontent, .input, .input button, #data, .navigation').show();
     systemStatusGood();
 };
@@ -207,8 +226,9 @@ var featureSelection = function(input) {
 function displayResults() {
     doneLoading();
     $('#title h1').text('Prediction results');
-    $('#title p').text('Presented to you in the center part of the page are the results from ' +
-        'running your data into the machine learning prediction magician.');
+    $('#title p').text('In the center page you can see the prediction result up top, with some graphs below. The ' +
+        'graphs detail the relationships between implant longevity and other features (such as blood analysis ' +
+        'results, angle of implant etc etc)');
     if (!cancelled) {
         $('#results_table, #graphFiller, #graphs, #r2button').fadeIn();
     } else {

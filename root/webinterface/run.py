@@ -26,12 +26,12 @@ class Data:
     selected_features = [feature for feature in original_features if feature not in dth.Features.initially_deactivated]
     recalibrate = False
     stop_process = False
+    target_dataframe = pd.DataFrame()
 
 
 @app.route('/')
 def index():
     Data.recalibrate = False
-    print(Data.selected_features)
     return render_template('index.html')
 
 
@@ -121,14 +121,14 @@ def dt_target_prediction():
     if Data.recalibrate:
         target = dth.load_dataframe('test.csv')
     else:
-        target = dth.prune_features(dth.Data.target)
+        target = dth.prune_features(dth.Data.unprocessed_target)
         if target is None:
             print('Target features are too few, what is going on')
             return 'none'
 
     # FOR ACTUAL USE
     if not Data.recalibrate:
-        for x in range(200):
+        for x in range(20):
             prediction_result, r2, graphs = ml.target_predict_decision_tree(target, Data.recalibrate)
             r2 = float(r2)
             prediction_results_list.append(float(prediction_result))
@@ -248,7 +248,7 @@ def feature_selector():
 
 
 # Gets all features from the feature selection page, filters out the deselected features (on the page) from the dataset.
-# TODO this broken, need to fix it AGAIN! GOD DAMMIT
+
 def update_features(features):
     Data.selected_features = features
 

@@ -6,10 +6,56 @@
   <component name="ChangeListManager">
     <list default="true" id="3e93f87e-0a3c-431c-8be6-2f63de5c70bc" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/DTRegressionBestParams.sav" beforeDir="false" afterPath="$PROJECT_DIR$/root/data/DTRegressionBestParams.sav" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/root/data/dt-regressor.sav" beforeDir="false" afterPath="$PROJECT_DIR$/root/data/dt-regressor.sav" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/root/webinterface/modules/datahandler.py" beforeDir="false" afterPath="$PROJECT_DIR$/root/webinterface/modules/datahandler.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/test-results/decision-tree-gridsearchCV.json" beforeDir="false" afterPath="$PROJECT_DIR$/root/data/test-results/decision-tree-gridsearchCV.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/test-results/decision-tree-gridsearchCV1.json" beforeDir="false" afterPath="$PROJECT_DIR$/root/data/test-results/decision-tree-gridsearchCV1.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/test-results/decision-tree-gridsearchCV10.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/test-results/decision-tree-gridsearchCV11.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/test-results/decision-tree-gridsearchCV12.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/test-results/decision-tree-gridsearchCV13.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/test-results/decision-tree-gridsearchCV14.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/test-results/decision-tree-gridsearchCV15.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/test-results/decision-tree-gridsearchCV16.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/test-results/decision-tree-gridsearchCV17.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/test-results/decision-tree-gridsearchCV18.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/test-results/decision-tree-gridsearchCV19.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/test-results/decision-tree-gridsearchCV2.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/test-results/decision-tree-gridsearchCV20.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/test-results/decision-tree-gridsearchCV21.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/test-results/decision-tree-gridsearchCV22.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/test-results/decision-tree-gridsearchCV23.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/test-results/decision-tree-gridsearchCV24.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/test-results/decision-tree-gridsearchCV25.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/test-results/decision-tree-gridsearchCV26.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/test-results/decision-tree-gridsearchCV27.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/test-results/decision-tree-gridsearchCV28.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/test-results/decision-tree-gridsearchCV29.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/test-results/decision-tree-gridsearchCV3.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/test-results/decision-tree-gridsearchCV30.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/test-results/decision-tree-gridsearchCV31.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/test-results/decision-tree-gridsearchCV32.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/test-results/decision-tree-gridsearchCV33.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/test-results/decision-tree-gridsearchCV34.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/test-results/decision-tree-gridsearchCV35.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/test-results/decision-tree-gridsearchCV36.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/test-results/decision-tree-gridsearchCV37.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/test-results/decision-tree-gridsearchCV38.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/test-results/decision-tree-gridsearchCV39.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/test-results/decision-tree-gridsearchCV4.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/test-results/decision-tree-gridsearchCV40.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/test-results/decision-tree-gridsearchCV41.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/test-results/decision-tree-gridsearchCV42.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/test-results/decision-tree-gridsearchCV5.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/test-results/decision-tree-gridsearchCV6.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/test-results/decision-tree-gridsearchCV7.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/test-results/decision-tree-gridsearchCV8.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/data/test-results/decision-tree-gridsearchCV9.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/webinterface/modules/ml.py" beforeDir="false" afterPath="$PROJECT_DIR$/root/webinterface/modules/ml.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/root/webinterface/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/root/webinterface/run.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/root/webinterface/static/img/graph6.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/webinterface/static/img/graph1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/webinterface/static/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/root/webinterface/static/main.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/webinterface/static/script/display.js" beforeDir="false" afterPath="$PROJECT_DIR$/root/webinterface/static/script/display.js" afterDir="false" />
     </list>
     <ignored path="venv/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -28,11 +74,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="run.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="run.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/root/webinterface/run.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="453">
-              <caret line="35" lean-forward="true" selection-start-line="35" selection-end-line="35" />
+            <state relative-caret-position="360">
+              <caret line="130" column="25" selection-start-line="130" selection-start-column="25" selection-end-line="130" selection-end-column="25" />
             </state>
           </provider>
         </entry>
@@ -40,17 +86,17 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/root/webinterface/templates/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3620">
+            <state relative-caret-position="321">
               <caret line="181" selection-start-line="181" selection-end-line="181" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="display.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="display.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/root/webinterface/static/script/display.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="460">
-              <caret line="23" column="30" selection-start-line="23" selection-start-column="30" selection-end-line="23" selection-end-column="30" />
+            <state relative-caret-position="-2620">
+              <caret line="21" column="28" lean-forward="true" selection-start-line="21" selection-start-column="28" selection-end-line="21" selection-end-column="28" />
             </state>
           </provider>
         </entry>
@@ -58,8 +104,8 @@
       <file leaf-file-name="main.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/root/webinterface/static/main.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3300">
-              <caret line="165" column="22" selection-start-line="165" selection-start-column="22" selection-end-line="165" selection-end-column="22" />
+            <state relative-caret-position="151">
+              <caret line="473" column="4" selection-start-line="473" selection-start-column="4" selection-end-line="473" selection-end-column="4" />
             </state>
           </provider>
         </entry>
@@ -67,8 +113,8 @@
       <file leaf-file-name="ml.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/root/webinterface/modules/ml.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-832">
-              <caret line="157" column="10" selection-start-line="157" selection-start-column="4" selection-end-line="157" selection-end-column="10" />
+            <state relative-caret-position="20">
+              <caret line="109" column="37" selection-start-line="109" selection-start-column="37" selection-end-line="109" selection-end-column="37" />
             </state>
           </provider>
         </entry>
@@ -76,8 +122,8 @@
       <file leaf-file-name="datahandler.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/root/webinterface/modules/datahandler.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="176">
-              <caret line="17" column="36" selection-start-line="17" selection-start-column="36" selection-end-line="17" selection-end-column="62" />
+            <state relative-caret-position="211">
+              <caret line="89" column="37" lean-forward="true" selection-start-line="89" selection-start-column="37" selection-end-line="89" selection-end-column="37" />
             </state>
           </provider>
         </entry>
@@ -124,7 +170,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>r2</find>
       <find>displayImage</find>
       <find>saved</find>
       <find>target_predict_</find>
@@ -154,6 +199,7 @@
       <find>feature</find>
       <find>Data.target</find>
       <find>target</find>
+      <find>r2</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -203,16 +249,16 @@
         <option value="$PROJECT_DIR$/root/webinterface/static/script/science.js" />
         <option value="$PROJECT_DIR$/root/webinterface/static/styles.sass" />
         <option value="$PROJECT_DIR$/.idea/misc.xml" />
-        <option value="$PROJECT_DIR$/root/webinterface/modules/ml.py" />
         <option value="$PROJECT_DIR$/root/webinterface/static/science.css" />
         <option value="$PROJECT_DIR$/root/webinterface/templates/index.html" />
         <option value="$PROJECT_DIR$/root/webinterface/templates/index.html" />
-        <option value="$PROJECT_DIR$/root/webinterface/static/main.css" />
-        <option value="$PROJECT_DIR$/root/webinterface/static/main.css" />
-        <option value="$PROJECT_DIR$/root/webinterface/static/script/display.js" />
-        <option value="$PROJECT_DIR$/root/webinterface/static/script/display.js" />
         <option value="$PROJECT_DIR$/root/webinterface/modules/datahandler.py" />
+        <option value="$PROJECT_DIR$/root/webinterface/modules/ml.py" />
         <option value="$PROJECT_DIR$/root/webinterface/run.py" />
+        <option value="$PROJECT_DIR$/root/webinterface/static/main.css" />
+        <option value="$PROJECT_DIR$/root/webinterface/static/main.css" />
+        <option value="$PROJECT_DIR$/root/webinterface/static/script/display.js" />
+        <option value="$PROJECT_DIR$/root/webinterface/static/script/display.js" />
       </list>
     </option>
   </component>
@@ -245,22 +291,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope">
-        <subPane subId="Project Files">
-          <expand>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="mastern" type="cbb8eebc:String" user="mastern" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="mastern" type="cbb8eebc:String" user="mastern" />
-              <item name=".idea" type="cbb8eebc:String" user=".idea" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -305,6 +335,22 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope">
+        <subPane subId="Project Files">
+          <expand>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="mastern" type="cbb8eebc:String" user="mastern" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="mastern" type="cbb8eebc:String" user="mastern" />
+              <item name=".idea" type="cbb8eebc:String" user=".idea" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -315,7 +361,7 @@
     <property name="list.type.of.created.stylesheet" value="Sass" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -495,9 +541,9 @@
       <window_info anchor="bottom" id="Database Changes" order="10" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.32965517" />
       <window_info anchor="bottom" id="Python Console" order="9" sideWeight="0.4978678" weight="0.3278867" />
-      <window_info anchor="bottom" id="Run" order="13" sideWeight="0.5021322" side_tool="true" weight="0.31773666" />
+      <window_info anchor="bottom" id="Run" order="13" sideWeight="0.5021322" side_tool="true" weight="0.3155604" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.32905984" />
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4856115" visible="true" weight="0.15458423" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4856115" visible="true" weight="0.15778251" />
       <window_info anchor="bottom" id="Docker" order="6" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="3" />
       <window_info anchor="right" id="SciView" order="4" sideWeight="0.49628055" weight="0.32877603" />
@@ -679,45 +725,45 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/root/webinterface/static/main.css">
+    <entry file="file://$PROJECT_DIR$/root/webinterface/modules/datahandler.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3300">
-          <caret line="165" column="22" selection-start-line="165" selection-start-column="22" selection-end-line="165" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/root/webinterface/templates/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3620">
-          <caret line="181" selection-start-line="181" selection-end-line="181" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/root/webinterface/static/script/display.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="460">
-          <caret line="23" column="30" selection-start-line="23" selection-start-column="30" selection-end-line="23" selection-end-column="30" />
+        <state relative-caret-position="211">
+          <caret line="89" column="37" lean-forward="true" selection-start-line="89" selection-start-column="37" selection-end-line="89" selection-end-column="37" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/root/webinterface/modules/ml.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-832">
-          <caret line="157" column="10" selection-start-line="157" selection-start-column="4" selection-end-line="157" selection-end-column="10" />
+        <state relative-caret-position="20">
+          <caret line="109" column="37" selection-start-line="109" selection-start-column="37" selection-end-line="109" selection-end-column="37" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/root/webinterface/modules/datahandler.py">
+    <entry file="file://$PROJECT_DIR$/root/webinterface/templates/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="17" column="36" selection-start-line="17" selection-start-column="36" selection-end-line="17" selection-end-column="62" />
+        <state relative-caret-position="321">
+          <caret line="181" selection-start-line="181" selection-end-line="181" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/root/webinterface/run.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="453">
-          <caret line="35" lean-forward="true" selection-start-line="35" selection-end-line="35" />
+        <state relative-caret-position="360">
+          <caret line="130" column="25" selection-start-line="130" selection-start-column="25" selection-end-line="130" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/root/webinterface/static/main.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="151">
+          <caret line="473" column="4" selection-start-line="473" selection-start-column="4" selection-end-line="473" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/root/webinterface/static/script/display.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2620">
+          <caret line="21" column="28" lean-forward="true" selection-start-line="21" selection-start-column="28" selection-end-line="21" selection-end-column="28" />
         </state>
       </provider>
     </entry>
