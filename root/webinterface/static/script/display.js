@@ -1,7 +1,7 @@
 var slide = true,
     cancelled,
     patientInfo,
-    previousWindow = []; //TODO implement as list instead, enable multiple backs
+    currentWindow = []; //TODO implement as list instead, enable multiple backs
 
 $(document).ready(function () {
     $('#scienceToggle').hide();
@@ -9,7 +9,6 @@ $(document).ready(function () {
     loadPage();
 
     $('#start').show().click(function() {
-        previousWindow.push(start);
         start();
         cancelled = false;
     });
@@ -19,8 +18,8 @@ $(document).ready(function () {
     });
 
     $('#dt').click(function() {
-        previousWindow.push(nextStep);
         if (!$(this).hasClass('disabled')) {
+            cancelled = false;
             $(this).fadeOut();
             hideAllElements();
             loading();
@@ -36,7 +35,9 @@ $(document).ready(function () {
                 }
             }).fail(function() {
                 console.log('JSON request was terminated');
-                systemStatusBad();
+                if (!cancelled) {
+                    systemStatusBad();
+                }
             });
         }
     });
@@ -47,8 +48,6 @@ $(document).ready(function () {
         systemStatusBad();
         $.get('/features', function(input) {
             featureSelection(input);
-            previousWindow.push(nextStep);
-            nextStep();
         }).fail(function() {
             console.log('Couldn\'t get list of features!');
         });
@@ -72,8 +71,6 @@ $(document).ready(function () {
                 success: function() {
                     $('#features').slideUp();
                     $('#saveFeatures').addClass('success').text('Successfully saved').css('margin-top', '15%');
-                    previousWindow.push(featureSelection);
-                    featureSelection();
                     setTimeout(nextStep, 2000);
                 },
                 error: function(response) {
@@ -113,11 +110,8 @@ $(document).ready(function () {
                     systemStatusBad();
                 }
             });
-            $(this).addClass('success').text('Successfully saved');
-            previousWindow.push(featureSelection);
-            enterPatientInfo();
+            $('#saveTarget').addClass('success').text('Successfully saved').css('margin-top', '45%');
             $('#patientInfoForm form').slideUp();
-            $('#saveTarget').css('margin-top', '45%');
             setTimeout(nextStep, 2000);
         }
     });
@@ -128,15 +122,20 @@ $(document).ready(function () {
         start();
     });
 
+    // TODO: This function works almost as intended - when using system straight it takes user back to input (from
+    // TODO: loading prediction - funky). Does weird things with select feature thing.
     $('#back').click(function() {
         stopProcess();
         hideAllElements();
-        console.log(previousWindow.length);
-        console.log(previousWindow[0]);
-
+        for (var thing in currentWindow) {
+            console.log(currentWindow[thing]);
+        }
         // Bugged
-        if (previousWindow.length > 0) {
-            previousWindow[previousWindow.length - 1]();
+        if (currentWindow.length > 1) {
+            var previousWindow = currentWindow[currentWindow.length - 2];
+            currentWindow.pop();
+            currentWindow.pop();
+            previousWindow();
         } else {
             start();
         }
@@ -162,6 +161,7 @@ function doneLoading() {
     $('#resultheader, #resultcontext, #loadinggif').hide();
     $('.success').removeClass('success');
     $('#saveFeatures').text('Save features');
+    $('#saveTarget').text('Save');
     $('#saveTarget, #saveFeatures').css('margin-top', '');
 }
 
@@ -171,6 +171,7 @@ function loadPage() {
 }
 
 var start = function () {
+    currentWindow.push(start);
     console.log('run');
     doneLoading();
     $('#start').hide();
@@ -178,12 +179,14 @@ var start = function () {
     $('#menu').css('left', 0);
     $('#saveFeatures').removeClass('success').text('Save feature selection');
     $('#saveTarget').removeClass('success').text('Save patient information');
+    systemStatusGood();
     setTimeout(function() {
         enterPatientInfo();
     }, 1000);
 };
 
 var enterPatientInfo = function () {
+    currentWindow.push(enterPatientInfo);
     doneLoading();
     clearTable();
     $('#title h1').text('Patient information form');
@@ -199,6 +202,7 @@ var enterPatientInfo = function () {
 };
 
 var nextStep = function () {
+    currentWindow.push(nextStep);
     doneLoading();
     hideAllElements();
     $('#title h1').text('One last thing...');
@@ -210,6 +214,7 @@ var nextStep = function () {
 };
 
 var featureSelection = function(input) {
+    currentWindow.push(featureSelection);
     doneLoading();
     hideAllElements();
     $('#features').append(input);
@@ -224,6 +229,7 @@ var featureSelection = function(input) {
 };
 
 function displayResults() {
+    currentWindow.push(displayResults);
     doneLoading();
     $('#title h1').text('Prediction results');
     $('#title p').text('In the center page you can see the prediction result up top, with some graphs below. The ' +
@@ -296,7 +302,7 @@ function systemStatusLoading() {
     if (!status.is(':visible')) {
         status.fadeIn();
     }
-     status.css('background-color', '#30310f').text('System status:    Loading - please wait...');
+    status.css('background-color', '#30310f').text('System status:    Loading - please wait...');
 }
 
 function systemStatusBad() {
@@ -304,7 +310,7 @@ function systemStatusBad() {
     if (!status.is(':visible')) {
         status.fadeIn();
     }
-     status.css('background-color', 'red').text('System status: Something stopped working - please refresh!');
+    status.css('background-color', 'red').text('System status: Something stopped working - please refresh!');
 }
 
 function hideAllElements() {
