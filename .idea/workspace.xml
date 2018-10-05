@@ -7,7 +7,10 @@
     <list default="true" id="3e93f87e-0a3c-431c-8be6-2f63de5c70bc" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/root/data/dt-regressor.sav" beforeDir="false" afterPath="$PROJECT_DIR$/root/data/dt-regressor.sav" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/webinterface/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/root/webinterface/run.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/webinterface/static/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/root/webinterface/static/main.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/root/webinterface/static/script/display.js" beforeDir="false" afterPath="$PROJECT_DIR$/root/webinterface/static/script/display.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/webinterface/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/root/webinterface/templates/index.html" afterDir="false" />
     </list>
     <ignored path="venv/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -29,8 +32,8 @@
       <file leaf-file-name="run.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/root/webinterface/run.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2460">
-              <caret line="130" column="25" selection-start-line="130" selection-start-column="25" selection-end-line="130" selection-end-column="25" />
+            <state relative-caret-position="410">
+              <caret line="274" lean-forward="true" selection-start-line="274" selection-end-line="274" />
             </state>
           </provider>
         </entry>
@@ -38,26 +41,26 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/root/webinterface/templates/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3620">
-              <caret line="181" selection-start-line="181" selection-end-line="181" />
+            <state relative-caret-position="203">
+              <caret line="59" column="74" selection-start-line="59" selection-start-column="74" selection-end-line="59" selection-end-column="74" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="display.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="display.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/root/webinterface/static/script/display.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="280">
-              <caret line="125" column="13" selection-start-line="125" selection-start-column="13" selection-end-line="125" selection-end-column="13" />
+            <state relative-caret-position="220">
+              <caret line="261" column="23" lean-forward="true" selection-start-line="261" selection-start-column="23" selection-end-line="261" selection-end-column="23" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main.css" pinned="false" current-in-tab="true">
+      <file leaf-file-name="main.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/root/webinterface/static/main.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2549">
-              <caret line="216" column="25" selection-start-line="216" selection-start-column="25" selection-end-line="216" selection-end-column="25" />
+            <state relative-caret-position="103">
+              <caret line="440" column="23" lean-forward="true" selection-start-line="440" selection-start-column="23" selection-end-line="440" selection-end-column="23" />
             </state>
           </provider>
         </entry>
@@ -65,7 +68,7 @@
       <file leaf-file-name="ml.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/root/webinterface/modules/ml.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2040">
+            <state relative-caret-position="830">
               <caret line="109" column="37" selection-start-line="109" selection-start-column="37" selection-end-line="109" selection-end-column="37" />
             </state>
           </provider>
@@ -122,7 +125,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>saved</find>
       <find>target_predict_</find>
       <find>dth.data.target</find>
       <find>TestData</find>
@@ -149,9 +151,10 @@
       <find>feature</find>
       <find>Data.target</find>
       <find>target</find>
-      <find>r2</find>
       <find>current</find>
       <find>currentWindow</find>
+      <find>load</find>
+      <find>r2</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -202,15 +205,15 @@
         <option value="$PROJECT_DIR$/root/webinterface/static/styles.sass" />
         <option value="$PROJECT_DIR$/.idea/misc.xml" />
         <option value="$PROJECT_DIR$/root/webinterface/static/science.css" />
-        <option value="$PROJECT_DIR$/root/webinterface/templates/index.html" />
-        <option value="$PROJECT_DIR$/root/webinterface/templates/index.html" />
         <option value="$PROJECT_DIR$/root/webinterface/modules/datahandler.py" />
         <option value="$PROJECT_DIR$/root/webinterface/modules/ml.py" />
         <option value="$PROJECT_DIR$/root/webinterface/run.py" />
-        <option value="$PROJECT_DIR$/root/webinterface/static/main.css" />
-        <option value="$PROJECT_DIR$/root/webinterface/static/main.css" />
+        <option value="$PROJECT_DIR$/root/webinterface/templates/index.html" />
+        <option value="$PROJECT_DIR$/root/webinterface/templates/index.html" />
         <option value="$PROJECT_DIR$/root/webinterface/static/script/display.js" />
         <option value="$PROJECT_DIR$/root/webinterface/static/script/display.js" />
+        <option value="$PROJECT_DIR$/root/webinterface/static/main.css" />
+        <option value="$PROJECT_DIR$/root/webinterface/static/main.css" />
       </list>
     </option>
   </component>
@@ -493,11 +496,12 @@
       <window_info anchor="bottom" id="Database Changes" order="10" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.32965517" />
       <window_info anchor="bottom" id="Python Console" order="9" sideWeight="0.4978678" weight="0.3278867" />
-      <window_info anchor="bottom" id="Run" order="13" sideWeight="0.5021322" side_tool="true" weight="0.31447226" />
+      <window_info anchor="bottom" id="Run" order="13" sideWeight="0.5021322" side_tool="true" weight="0.31338412" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.32905984" />
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4856115" visible="true" weight="0.15938166" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4856115" visible="true" weight="0.16257995" />
       <window_info anchor="bottom" id="Docker" order="6" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="3" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.4966443" weight="0.3191721" />
       <window_info anchor="right" id="SciView" order="4" sideWeight="0.49628055" weight="0.32877603" />
       <window_info id="Structure" order="1" sideWeight="0.5143885" side_tool="true" weight="0.13333334" />
       <window_info id="Favorites" order="2" side_tool="true" />
@@ -512,7 +516,6 @@
       <window_info anchor="right" x="0" y="0" width="434" height="856" id="Documentation" order="7" sideWeight="0.50371945" side_tool="true" weight="0.32916668" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="3" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.4966443" weight="0.31946006" />
     </layout>
     <layout-to-restore>
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.32965517" />
@@ -686,36 +689,36 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/root/webinterface/modules/ml.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2040">
+        <state relative-caret-position="830">
           <caret line="109" column="37" selection-start-line="109" selection-start-column="37" selection-end-line="109" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/root/webinterface/templates/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3620">
-          <caret line="181" selection-start-line="181" selection-end-line="181" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/root/webinterface/run.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2460">
-          <caret line="130" column="25" selection-start-line="130" selection-start-column="25" selection-end-line="130" selection-end-column="25" />
+        <state relative-caret-position="410">
+          <caret line="274" lean-forward="true" selection-start-line="274" selection-end-line="274" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/root/webinterface/static/script/display.js">
+    <entry file="file://$PROJECT_DIR$/root/webinterface/templates/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="280">
-          <caret line="125" column="13" selection-start-line="125" selection-start-column="13" selection-end-line="125" selection-end-column="13" />
+        <state relative-caret-position="203">
+          <caret line="59" column="74" selection-start-line="59" selection-start-column="74" selection-end-line="59" selection-end-column="74" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/root/webinterface/static/main.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2549">
-          <caret line="216" column="25" selection-start-line="216" selection-start-column="25" selection-end-line="216" selection-end-column="25" />
+        <state relative-caret-position="103">
+          <caret line="440" column="23" lean-forward="true" selection-start-line="440" selection-start-column="23" selection-end-line="440" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/root/webinterface/static/script/display.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="261" column="23" lean-forward="true" selection-start-line="261" selection-start-column="23" selection-end-line="261" selection-end-column="23" />
         </state>
       </provider>
     </entry>

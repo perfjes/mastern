@@ -231,10 +231,10 @@ var featureSelection = function(input) {
 function displayResults() {
     currentWindow.push(displayResults);
     doneLoading();
-    $('#title h1').text('Prediction results');
-    $('#title p').text('In the center page you can see the prediction result up top, with some graphs below. The ' +
-        'graphs detail the relationships between implant longevity and other features (such as blood analysis ' +
-        'results, angle of implant etc etc)');
+    $('#title h1').text('Results');
+    $('#title p').text('Displayed in the center of the page is the results from predicting the longevity of the ' +
+        'patients implant, given the information you provided in the patient information form.' + '</br></br>' +
+        'This is a work in progress. Please do not accept the results as conclusive.');
     if (!cancelled) {
         $('#results_table, #graphFiller, #graphs, #r2button').fadeIn();
     } else {
@@ -260,17 +260,11 @@ function updateTable(json) {
     });
     systemStatusGood();
     if ('r2' in json) {
-        $('#r2info').text('This prediction model has an R2 score of ' + parseFloat(json.r2).toFixed(7));
+        $('#r2info').text('This prediction has an R2 score of ' + parseFloat(json.r2).toFixed(4));
     }
     $.each(json.result, function (index, item) {
-        appendDataToTable(item);
-    });
-}
-
-function appendDataToTable(rowdata) {
-    $('#results_table').append(function () {
-        return '<tr class="result_element"><td>Actual: ' + rowdata['Actual'] + '</td>' + '\n' +
-            '<td>Predicted: ' + rowdata['Predicted'] + '</td></tr>';
+        $('#results_table').append('<tr><td id="p">Predicted implant longevity:</td></tr><tr class="result_element">' +
+            '<td id="prediction">' + parseFloat(item['Predicted']).toFixed(3) + ' years.</td></tr>');
     });
 }
 

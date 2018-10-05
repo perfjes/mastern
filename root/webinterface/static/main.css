@@ -428,17 +428,25 @@ body {
     margin: 7% auto 1% 7%;
 }
 
-#data p {
-    width: auto;
-    height: auto;
-    margin: 0 7% 1% 7%;
+#p {
+    font-weight: bold;
+    font-size: 16pt;
+    text-align: center;
+}
+
+#prediction {
+    font-size: 20pt;
+    color: #b23000;
+    font-weight: bold;
+    text-align: center;
 }
 
 #loadinggif {
-    display: block;
+    position: absolute;
     width: 100%;
-    height: 35%;
-    margin: 60px auto;
+    margin: auto;
+    top: 50%;
+    transform: translatey(-50%);
 }
 
 #results_table {
@@ -499,7 +507,7 @@ body {
 #r2info {
     position: absolute;
     top: 80px;
-    right: 25px;
+    right: 50%;
     z-index: 10;
     padding: 20px;
     width: 150px;
@@ -510,7 +518,8 @@ body {
     border-radius: 5px;
     font-size: 1.2em;
     -webkit-box-shadow: 0 4px 6px 1px #b23000;
-            box-shadow: 0 4px 6px 1px #b23000;;
+            box-shadow: 0 4px 6px 1px #b23000;
+    transform: translateX(50%);
 }
 
 /****************************** GRAPH IMAGES ******************************/

@@ -139,14 +139,14 @@ def dt_target_prediction():
         prediction = pd.DataFrame(
             {'Actual': target['years in vivo'], 'Predicted': statistics.mean(prediction_results_list)})
         r2_list.append(r2)
-        result = format_results_into_json(prediction, statistics.mean(r2_list), graphs)
+        result = format_results_to_html(prediction, statistics.mean(r2_list), graphs)
         get_processed_list_of_predictions(prediction_results_list)
 
     # FOR TESTING
     else:
         prediction_result, r2, _ = ml.target_predict_decision_tree(target, Data.recalibrate)
         prediction = pd.DataFrame({'Actual': target['years in vivo'], 'Predicted': prediction_result})
-        result = format_results_into_json(prediction, r2)
+        result = format_results_to_html(prediction, r2)
 
     return result
 
@@ -174,14 +174,14 @@ def mlp_target_prediction():
         prediction = pd.DataFrame(
             {'Actual': target['years in vivo'], 'Predicted': statistics.mean(prediction_results_list)})
         r2_list.append(r2)
-        result = format_results_into_json(prediction, statistics.mean(r2_list), graphs)
+        result = format_results_to_html(prediction, statistics.mean(r2_list), graphs)
         get_processed_list_of_predictions(prediction_results_list)
 
     # FOR TESTING
     else:
         prediction_result, r2, _ = ml.target_predict_mlp(target, Data.recalibrate)
         prediction = pd.DataFrame({'Actual': target['years in vivo'], 'Predicted': prediction_result})
-        result = format_results_into_json(prediction, r2)
+        result = format_results_to_html(prediction, r2)
 
     return result
 
@@ -209,14 +209,14 @@ def linear_target_prediction():
         prediction = pd.DataFrame(
             {'Actual': target['years in vivo'], 'Predicted': statistics.mean(prediction_results_list)})
         r2_list.append(r2)
-        result = format_results_into_json(prediction, statistics.mean(r2_list), graphs)
+        result = format_results_to_html(prediction, statistics.mean(r2_list), graphs)
         get_processed_list_of_predictions(prediction_results_list)
 
     # FOR TESTING
     else:
         prediction_result, r2, _ = ml.target_predict_linear(target, Data.recalibrate)
         prediction = pd.DataFrame({'Actual': target['years in vivo'], 'Predicted': prediction_result})
-        result = format_results_into_json(prediction, r2)
+        result = format_results_to_html(prediction, r2)
 
     return result
 
@@ -266,7 +266,7 @@ def update_features(features):
 
 # Dataframe, R2 score and a list of graphs are passed and the function returns a dict formatted into a proper JSON
 # string.
-def format_results_into_json(dataframe, r2score=None, graphs=list()):
+def format_results_to_html(dataframe, r2score=None, graphs=list()):
     json_result = {}
     if r2score is not None:
         json_result['r2'] = r2score
