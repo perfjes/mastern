@@ -1,10 +1,10 @@
 var slide = true,
     cancelled,
-    patientInfo,
+    patientInfo = {},
     currentWindow = []; //TODO implement as list instead, enable multiple backs
 
 $(document).ready(function () {
-    $('#scienceToggle').hide();
+    $('#scienceToggle, #patInfoSheet, #patInfoDisplay').hide();
     clearTable();
     loadPage();
 
@@ -81,9 +81,18 @@ $(document).ready(function () {
         });
     });
 
+    $('#case').change(function() {
+        if ($(this).val() == 1) {
+            $('#patientInfoForm form .hidden').slideDown();
+        } else {
+            // TODO this doesn't change the input value of subsequent fields.
+            $('#patientInfoForm form .hidden').val(0).slideUp();
+        }
+    });
+
     $('#saveTarget').click(function() {
         var formValid = true;
-        $('#patientInfoForm form input').each(function() {
+        $('#patientInfoForm form input, #patientInfoForm form select').each(function() {
             if ($(this).val() === "") {
                 formValid = false;
                 console.log('Missing value!');
@@ -93,11 +102,15 @@ $(document).ready(function () {
                     console.log('Form successfully filled');
                     $(this).removeClass('emptyForm');
                 }
+                // $('#patInfoSheet').append('<tr><td>' + $('label[for="' + $(this).attr('id') + '"]').text() +
+                //     '</td><td>' + $(this).val() + '</td></tr>');
+
+                patientInfo[$('label[for="' + $(this).attr('id') + '"]').text()] = $(this).val();
             }
         });
+
         if (formValid) {
             console.log('running post request');
-            patientInfo = $('.patInfo').val();
             $.ajax({
                 url: '/updatetarget',
                 data: $('.patInfo').serialize(),
@@ -110,6 +123,30 @@ $(document).ready(function () {
                     systemStatusBad();
                 }
             });
+            for(var item in patientInfo) {
+                console.log(item.search('Has the implant'));
+                if (item == 'Has the implant been removed?' || item == 'Was the cup loose? (if it was removed)' ||
+                    item == 'Was the stem loose? (if it was removed)') {
+                    var whetherOrNot = 'Yes';
+                    if (patientInfo[item] == 0) {
+                        whetherOrNot = 'No';
+                    }
+                    $('#patInfoSheet').append('<tr><td class="patinfodesc">' + item + '</td><td class="patinfoval">' +
+                        whetherOrNot + '</td></tr>');
+                } else if (patientInfo[item] == 'Sex / Gender ') {
+                    var gender = 'Undefined';
+                    if (patientInfo[item] == 1) {
+                        gender = 'Male';
+                    } else if (patientInfo[item] == 2) {
+                        gender = 'Female';
+                    }
+                    $('#patInfoSheet').append('<tr><td class="patinfodesc">' + item + '</td><td class="patinfoval">' +
+                    gender + '</td></tr>');
+                } else {
+                    $('#patInfoSheet').append('<tr><td class="patinfodesc">' + item + '</td><td class="patinfoval">' +
+                    patientInfo[item] + '</td></tr>');
+                }
+            }
             $('#saveTarget').addClass('success').text('Successfully saved').css('margin-top', '45%');
             $('#patientInfoForm form').slideUp();
             setTimeout(nextStep, 2000);
@@ -120,6 +157,16 @@ $(document).ready(function () {
         stopProcess();
         hideAllElements();
         start();
+    });
+
+    $('#patInfoDisplayButton').click(function() {
+        if ($(this).hasClass('buttonClicked')) {
+            $(this).removeClass('buttonClicked');
+            $('#patInfoSheet').slideUp();
+        } else {
+            $(this).addClass('buttonClicked');
+            $('#patInfoSheet').slideDown();
+        }
     });
 
     // TODO: This function works almost as intended - when using system straight it takes user back to input (from
@@ -142,7 +189,7 @@ $(document).ready(function () {
     });
 
     $('#r2button').click(function() {
-        $('#r2info').fadeToggle();
+        $('#r2info').slideToggle();
     });
 });
 
@@ -192,7 +239,7 @@ var enterPatientInfo = function () {
     $('#title h1').text('Patient information form');
     $('#title p').text('We need you to enter all the information on your patient here. If you\'re missing some ' +
         'data, please enter -1.');
-    $('#patientInfoForm, #patientInfoForm form, .input, #data, #status').slideDown();
+    $('#patientInfoForm, #patientInfoForm form, .input, #data').slideDown();
     if (slide) {
         $('#centercontent').slideDown();
     } else {
@@ -209,7 +256,7 @@ var nextStep = function () {
     $('#title p').text('We\'re ready to start predicting! The prediction usually takes a minute to run, but that ' +
         'depends on how beefy your computer processor is. It might take longer. If you want, you can specify which ' +
         'parts of the patient information will be taken into consideration.');
-    $('#centercontent, .input, .input button, #data, .navigation').show();
+    $('#centercontent, .input, .input button, #data, .navigation, #patInfoDisplay').slideDown();
     systemStatusGood();
 };
 
@@ -308,7 +355,8 @@ function systemStatusBad() {
 }
 
 function hideAllElements() {
-    $('.hideContent, #data, #patientInfoForm, #graphFiller, #graphs, #status, .feature, #loadinggif, #r2info, ' +
+    // todo , #patInfoDisplayButton, add this
+    $('.help, .hideContent, #data, #patientInfoForm, #graphFiller, #graphs, #status, .feature, #loadinggif, #r2info, ' +
         '#r2button, #input, #input button, .input, .input button, .optional').hide();
 }
 

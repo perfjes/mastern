@@ -542,3 +542,75 @@ body {
     margin: 20px auto;
     display: block;
 }
+
+/****************************** PATIENT INFO BOX ******************************/
+
+#patInfoDisplayButton {
+    width: 200px;
+    background-color: #b23000;
+    color: white;
+    text-align: center;
+    padding: 10px 4px;
+    border-radius: 0 8px 8px 0;
+    box-shadow: grey 3px 3px 3px;
+    transition: 0.7s ease;
+    font-size: 14pt;
+}
+
+#patInfoDisplayButton:hover {
+    background-color: #ffc7b2 !important;
+    color: black;
+    transition: 0.7s ease;
+    cursor: pointer;
+}
+
+#patInfoDisplay {
+    font-family: Roboto, sans-serif;
+    position: absolute;
+    top: 2%;
+    right: 0;
+    width: 45.9%;
+    height: fit-content;
+    transform: translateX(99.99%);
+}
+
+#patInfoSheet {
+    border-collapse: collapse;
+    background-color: white;
+    margin: 20px 0;
+    padding: 15px 0;
+    box-shadow: grey 3px 3px 3px;
+}
+
+#patInfoSheet p {
+    text-align: center;
+    font-weight: bold;
+    color: #b23000;
+}
+
+.buttonClicked {
+    background-color: #ff7e1a !important;
+    color: black;
+}
+
+.patinfodesc {
+    height: fit-content;
+    width: 70%;
+    text-align: right;
+    padding: 1% 0;
+}
+
+.patinfoval {
+    height: fit-content;
+    width: 30%;
+    text-align: center;
+    padding: 1% 0;
+}
+
+#patInfoSheet tr:not(:last-child) {
+    border-bottom: 2px solid #ffe1cb;
+}
+
+#help {
+    display: none;
+}
