@@ -567,7 +567,7 @@ body {
 #patInfoDisplay {
     font-family: Roboto, sans-serif;
     position: absolute;
-    top: 2%;
+    top: 12px;
     right: 0;
     width: 45.9%;
     height: fit-content;
@@ -576,7 +576,7 @@ body {
 
 #patInfoSheet {
     border-collapse: collapse;
-    background-color: white;
+    background-color: #ffe9d8;
     margin: 20px 0;
     padding: 15px 0;
     box-shadow: grey 3px 3px 3px;
@@ -609,6 +609,10 @@ body {
 
 #patInfoSheet tr:not(:last-child) {
     border-bottom: 2px solid #ffe1cb;
+}
+
+#patInfoSheet tr, #patInfoSheet td {
+    background-color: #fff4ed;
 }
 
 #help {

@@ -123,6 +123,10 @@ $(document).ready(function () {
                     systemStatusBad();
                 }
             });
+
+            if ($('#patInfoSheet').children().length > 2) {
+                $('#patInfoSheet tr').remove();
+            }
             for(var item in patientInfo) {
                 console.log(item.search('Has the implant'));
                 if (item == 'Has the implant been removed?' || item == 'Was the cup loose? (if it was removed)' ||

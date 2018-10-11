@@ -128,7 +128,7 @@ def dt_target_prediction():
 
     # FOR ACTUAL USE
     if not Data.recalibrate:
-        for x in range(20):
+        for x in range(2000):
             prediction_result, r2, graphs = ml.target_predict_decision_tree(target, Data.recalibrate)
             r2 = float(r2)
             prediction_results_list.append(float(prediction_result))
