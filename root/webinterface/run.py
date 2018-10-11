@@ -70,6 +70,16 @@ def linear_regressor():
     return prediction_result
 
 
+# TODO temporary method
+@app.route('/linear20', methods=['GET'])
+def lin20():
+    start_time = time.time()
+    prediction_result = linear_target_prediction(True)
+    end_time = (time.time() - start_time)
+    print('Runtime is: ' + str(end_time))
+    return prediction_result
+
+
 @app.route('/features', methods=['GET', 'POST'])
 def select_features():
     if request.method == 'GET':
@@ -128,7 +138,7 @@ def dt_target_prediction():
 
     # FOR ACTUAL USE
     if not Data.recalibrate:
-        for x in range(2000):
+        for x in range(20):
             prediction_result, r2, graphs = ml.target_predict_decision_tree(target, Data.recalibrate)
             r2 = float(r2)
             prediction_results_list.append(float(prediction_result))
@@ -187,37 +197,16 @@ def mlp_target_prediction():
 
 
 # Linear regression
-def linear_target_prediction():
-    r2_list = []
-    prediction_results_list.clear()
+def linear_target_prediction(twenty=False):
+    actual, prediction, r2 = ml.leave_one_out(twenty)
 
-    if Data.recalibrate:
-        target = dth.load_dataframe('test.csv')
-    else:
-        target = dth.Data.target
-        if target is None:
-            print('Target features are too few, what is going on')
-            return 'none'
+    avg_actual = sum(actual) / len(actual)
+    avg_prediction = sum(prediction) / len(prediction)
 
-    # FOR ACTUAL USE
-    if not Data.recalibrate:
-        for x in range(50):
-            prediction_result, r2, graphs = ml.target_predict_linear(target, Data.recalibrate)
-            r2 = float(r2)
-            prediction_results_list.append(float(prediction_result))
+    stats = "R2 score: %f\nActual longevity: %f\nPredicted longevity: %f" % (float(r2),
+                                                                                           avg_actual, avg_prediction)
 
-        prediction = pd.DataFrame(
-            {'Actual': target['years in vivo'], 'Predicted': statistics.mean(prediction_results_list)})
-        r2_list.append(r2)
-        result = format_results_to_html(prediction, statistics.mean(r2_list), graphs)
-        get_processed_list_of_predictions(prediction_results_list)
-
-    # FOR TESTING
-    else:
-        prediction_result, r2, _ = ml.target_predict_linear(target, Data.recalibrate)
-        prediction = pd.DataFrame({'Actual': target['years in vivo'], 'Predicted': prediction_result})
-        result = format_results_to_html(prediction, r2)
-
+    result = format_results_to_html(pd.DataFrame({'Actual': list(actual), 'Predicted': list(prediction)}), stats)
     return result
 
 

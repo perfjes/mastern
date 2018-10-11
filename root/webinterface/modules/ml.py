@@ -1,11 +1,10 @@
-import itertools
-
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.linear_model import LinearRegression
 from sklearn.neural_network.multilayer_perceptron import MLPRegressor
-from sklearn.model_selection import train_test_split, GridSearchCV
+from sklearn.model_selection import train_test_split, GridSearchCV, LeaveOneOut
 from sklearn import metrics
 from modules import datahandler, graph_factory
+import numpy as np
 
 dth = datahandler
 graph = graph_factory
@@ -241,3 +240,35 @@ def make_some_graphs():
             count += 1
 
     return graphs
+
+
+def leave_one_out(twenty=False):
+    if twenty:
+        data = dth.prune_features(dth.Data.dataframe.head(20))
+        print(data)
+    else:
+        data = dth.prune_features(dth.Data.dataframe)
+    targets = np.array(data['years in vivo'])
+    dataset = np.array(data.drop('years in vivo', axis=1))
+
+    loo = LeaveOneOut()
+    ytests, ypreds, r2yt, r2yp = [], [], [], []
+
+    for train, test in loo.split(dataset):
+        x_train, x_test = dataset[train], dataset[test]
+        y_train, y_test = targets[train], targets[test]
+
+        regressor = DecisionTreeRegressor(criterion='friedman_mse', max_depth=12, min_samples_split=13,
+                                          splitter='random', max_leaf_nodes=18, min_impurity_decrease=0.08,
+                                          presort=False, random_state=77)
+        regressor.fit(x_train, y_train)
+        prediction = regressor.predict(x_test)
+
+        r2yt.append(y_test)
+        r2yp.append(prediction)
+        ytests.append(float(y_test))
+        ypreds.append(float(prediction))
+
+    r2 = metrics.r2_score(r2yt, r2yp)
+
+    return ytests, ypreds, r2

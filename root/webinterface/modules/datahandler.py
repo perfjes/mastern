@@ -188,7 +188,7 @@ def prune_features(df):
 
 # Class variables allow for mutation
 class Data:
-    dataframe = load_dataframe_from_pickle()
+    dataframe = load_dataframe('db')
     split = load_split_value_from_pickle()
     unprocessed_target = pd.DataFrame()
     target = pd.DataFrame()

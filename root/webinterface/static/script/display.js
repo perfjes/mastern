@@ -1,4 +1,5 @@
 var slide = true,
+    systemLoading = false,
     cancelled,
     patientInfo = {},
     currentWindow = []; //TODO implement as list instead, enable multiple backs
@@ -21,7 +22,7 @@ $(document).ready(function () {
         if (!$(this).hasClass('disabled')) {
             cancelled = false;
             $(this).fadeOut();
-            hideAllElements();
+            hideMostElements();
             loading();
             $('.result_element').remove();
             $.getJSON('/dt', function (data) {
@@ -43,8 +44,7 @@ $(document).ready(function () {
     });
 
     $('#featurebtn').click(function() {
-        hideAllElements();
-        loading();
+        hideMostElements();
         systemStatusBad();
         $.get('/features', function(input) {
             featureSelection(input);
@@ -127,6 +127,7 @@ $(document).ready(function () {
             if ($('#patInfoSheet').children().length > 2) {
                 $('#patInfoSheet tr').remove();
             }
+
             for(var item in patientInfo) {
                 console.log(item.search('Has the implant'));
                 if (item == 'Has the implant been removed?' || item == 'Was the cup loose? (if it was removed)' ||
@@ -177,15 +178,22 @@ $(document).ready(function () {
     // TODO: loading prediction - funky). Does weird things with select feature thing.
     $('#back').click(function() {
         stopProcess();
-        hideAllElements();
+        hideMostElements();
+
         for (var thing in currentWindow) {
             console.log(currentWindow[thing]);
         }
-        // Bugged
+
         if (currentWindow.length > 1) {
             var previousWindow = currentWindow[currentWindow.length - 2];
-            currentWindow.pop();
-            currentWindow.pop();
+            if (systemLoading) {
+                previousWindow = currentWindow[currentWindow.length - 1];
+                currentWindow.pop();
+            } else {
+                console.log('skrrt');
+                currentWindow.pop();
+                currentWindow.pop();
+            }
             previousWindow();
         } else {
             start();
@@ -209,6 +217,7 @@ function loading() {
 }
 
 function doneLoading() {
+    systemLoading = false;
     $('#resultheader, #resultcontext, #loadinggif').hide();
     $('.success').removeClass('success');
     $('#saveFeatures').text('Save features');
@@ -244,30 +253,30 @@ var enterPatientInfo = function () {
     $('#title p').text('We need you to enter all the information on your patient here. If you\'re missing some ' +
         'data, please enter -1.');
     $('#patientInfoForm, #patientInfoForm form, .input, #data').slideDown();
+    systemStatusGood();
     if (slide) {
         $('#centercontent').slideDown();
     } else {
         $('#centercontent').fadeIn();
     }
-    systemStatusGood();
 };
 
 var nextStep = function () {
     currentWindow.push(nextStep);
     doneLoading();
-    hideAllElements();
+    hideMostElements();
+    systemStatusGood();
     $('#title h1').text('One last thing...');
     $('#title p').text('We\'re ready to start predicting! The prediction usually takes a minute to run, but that ' +
         'depends on how beefy your computer processor is. It might take longer. If you want, you can specify which ' +
         'parts of the patient information will be taken into consideration.');
-    $('#centercontent, .input, .input button, #data, .navigation, #patInfoDisplay').slideDown();
-    systemStatusGood();
+    $('.input, .input button, #data, .navigation, #patInfoDisplay').slideDown();
 };
 
 var featureSelection = function(input) {
     currentWindow.push(featureSelection);
     doneLoading();
-    hideAllElements();
+    hideMostElements();
     $('#features').append(input);
     $('#title h1').text('Dataset features');
     $('#title p').text('These are the features (or columns) of the dataset - also known as the ' +
@@ -275,18 +284,18 @@ var featureSelection = function(input) {
         'checkboxes indicate whether or not a feature will be included when the system predicts how long ' +
         'an implant will last in the given patient, by checking a box you include that feature in the ' +
         'prediction.');
-    $('#centercontent, #features, .feature, .feature button, #data, .navigation').show();
+    $('#features, .feature, .feature button, #data, .navigation').show();
     systemStatusGood();
 };
 
-function displayResults() {
-    currentWindow.push(displayResults);
-    doneLoading();
-    $('#title h1').text('Results');
-    $('#title p').text('Displayed in the center of the page is the results from predicting the longevity of the ' +
+var displayResults = function() {
+    if (!cancelled) {
+        currentWindow.push(displayResults);
+        doneLoading();
+        $('#title h1').text('Results');
+        $('#title p').text('Displayed in the center of the page is the results from predicting the longevity of the ' +
         'patients implant, given the information you provided in the patient information form.' + '</br></br>' +
         'This is a work in progress. Please do not accept the results as conclusive.');
-    if (!cancelled) {
         $('#results_table, #graphFiller, #graphs, #r2button').fadeIn();
     } else {
         console.log('process terminated');
@@ -343,6 +352,7 @@ function systemStatusGood() {
 }
 
 function systemStatusLoading() {
+    systemLoading = true;
     var status = $('#status');
     if (!status.is(':visible')) {
         status.fadeIn();
@@ -360,6 +370,12 @@ function systemStatusBad() {
 
 function hideAllElements() {
     // todo , #patInfoDisplayButton, add this
+    $('.help, .hideContent, #centercontent, #data, #patientInfoForm, #graphFiller, #graphs, #status, .feature, #loadinggif, #r2info, ' +
+        '#r2button, #input, #input button, .input, .input button, .optional').hide();
+}
+
+// For when system is initiated
+function hideMostElements() {
     $('.help, .hideContent, #data, #patientInfoForm, #graphFiller, #graphs, #status, .feature, #loadinggif, #r2info, ' +
         '#r2button, #input, #input button, .input, .input button, .optional').hide();
 }

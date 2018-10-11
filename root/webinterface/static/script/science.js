@@ -13,10 +13,24 @@ $(document).ready(function () {
             $('#r2button').show();
             updateTable(data);
             $('#resultheader').text('Results - Training the model');
-            $('#resultcontext').text('The training function randomly selects a subset of test cases and training' +
-                'cases, fitting the training data to the model. The model is then used to predict each test case ' +
-                ', the results being displayed above. \"Actual\" represents the actual years in vivo value ' +
-                'from the test set, while \"Predicted\" represents the value predicted by the model.');
+            $('#resultcontext').text('Based on leave-one-out model selection, the results above show the actual years ' +
+                'in vivo value for a given patient used as a test case with the predicted value from the decision ' +
+                'tree regression model.');
+            $('#loadinggif').hide();
+            displayImage();
+        });
+    });
+
+    $('#linear20').click(function() {
+        loading();
+        $('.result_element').remove();
+        $.getJSON('/linear20', function(data) {
+            $('#r2button').show();
+            updateTable(data);
+            $('#resultheader').text('Results - Training the model');
+            $('#resultcontext').text('Based on leave-one-out model selection, the results above show the actual years ' +
+                'in vivo value for a given patient used as a test case with the predicted value from the decision ' +
+                'tree regression model.');
             $('#loadinggif').hide();
             displayImage();
         });
@@ -108,7 +122,8 @@ $(document).ready(function () {
 function updateTable(json, type) {
     $('#status').text('System is currently loaded and ready.');
     if ('r2' in json) {
-        $('#r2info').text('This prediction model has an R2 score of ' + parseFloat(json.r2).toFixed(7));
+        $('#r2info').text(json.r2);
+        // $('#r2info').text('This prediction model has an R2 score of ' + parseFloat(json.r2).toFixed(7)); original
     }
     $.each(json.result, function (index, item) {
         appendDataToTable(item, type);
@@ -125,7 +140,7 @@ function appendDataToTable(rowdata) {
 function clearTable() {
     $('#results').hide();
     $('#graphFiller').hide();
-    $('#r2info').hide();
+    // $('#r2info').hide();
     $('#r2button').hide();
     $('.feature').hide();
     $('#loadinggif').hide();
