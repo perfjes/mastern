@@ -260,7 +260,7 @@ def leave_one_out(twenty=False):
 
         regressor = DecisionTreeRegressor(criterion='friedman_mse', max_depth=12, min_samples_split=13,
                                           splitter='random', max_leaf_nodes=18, min_impurity_decrease=0.08,
-                                          presort=False, random_state=77)
+                                          presort=False, random_state=13)
         regressor.fit(x_train, y_train)
         prediction = regressor.predict(x_test)
 
