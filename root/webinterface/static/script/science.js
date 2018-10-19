@@ -122,7 +122,17 @@ $(document).ready(function () {
 function updateTable(json, type) {
     $('#status').text('System is currently loaded and ready.');
     if ('r2' in json) {
-        $('#r2info').text(json.r2);
+        $('#r2info').text('');
+        console.log(typeof(json.r2));
+        console.log(json.r2);
+        if(typeof(json.r2) == 'string' || typeof(json.r2) == 'number') {
+            $('#r2info').append(json.r2);
+        } else {
+            $.each(json.r2, function (index, item) {
+                $('#r2info').append(item, '</br></br>');
+            });
+        }
+
         // $('#r2info').text('This prediction model has an R2 score of ' + parseFloat(json.r2).toFixed(7)); original
     }
     $.each(json.result, function (index, item) {

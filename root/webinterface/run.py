@@ -203,8 +203,8 @@ def linear_target_prediction(twenty=False):
     avg_actual = sum(actual) / len(actual)
     avg_prediction = sum(prediction) / len(prediction)
 
-    stats = "R2 score: %f\nActual longevity: %f\nPredicted longevity: %f" % (float(r2),
-                                                                                           avg_actual, avg_prediction)
+    stats = ['R^2 score: ' + str(float(r2)), 'Average actual longevity: ' + str(avg_actual),
+             'Average predicted longevity: ' + str(avg_prediction)]
 
     result = format_results_to_html(pd.DataFrame({'Actual': list(actual), 'Predicted': list(prediction)}), stats)
     return result
