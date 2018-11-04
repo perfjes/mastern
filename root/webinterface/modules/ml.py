@@ -5,6 +5,7 @@ from sklearn.model_selection import train_test_split, GridSearchCV, LeaveOneOut
 from sklearn import metrics
 from modules import datahandler, graph_factory
 import numpy as np
+import statsmodels.api as sm
 
 dth = datahandler
 graph = graph_factory
@@ -272,3 +273,22 @@ def leave_one_out(twenty=False):
     r2 = metrics.r2_score(r2yt, r2yp)
 
     return ytests, ypreds, r2
+
+
+def multiple_regression_analysis(twenty=False):
+    if twenty:
+        data = dth.prune_features(dth.Data.dataframe.head(20))
+    else:
+        data = dth.prune_features(dth.Data.dataframe)
+
+    X = data['linwear']
+    y = data['years in vivo']
+
+    model = sm.OLS(y, X).fit()
+    predictions = model.predict(X)
+    print('PREDICTIONS ', predictions)
+
+    graphs = [graph.generate_graph(X, y, 'Linear Wear', 'Years in Vivo', 'Yikes', 'mlr_graph.png')]
+
+    model.summary()
+    return predictions

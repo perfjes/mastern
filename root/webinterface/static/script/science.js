@@ -6,10 +6,10 @@ $(document).ready(function () {
         // figure out how
     });
 
-    $('#linear').click(function() {
+    $('#loocv').click(function() {
         loading();
         $('.result_element').remove();
-        $.getJSON('/linear', function(data) {
+        $.getJSON('/loocv', function(data) {
             $('#r2button').show();
             updateTable(data);
             $('#resultheader').text('Results - Training the model');
@@ -21,16 +21,42 @@ $(document).ready(function () {
         });
     });
 
-    $('#linear20').click(function() {
+    $('#loocv20').click(function() {
         loading();
         $('.result_element').remove();
-        $.getJSON('/linear20', function(data) {
+        $.getJSON('/loocv20', function(data) {
             $('#r2button').show();
             updateTable(data);
             $('#resultheader').text('Results - Training the model');
             $('#resultcontext').text('Based on leave-one-out model selection, the results above show the actual years ' +
                 'in vivo value for a given patient used as a test case with the predicted value from the decision ' +
                 'tree regression model.');
+            $('#loadinggif').hide();
+            displayImage();
+        });
+    });
+
+    $('#mlr').click(function() {
+        loading();
+        $('.result_element').remove();
+        $.getJSON('/mlr', function(data) {
+            $('#r2button').show();
+            updateTable(data);
+            $('#resultheader').text('Results - Training the model');
+            $('#resultcontext').text('Multiple Linear Regression');
+            $('#loadinggif').hide();
+            displayImage();
+        });
+    });
+
+    $('#mlr20').click(function() {
+        loading();
+        $('.result_element').remove();
+        $.getJSON('/mlr20', function(data) {
+            $('#r2button').show();
+            updateTable(data);
+            $('#resultheader').text('Results - Training the model');
+            $('#resultcontext').text('Multiple Linear Regression');
             $('#loadinggif').hide();
             displayImage();
         });

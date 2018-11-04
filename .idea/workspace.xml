@@ -8,26 +8,10 @@
       <change beforePath="$PROJECT_DIR$/.idea/mastern.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/mastern.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/root/data/MLPRegressionBestParams.sav" beforeDir="false" afterPath="$PROJECT_DIR$/root/data/MLPRegressionBestParams.sav" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/webinterface/modules/ml.py" beforeDir="false" afterPath="$PROJECT_DIR$/root/webinterface/modules/ml.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/root/webinterface/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/root/webinterface/run.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/root/webinterface/static/img/graph1.png" beforeDir="false" afterPath="$PROJECT_DIR$/root/webinterface/static/img/graph1.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/root/webinterface/static/img/graph10.png" beforeDir="false" afterPath="$PROJECT_DIR$/root/webinterface/static/img/graph10.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/root/webinterface/static/img/graph11.png" beforeDir="false" afterPath="$PROJECT_DIR$/root/webinterface/static/img/graph11.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/root/webinterface/static/img/graph12.png" beforeDir="false" afterPath="$PROJECT_DIR$/root/webinterface/static/img/graph12.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/root/webinterface/static/img/graph13.png" beforeDir="false" afterPath="$PROJECT_DIR$/root/webinterface/static/img/graph13.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/root/webinterface/static/img/graph14.png" beforeDir="false" afterPath="$PROJECT_DIR$/root/webinterface/static/img/graph14.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/root/webinterface/static/img/graph15.png" beforeDir="false" afterPath="$PROJECT_DIR$/root/webinterface/static/img/graph15.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/root/webinterface/static/img/graph16.png" beforeDir="false" afterPath="$PROJECT_DIR$/root/webinterface/static/img/graph16.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/root/webinterface/static/img/graph2.png" beforeDir="false" afterPath="$PROJECT_DIR$/root/webinterface/static/img/graph2.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/root/webinterface/static/img/graph3.png" beforeDir="false" afterPath="$PROJECT_DIR$/root/webinterface/static/img/graph3.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/root/webinterface/static/img/graph4.png" beforeDir="false" afterPath="$PROJECT_DIR$/root/webinterface/static/img/graph4.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/root/webinterface/static/img/graph5.png" beforeDir="false" afterPath="$PROJECT_DIR$/root/webinterface/static/img/graph5.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/root/webinterface/static/img/graph6.png" beforeDir="false" afterPath="$PROJECT_DIR$/root/webinterface/static/img/graph6.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/root/webinterface/static/img/graph7.png" beforeDir="false" afterPath="$PROJECT_DIR$/root/webinterface/static/img/graph7.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/root/webinterface/static/img/graph8.png" beforeDir="false" afterPath="$PROJECT_DIR$/root/webinterface/static/img/graph8.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/root/webinterface/static/img/graph9.png" beforeDir="false" afterPath="$PROJECT_DIR$/root/webinterface/static/img/graph9.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/root/webinterface/static/script/science.js" beforeDir="false" afterPath="$PROJECT_DIR$/root/webinterface/static/script/science.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/root/webinterface/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/root/webinterface/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/webinterface/templates/science.html" beforeDir="false" afterPath="$PROJECT_DIR$/root/webinterface/templates/science.html" afterDir="false" />
     </list>
     <ignored path="venv/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -39,18 +23,18 @@
   </component>
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/mastern$main__1_.coverage" NAME="main (1) Coverage Results" MODIFIED="1527155792833" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/compute/modules/gui" />
-    <SUITE FILE_PATH="coverage/mastern$main.coverage" NAME="main Coverage Results" MODIFIED="1527244973276" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/compute/modules" />
     <SUITE FILE_PATH="coverage/mastern$web_gui.coverage" NAME="web_gui Coverage Results" MODIFIED="1530103466170" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/compute/webinterface" />
-    <SUITE FILE_PATH="coverage/mastern$html__1_.coverage" NAME="html (1) Coverage Results" MODIFIED="1527502416361" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/compute/webinterface" />
     <SUITE FILE_PATH="coverage/mastern$run__1_.coverage" NAME="run (1) Coverage Results" MODIFIED="1533803853842" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/root" />
+    <SUITE FILE_PATH="coverage/mastern$main.coverage" NAME="main Coverage Results" MODIFIED="1527244973276" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/compute/modules" />
+    <SUITE FILE_PATH="coverage/mastern$html__1_.coverage" NAME="html (1) Coverage Results" MODIFIED="1527502416361" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/compute/webinterface" />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file leaf-file-name="run.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/root/webinterface/run.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1495">
-              <caret line="203" column="54" selection-start-line="203" selection-start-column="54" selection-end-line="203" selection-end-column="54" />
+            <state relative-caret-position="364">
+              <caret line="92" column="9" selection-start-line="92" selection-start-column="9" selection-end-line="92" selection-end-column="9" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -61,7 +45,7 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/root/webinterface/templates/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="91">
+            <state relative-caret-position="682">
               <caret line="108" column="55" selection-start-line="108" selection-start-column="55" selection-end-line="108" selection-end-column="55" />
             </state>
           </provider>
@@ -70,8 +54,8 @@
       <file leaf-file-name="science.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/root/webinterface/templates/science.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="437">
-              <caret line="19" column="24" selection-start-line="19" selection-start-column="24" selection-end-line="19" selection-end-column="24" />
+            <state relative-caret-position="275">
+              <caret line="30" column="71" selection-start-line="30" selection-start-column="71" selection-end-line="30" selection-end-column="71" />
             </state>
           </provider>
         </entry>
@@ -79,7 +63,7 @@
       <file leaf-file-name="display.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/root/webinterface/static/script/display.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4163">
+            <state relative-caret-position="3982">
               <caret line="181" selection-start-line="181" selection-end-line="181" />
             </state>
           </provider>
@@ -88,17 +72,17 @@
       <file leaf-file-name="main.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/root/webinterface/static/main.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="10879">
+            <state relative-caret-position="10406">
               <caret line="473" selection-start-line="473" selection-end-line="473" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ml.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ml.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/root/webinterface/modules/ml.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="275">
-              <caret line="236" column="37" selection-start-line="236" selection-start-column="37" selection-end-line="236" selection-end-column="37" />
+            <state relative-caret-position="420">
+              <caret line="290" column="87" selection-start-line="290" selection-start-column="87" selection-end-line="290" selection-end-column="87" />
               <folding>
                 <element signature="e#0#46#0" expanded="true" />
               </folding>
@@ -109,7 +93,7 @@
       <file leaf-file-name="datahandler.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/root/webinterface/modules/datahandler.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2691">
+            <state relative-caret-position="2574">
               <caret line="121" column="55" selection-start-line="121" selection-start-column="55" selection-end-line="121" selection-end-column="55" />
             </state>
           </provider>
@@ -118,17 +102,17 @@
       <file leaf-file-name="graph_factory.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/root/webinterface/modules/graph_factory.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="276">
-              <caret line="18" column="23" selection-start-line="18" selection-start-column="23" selection-end-line="18" selection-end-column="23" />
+            <state relative-caret-position="154">
+              <caret line="13" column="4" lean-forward="true" selection-start-line="13" selection-start-column="4" selection-end-line="13" selection-end-column="69" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="science.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="science.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/root/webinterface/static/script/science.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="142">
-              <caret line="120" lean-forward="true" selection-start-line="120" selection-end-line="120" />
+            <state relative-caret-position="324">
+              <caret line="49" column="7" lean-forward="true" selection-start-line="49" selection-start-column="7" selection-end-line="49" selection-end-column="7" />
             </state>
           </provider>
         </entry>
@@ -136,7 +120,7 @@
       <file leaf-file-name="science.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/root/webinterface/static/science.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="794">
+            <state relative-caret-position="1650">
               <caret line="75" column="14" selection-start-line="75" selection-start-column="14" selection-end-line="75" selection-end-column="14" />
             </state>
           </provider>
@@ -157,8 +141,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>test_data</find>
-      <find>refit</find>
       <find>cancle</find>
       <find>cancel</find>
       <find>.success</find>
@@ -187,6 +169,8 @@
       <find>nav</find>
       <find>status</find>
       <find>graph</find>
+      <find>leave_one</find>
+      <find>linear</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -239,13 +223,13 @@
         <option value="$PROJECT_DIR$/root/webinterface/static/script/display.js" />
         <option value="$PROJECT_DIR$/root/webinterface/static/script/display.js" />
         <option value="$PROJECT_DIR$/root/webinterface/modules/datahandler.py" />
-        <option value="$PROJECT_DIR$/root/webinterface/templates/science.html" />
         <option value="$PROJECT_DIR$/root/webinterface/static/science.css" />
-        <option value="$PROJECT_DIR$/root/webinterface/modules/ml.py" />
-        <option value="$PROJECT_DIR$/root/webinterface/run.py" />
         <option value="$PROJECT_DIR$/root/webinterface/templates/index.html" />
         <option value="$PROJECT_DIR$/root/webinterface/templates/index.html" />
         <option value="$PROJECT_DIR$/root/webinterface/static/script/science.js" />
+        <option value="$PROJECT_DIR$/root/webinterface/run.py" />
+        <option value="$PROJECT_DIR$/root/webinterface/templates/science.html" />
+        <option value="$PROJECT_DIR$/root/webinterface/modules/ml.py" />
       </list>
     </option>
   </component>
@@ -265,10 +249,10 @@
     <packageJsonPaths />
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1696" />
-    <option name="height" value="1026" />
+    <option name="x" value="-9" />
+    <option name="y" value="-9" />
+    <option name="width" value="1697" />
+    <option name="height" value="1027" />
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -278,6 +262,95 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope">
+        <subPane subId="Project Files">
+          <expand>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="mastern" type="cbb8eebc:String" user="mastern" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="mastern" type="cbb8eebc:String" user="mastern" />
+              <item name="root" type="cbb8eebc:String" user="root" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="mastern" type="cbb8eebc:String" user="mastern" />
+              <item name="root" type="cbb8eebc:String" user="root" />
+              <item name="webinterface" type="cbb8eebc:String" user="webinterface" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="mastern" type="cbb8eebc:String" user="mastern" />
+              <item name="root" type="cbb8eebc:String" user="root" />
+              <item name="webinterface" type="cbb8eebc:String" user="webinterface" />
+              <item name="templates" type="cbb8eebc:String" user="templates" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="External Dependencies" type="cbb8eebc:String" user="External Dependencies" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="External Dependencies" type="cbb8eebc:String" user="External Dependencies" />
+              <item name="C:" type="cbb8eebc:String" user="C:" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="External Dependencies" type="cbb8eebc:String" user="External Dependencies" />
+              <item name="C:" type="cbb8eebc:String" user="C:" />
+              <item name="Users" type="cbb8eebc:String" user="Users" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="External Dependencies" type="cbb8eebc:String" user="External Dependencies" />
+              <item name="C:" type="cbb8eebc:String" user="C:" />
+              <item name="Users" type="cbb8eebc:String" user="Users" />
+              <item name="perni" type="cbb8eebc:String" user="perni" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="External Dependencies" type="cbb8eebc:String" user="External Dependencies" />
+              <item name="C:" type="cbb8eebc:String" user="C:" />
+              <item name="Users" type="cbb8eebc:String" user="Users" />
+              <item name="perni" type="cbb8eebc:String" user="perni" />
+              <item name=".PyCharm2018.1" type="cbb8eebc:String" user=".PyCharm2018.1" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="External Dependencies" type="cbb8eebc:String" user="External Dependencies" />
+              <item name="C:" type="cbb8eebc:String" user="C:" />
+              <item name="Users" type="cbb8eebc:String" user="Users" />
+              <item name="perni" type="cbb8eebc:String" user="perni" />
+              <item name=".PyCharm2018.1" type="cbb8eebc:String" user=".PyCharm2018.1" />
+              <item name="system" type="cbb8eebc:String" user="system" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="External Dependencies" type="cbb8eebc:String" user="External Dependencies" />
+              <item name="C:" type="cbb8eebc:String" user="C:" />
+              <item name="Users" type="cbb8eebc:String" user="Users" />
+              <item name="perni" type="cbb8eebc:String" user="perni" />
+              <item name=".PyCharm2018.1" type="cbb8eebc:String" user=".PyCharm2018.1" />
+              <item name="system" type="cbb8eebc:String" user="system" />
+              <item name="python_stubs" type="cbb8eebc:String" user="python_stubs" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="External Dependencies" type="cbb8eebc:String" user="External Dependencies" />
+              <item name="C:" type="cbb8eebc:String" user="C:" />
+              <item name="Users" type="cbb8eebc:String" user="Users" />
+              <item name="perni" type="cbb8eebc:String" user="perni" />
+              <item name=".PyCharm2018.1" type="cbb8eebc:String" user=".PyCharm2018.1" />
+              <item name="system" type="cbb8eebc:String" user="system" />
+              <item name="python_stubs" type="cbb8eebc:String" user="python_stubs" />
+              <item name="-267385841" type="cbb8eebc:String" user="-267385841" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -317,35 +390,6 @@
               <item name="webinterface" type="462c0819:PsiDirectoryNode" />
               <item name="static" type="462c0819:PsiDirectoryNode" />
               <item name="script" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="Scope">
-        <subPane subId="Project Files">
-          <expand>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="mastern" type="cbb8eebc:String" user="mastern" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="mastern" type="cbb8eebc:String" user="mastern" />
-              <item name="root" type="cbb8eebc:String" user="root" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="mastern" type="cbb8eebc:String" user="mastern" />
-              <item name="root" type="cbb8eebc:String" user="root" />
-              <item name="webinterface" type="cbb8eebc:String" user="webinterface" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="mastern" type="cbb8eebc:String" user="mastern" />
-              <item name="root" type="cbb8eebc:String" user="root" />
-              <item name="webinterface" type="cbb8eebc:String" user="webinterface" />
-              <item name="templates" type="cbb8eebc:String" user="templates" />
             </path>
           </expand>
           <select />
@@ -533,22 +577,19 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1696" height="1026" extended-state="6" />
-    <editor active="true" />
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="5" />
       <window_info anchor="bottom" id="Event Log" order="12" sideWeight="0.50535715" side_tool="true" weight="0.47769314" />
       <window_info anchor="bottom" id="Database Changes" order="10" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.32965517" />
       <window_info anchor="bottom" id="Python Console" order="9" sideWeight="0.4978678" weight="0.3278867" />
-      <window_info anchor="bottom" id="Run" order="13" sideWeight="0.50373137" side_tool="true" weight="0.31496063" />
+      <window_info anchor="bottom" id="Run" order="13" sideWeight="0.50373137" side_tool="true" weight="0.32621083" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.32905984" />
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4856115" visible="true" weight="0.10207824" />
-      <window_info anchor="right" id="R Packages" order="6" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4856115" visible="true" weight="0.103355706" />
       <window_info anchor="bottom" id="Docker" order="6" show_stripe_button="false" />
-      <window_info anchor="right" id="R Graphics" order="5" />
       <window_info anchor="right" id="Database" order="3" />
-      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49626866" weight="0.3188248" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49626866" weight="0.31766382" />
       <window_info anchor="right" id="SciView" order="4" sideWeight="0.49628055" weight="0.32877603" />
       <window_info id="Structure" order="1" sideWeight="0.5143885" side_tool="true" weight="0.13333334" />
       <window_info id="Favorites" order="2" side_tool="true" />
@@ -558,16 +599,17 @@
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="Inspection Results" order="11" weight="0.32979852" />
+      <window_info anchor="right" id="R Packages" order="6" />
       <window_info anchor="right" x="0" y="0" width="434" height="856" id="Documentation" order="7" sideWeight="0.50371945" side_tool="true" weight="0.32916668" />
+      <window_info anchor="right" id="R Graphics" order="5" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="3" weight="0.25" />
     </layout>
     <layout-to-restore>
-      <window_info anchor="bottom" id="Version Control" order="8" weight="0.32965517" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" visible="true" weight="0.25" />
       <window_info anchor="bottom" id="Docker" order="6" show_stripe_button="false" />
       <window_info anchor="bottom" id="Run" order="13" sideWeight="0.5033557" side_tool="true" weight="0.45331833" />
-      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Cvs" order="3" weight="0.25" />
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4856115" visible="true" weight="0.13630807" />
       <window_info id="Structure" order="1" sideWeight="0.5143885" side_tool="true" weight="0.13333334" />
       <window_info anchor="right" id="R Graphics" order="5" />
@@ -576,17 +618,18 @@
       <window_info anchor="bottom" id="TODO" order="5" />
       <window_info anchor="bottom" id="Inspection Results" order="11" weight="0.32979852" />
       <window_info anchor="right" id="R Packages" order="6" />
+      <window_info anchor="bottom" id="Python Console" order="9" sideWeight="0.4986577" weight="0.32763532" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.4966443" weight="0.32051283" />
       <window_info anchor="right" x="0" y="0" width="434" height="856" id="Documentation" order="7" sideWeight="0.50371945" side_tool="true" weight="0.32916668" />
       <window_info anchor="bottom" id="Debug" order="2" sideWeight="0.4987775" weight="0.3975225" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.32905984" />
       <window_info anchor="bottom" id="Event Log" order="12" sideWeight="0.50535715" side_tool="true" weight="0.47806525" />
       <window_info anchor="bottom" id="Inspection" order="4" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="3" weight="0.25" />
+      <window_info anchor="bottom" id="Version Control" order="8" weight="0.32965517" />
       <window_info anchor="right" id="SciView" order="4" sideWeight="0.49628055" weight="0.32877603" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Database" order="3" />
-      <window_info anchor="bottom" id="Python Console" order="9" sideWeight="0.4986577" weight="0.32763532" />
+      <window_info id="Favorites" order="2" side_tool="true" />
     </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -699,77 +742,77 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/root/webinterface/static/script/display.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4163">
+        <state relative-caret-position="3982">
           <caret line="181" selection-start-line="181" selection-end-line="181" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/root/webinterface/modules/datahandler.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2691">
+        <state relative-caret-position="2574">
           <caret line="121" column="55" selection-start-line="121" selection-start-column="55" selection-end-line="121" selection-end-column="55" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/root/webinterface/static/main.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="10879">
+        <state relative-caret-position="10406">
           <caret line="473" selection-start-line="473" selection-end-line="473" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/root/webinterface/templates/science.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="437">
-          <caret line="19" column="24" selection-start-line="19" selection-start-column="24" selection-end-line="19" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/root/webinterface/modules/ml.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="275">
-          <caret line="236" column="37" selection-start-line="236" selection-start-column="37" selection-end-line="236" selection-end-column="37" />
-          <folding>
-            <element signature="e#0#46#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/root/webinterface/modules/graph_factory.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
-          <caret line="18" column="23" selection-start-line="18" selection-start-column="23" selection-end-line="18" selection-end-column="23" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/root/webinterface/static/science.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="794">
+        <state relative-caret-position="1650">
           <caret line="75" column="14" selection-start-line="75" selection-start-column="14" selection-end-line="75" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/root/webinterface/run.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1495">
-          <caret line="203" column="54" selection-start-line="203" selection-start-column="54" selection-end-line="203" selection-end-column="54" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/root/webinterface/templates/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="91">
+        <state relative-caret-position="682">
           <caret line="108" column="55" selection-start-line="108" selection-start-column="55" selection-end-line="108" selection-end-column="55" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/root/webinterface/static/script/science.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="142">
-          <caret line="120" lean-forward="true" selection-start-line="120" selection-end-line="120" />
+        <state relative-caret-position="324">
+          <caret line="49" column="7" lean-forward="true" selection-start-line="49" selection-start-column="7" selection-end-line="49" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/root/webinterface/run.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="364">
+          <caret line="92" column="9" selection-start-line="92" selection-start-column="9" selection-end-line="92" selection-end-column="9" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/root/webinterface/templates/science.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="275">
+          <caret line="30" column="71" selection-start-line="30" selection-start-column="71" selection-end-line="30" selection-end-column="71" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/root/webinterface/modules/graph_factory.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="154">
+          <caret line="13" column="4" lean-forward="true" selection-start-line="13" selection-start-column="4" selection-end-line="13" selection-end-column="69" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/root/webinterface/modules/ml.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="290" column="87" selection-start-line="290" selection-start-column="87" selection-end-line="290" selection-end-column="87" />
+          <folding>
+            <element signature="e#0#46#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

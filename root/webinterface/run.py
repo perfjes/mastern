@@ -61,10 +61,10 @@ def mlp_regressor():
     return prediction_result
 
 
-@app.route('/linear', methods=['GET'])
-def linear_regressor():
+@app.route('/loocv', methods=['GET'])
+def loocv():
     start_time = time.time()
-    prediction_result = linear_target_prediction()
+    prediction_result = leave_one_out()
     end_time = (time.time() - start_time)
     print('Runtime is: ' + str(end_time))
     return prediction_result
@@ -74,7 +74,25 @@ def linear_regressor():
 @app.route('/linear20', methods=['GET'])
 def lin20():
     start_time = time.time()
-    prediction_result = linear_target_prediction(True)
+    prediction_result = leave_one_out(True)
+    end_time = (time.time() - start_time)
+    print('Runtime is: ' + str(end_time))
+    return prediction_result
+
+
+@app.route('/mlr', methods=['GET'])
+def mlr():
+    start_time = time.time()
+    prediction_result = multiple_linear_regression()
+    end_time = (time.time() - start_time)
+    print('Runtime is: ' + str(end_time))
+    return prediction_result
+
+
+@app.route('/mlr20', methods=['GET'])
+def mlr20():
+    start_time = time.time()
+    prediction_result = multiple_linear_regression(True)
     end_time = (time.time() - start_time)
     print('Runtime is: ' + str(end_time))
     return prediction_result
@@ -196,8 +214,7 @@ def mlp_target_prediction():
     return result
 
 
-# Linear regression
-def linear_target_prediction(twenty=False):
+def leave_one_out(twenty=False):
     actual, prediction, r2 = ml.leave_one_out(twenty)
 
     avg_actual = sum(actual) / len(actual)
@@ -207,6 +224,12 @@ def linear_target_prediction(twenty=False):
              'Average predicted longevity: ' + str(avg_prediction)]
 
     result = format_results_to_html(pd.DataFrame({'Actual': list(actual), 'Predicted': list(prediction)}), stats)
+    return result
+
+
+def multiple_linear_regression(twenty=False):
+    result = ml.multiple_regression_analysis(twenty)
+
     return result
 
 
