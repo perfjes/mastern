@@ -71,7 +71,7 @@ def loocv():
 
 
 # TODO temporary method
-@app.route('/linear20', methods=['GET'])
+@app.route('/loocv20', methods=['GET'])
 def lin20():
     start_time = time.time()
     prediction_result = leave_one_out(True)

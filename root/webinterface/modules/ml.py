@@ -115,12 +115,12 @@ def target_predict_decision_tree(target, recalibrate=False, count=0):
     if recalibrate:
         parameters = {
             'criterion': ('mse', 'friedman_mse', 'mae'),
-            # 'splitter': ('best', 'random'),
-            # 'max_depth': (3, 5, 8, 12, 16, 18, 22),
-            # 'min_samples_split': (2, 3, 4, 5, 6, 9, 11, 16, 21, 25),
-            # 'max_leaf_nodes': range(4, 15),
-            # 'min_impurity_decrease': (0.0, 0.01, 0.02, 0.03, 0.05, 0.08, 0.12, 0.16, 0.2),
-            'presort': (True, False),
+            'splitter': ('best', 'random'),
+            'max_depth': (3, 5, 8, 12, 16, 18, 22, 35),
+            'min_samples_split': (2, 3, 4, 5, 6, 9, 11, 16, 21, 25, 38),
+            'max_leaf_nodes': range(4, 15),
+            'min_impurity_decrease': (0.0, 0.01, 0.02, 0.03, 0.05, 0.08, 0.12, 0.16, 0.2, 0.28, 0.4, 0.8),
+            'presort': (True, False)
             # 'random_state': range(0, 101)
         }
 
@@ -281,14 +281,22 @@ def multiple_regression_analysis(twenty=False):
     else:
         data = dth.prune_features(dth.Data.dataframe)
 
-    X = data['linwear']
+    list_of_features = []
+    for header in list(data):
+        if header in dth.Features.original_dataset_features:
+            if header not in dth.Features.drop_features_regression:
+                if header not in dth.Features.initially_deactivated:
+                    list_of_features.append(header)
+
+    X = data[[feature for feature in list_of_features]]
     y = data['years in vivo']
+    print(list(X))
 
     model = sm.OLS(y, X).fit()
     predictions = model.predict(X)
-    print('PREDICTIONS ', predictions)
 
-    graphs = [graph.generate_graph(X, y, 'Linear Wear', 'Years in Vivo', 'Yikes', 'mlr_graph.png')]
 
-    model.summary()
-    return predictions
+    # graphs = [graph.generate_graph(X, y, 'Linear Wear', 'Years in Vivo', 'Yikes', 'mlr_graph.png')]
+
+    print(model.summary())
+    return "hello beb"
