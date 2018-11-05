@@ -6,6 +6,7 @@ from sklearn import metrics
 from modules import datahandler, graph_factory
 import numpy as np
 import statsmodels.api as sm
+# statsmodels needs patsy
 
 dth = datahandler
 graph = graph_factory

@@ -1,6 +1,5 @@
 from os.path import dirname, abspath
 import pandas as pd
-import numpy as np
 import os
 import _pickle as pickle
 

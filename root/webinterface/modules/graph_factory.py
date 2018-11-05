@@ -1,9 +1,7 @@
-import collections
 import os
 from os.path import dirname
 
 from modules import datahandler as dth
-import pydotplus
 import matplotlib.pyplot as plt
 
 path = dth.Path.path

@@ -2,10 +2,6 @@ $(document).ready(function () {
     $('#status').text('System is currently loaded and ready.');
     clearTable();
 
-    $('#resetmodel').click(function() {
-        // figure out how
-    });
-
     $('#loocv').click(function() {
         loading();
         $('.result_element').remove();
@@ -105,21 +101,6 @@ $(document).ready(function () {
             $('.feature').fadeIn();
             $('#status').text('System is currently loaded and ready.');
         });
-        /*  The original Save File function - deprecated for now
-        $("#savestatus").load("../../save", function() {
-            $('#data').fadeIn();
-            if($('#success').text() == 'success'){
-                $('#resultheader').text('File saved as ' + $('#fname').text());
-                $('#resultcontext').text('The dataset was saved as a new file with the aforementioned name for ' +
-                    'future use.');
-                $('#loadinggif').hide();
-            } else {
-                $('#resultheader').text('An error occurred!');
-                $('#resultcontext').text('The dataset has not been saved.');
-                $('#loadinggif').hide();
-            }
-        });
-        */
     });
 
     $('#saveFeatures').click(function() {
@@ -168,8 +149,8 @@ function updateTable(json, type) {
 
 function appendDataToTable(rowdata) {
     $('#results_table').append(function () {
-        return '<tr class="result_element"><td>Actual: ' + rowdata['Actual'].toFixed(5) + '</td>' + '\n' +
-            '<td>Predicted: ' + rowdata['Predicted'].toFixed(5) + '</td></tr>';
+        return '<tr class="result_element"><td>Actual: ' + rowdata['Actual'].toFixed(2) + '</td>' + '\n' +
+            '<td>Predicted: ' + rowdata['Predicted'].toFixed(2) + '</td></tr>';
     });
 }
 

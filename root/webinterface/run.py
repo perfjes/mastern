@@ -1,9 +1,7 @@
-import os
 import statistics
 import pandas as pd
 import time
-from flask import Flask, render_template, request, redirect, url_for, flash, send_from_directory
-from werkzeug.utils import secure_filename
+from flask import Flask, render_template, request
 from modules import datahandler, ml
 import json
 
@@ -216,12 +214,14 @@ def mlp_target_prediction():
 
 def leave_one_out(twenty=False):
     actual, prediction, r2 = ml.leave_one_out(twenty)
-
     avg_actual = sum(actual) / len(actual)
     avg_prediction = sum(prediction) / len(prediction)
 
-    stats = ['R^2 score: ' + str(float(r2)), 'Average actual longevity: ' + str(avg_actual),
-             'Average predicted longevity: ' + str(avg_prediction)]
+    stats = ['R^2 score: %.4f' % float(r2), 'Average actual longevity: %.4f' % float(avg_actual),
+             'Average predicted longevity: %.4f' % float(avg_prediction)]
+
+    actual = [round(val, 2) for val in actual]
+    prediction = [round(val, 2) for val in prediction]
 
     result = format_results_to_html(pd.DataFrame({'Actual': list(actual), 'Predicted': list(prediction)}), stats)
     return result
