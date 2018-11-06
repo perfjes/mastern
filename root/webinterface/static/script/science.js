@@ -126,7 +126,7 @@ $(document).ready(function () {
     });
 });
 
-function updateTable(json, type) {
+function updateTable(json) {
     $('#status').text('System is currently loaded and ready.');
     if ('r2' in json) {
         $('#r2info').text('');
@@ -143,13 +143,14 @@ function updateTable(json, type) {
         // $('#r2info').text('This prediction model has an R2 score of ' + parseFloat(json.r2).toFixed(7)); original
     }
     $.each(json.result, function (index, item) {
-        appendDataToTable(item, type);
+        appendDataToTable(index, item);
     });
 }
 
-function appendDataToTable(rowdata) {
+function appendDataToTable(index, rowdata) {
+    index += 1;
     $('#results_table').append(function () {
-        return '<tr class="result_element"><td>Actual: ' + rowdata['Actual'].toFixed(2) + '</td>' + '\n' +
+        return '<tr class="result_element"><td>' + index + '</td><td>Actual: ' + rowdata['Actual'].toFixed(2) + '</td>' + '\n' +
             '<td>Predicted: ' + rowdata['Predicted'].toFixed(2) + '</td></tr>';
     });
 }

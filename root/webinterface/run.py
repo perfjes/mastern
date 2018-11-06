@@ -154,7 +154,7 @@ def dt_target_prediction():
 
     # FOR ACTUAL USE
     if not Data.recalibrate:
-        for x in range(20):
+        for x in range(2000):
             prediction_result, r2 = ml.target_predict_decision_tree(target, Data.recalibrate)
             r2 = float(r2)
             prediction_results_list.append(float(prediction_result))
@@ -162,7 +162,11 @@ def dt_target_prediction():
                 print('Process stopped, system made ', len(prediction_results_list), ' predictions')
                 break
 
-        graphs = graph_factory.make_some_graphs()
+        graph_factory.clean_up_graph_folder()
+        graphs = graph_factory.histogram_of_results(prediction_results_list)
+        more_graphs = graph_factory.make_some_graphs()
+        for every in more_graphs:
+            graphs.append(every)
         prediction = pd.DataFrame(
             {'Actual': target['years in vivo'], 'Predicted': statistics.mean(prediction_results_list)})
         r2_list.append(r2)
@@ -288,8 +292,6 @@ def format_results_to_html(dataframe, r2score=None, graphs=list(), stats=list())
 
     json_result['graphs'] = graphs
     json_result['stats'] = stats
-
-    print(graphs)
 
     table_data = [dict([(column, row[i]) for i, column in enumerate(dataframe.columns)]) for row in
                   dataframe.values]

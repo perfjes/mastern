@@ -32,6 +32,7 @@ $(document).ready(function () {
                 if (!cancelled) {
                     updateTable(data);
                     displayImage(data['graphs']);
+                    displayImage(data['graphs']);
                     displayResults();
                 }
             }).fail(function() {
@@ -397,6 +398,6 @@ function hideMostElements() {
 function clearTable() {
     $('#resultheader').text('');
     $('#resultcontext').text('');
-    $('.result_element, .graphImage, .statistics').remove();
+    $('.result_element, .graphImage, .statistics, #results_table tr').remove();
     $('#features').empty();
 }

@@ -66,7 +66,6 @@ def split_dataset_loocv(dataframe, column):
 # Function for predicting the longevity of a single sample - given the training/testing dataset and a new CSV file
 # containing the exact same features as the training/testing set.
 def target_predict_decision_tree(target, recalibrate=False, count=0):
-    print(list(dth.prune_features(dth.Data.dataframe)))
     x_train, x_test, y_train, y_test = split_dataset_into_train_test(dth.prune_features(dth.Data.dataframe),
                                                                      'years in vivo', recalibrate)
     if 'years in vivo' not in target:
@@ -191,10 +190,9 @@ def target_predict_linear(target, recalibrate=False, count=0):
     return prediction, r2
 
 
-def leave_one_out(twenty=False):
-    if twenty:
-        data = dth.prune_features(dth.Data.dataframe.head(20))
-        print(data)
+def leave_one_out(control_group=False):
+    if control_group:
+        data = dth.prune_features(dth.Data.dataframe.head(17))
     else:
         data = dth.prune_features(dth.Data.dataframe)
     targets = np.array(data['years in vivo'])
@@ -222,9 +220,9 @@ def leave_one_out(twenty=False):
     return ytests, ypreds, r2
 
 
-def multiple_regression_analysis(twenty=False):
-    if twenty:
-        data = dth.prune_features(dth.Data.dataframe.head(20))
+def multiple_regression_analysis(control_group=False):
+    if control_group:
+        data = dth.prune_features(dth.Data.dataframe.head(17))
     else:
         data = dth.prune_features(dth.Data.dataframe)
 
