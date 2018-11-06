@@ -5,7 +5,6 @@ from sklearn.model_selection import train_test_split, GridSearchCV, LeaveOneOut
 from sklearn import metrics
 from modules import datahandler, graph_factory
 import numpy as np
-import statsmodels.api as sm
 # statsmodels needs patsy
 
 dth = datahandler
@@ -34,12 +33,15 @@ def split_dataset_into_train_test(dataframe, column, recalibrate=False):
     else:
         x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.35)
 
+    """
     # TODO might not be necessary - just in case there's too little or too much of control cases in the
     # TODO training/testing subset. Not optimal by any means, just a temporary solution.
     while (len(x.loc[x['case'] == 0].index) / 2.2) > len(x_train.loc[x_train['case'] == 0].index) > \
             len(x.loc[x['case'] == 0].index) / 1.5:
         print('\n', 'RECALIBRATING', '\n')
         x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.35)
+        
+    """
 
     return x_train, x_test, y_train, y_test
 
@@ -54,58 +56,17 @@ def float_test():
     return float_list
 
 
-# Loads a previously saved regression model if there is one, trains a new if there's not. If the dataframe being used
-#  for the prediction have more or less features than the regression model,
-def validate_or_create_regressor(filename):
-    df = dth.prune_features(dth.Data.dataframe)
-    x_train, x_test, y_train, y_test = split_dataset_into_train_test(df, 'years in vivo')
-
-    if dth.load_file(filename) is not None:
-        regressor = dth.load_file(filename)
-    else:
-        regressor = update_regression_model(filename, x_train, y_train)
-
-    # Checks whether the amount of features in the regression model is the same as the data being used to predict a
-    # feature. TODO create save-new-model so I don't have to deal with retraining the model every time? Or handle better
-    if filename != 'mlp-regressor.sav':
-        if regressor.max_features_ == len(list(x_test)):
-            return regressor
-        else:
-            regressor = update_regression_model(filename, x_train, y_train)
-            return regressor
-    else:
-        regressor = update_regression_model(filename, x_train, y_train)
-        return regressor
-
-
-def update_regression_model(filename, x_train, y_train):
-    if filename == 'dt-regressor.sav':
-        regressor = DecisionTreeRegressor(criterion='friedman_mse', max_depth=12, min_samples_split=13, splitter='random',
-                                          max_leaf_nodes=18, min_impurity_decrease=0.08, presort=False)
-        regressor.fit(x_train, y_train)
-        dth.save_file(filename, regressor)
-        print('Saved new regression model as', filename)
-        return regressor
-    elif filename == 'mlp-regressor.sav':
-        regressor = MLPRegressor(activation='tanh', alpha=0.001, early_stopping=True, hidden_layer_sizes=(25, 20, 40),
-                                 solver='lbfgs', max_iter=100)
-        regressor.fit(x_train, y_train)
-        dth.save_file(filename, regressor)
-        print('Saved new regression model as', filename)
-        return regressor
-    elif filename == 'linear-regressor.sav':
-        regressor = LinearRegression(fit_intercept=True, normalize=True, copy_X=True)
-        regressor.fit(x_train, y_train)
-        dth.save_file(filename, regressor)
-        print('Saved new regression model as', filename)
-        return regressor
-    else:
-        print('Wrong filetype?')
+def split_dataset_loocv(dataframe, column):
+    x = dataframe.drop(column, axis=1)
+    y = dataframe[column]
+    loo = LeaveOneOut()
+    loo.get_n_splits(x)
 
 
 # Function for predicting the longevity of a single sample - given the training/testing dataset and a new CSV file
 # containing the exact same features as the training/testing set.
 def target_predict_decision_tree(target, recalibrate=False, count=0):
+    print(list(dth.prune_features(dth.Data.dataframe)))
     x_train, x_test, y_train, y_test = split_dataset_into_train_test(dth.prune_features(dth.Data.dataframe),
                                                                      'years in vivo', recalibrate)
     if 'years in vivo' not in target:
@@ -125,9 +86,7 @@ def target_predict_decision_tree(target, recalibrate=False, count=0):
             # 'random_state': range(0, 101)
         }
 
-        regressor = GridSearchCV(DecisionTreeRegressor(criterion='mae', max_depth=8, min_samples_split=8,
-                                                       splitter='best', max_leaf_nodes=15, min_impurity_decrease=0.0,
-                                                       presort=True, random_state=83), parameters, n_jobs=-1)
+        regressor = GridSearchCV(DecisionTreeRegressor(random_state=83), parameters, n_jobs=-1)
 
         regressor.fit(x_train, y_train)
         print(regressor.best_params_)
@@ -136,7 +95,8 @@ def target_predict_decision_tree(target, recalibrate=False, count=0):
         r2 = str(regressor.best_score_)
 
     else:
-        regressor = validate_or_create_regressor('dt-regressor.sav')
+        regressor = DecisionTreeRegressor(criterion='mae', max_depth=3, min_samples_split=21, splitter='best',
+                                          max_leaf_nodes=4, min_impurity_decrease=0.0, presort=True)
         regressor.fit(x_train, y_train)
 
     r2_prediction = regressor.predict(x_test)
@@ -150,7 +110,7 @@ def target_predict_decision_tree(target, recalibrate=False, count=0):
         r2_pred = r2_prediction.reshape(-1, 1)
         r2 = metrics.r2_score(y_true, r2_pred)
 
-    return prediction, r2, make_some_graphs()
+    return prediction, r2
 
 
 def target_predict_mlp(target, recalibrate=False, count=0):
@@ -179,7 +139,8 @@ def target_predict_mlp(target, recalibrate=False, count=0):
         dth.save_file('MLPRegressionBestParams.sav', regressor.best_params_)
         r2 = regressor.best_score_
     else:
-        regressor = validate_or_create_regressor('mlp-regressor.sav')
+        regressor = MLPRegressor(activation='tanh', alpha=0.001, early_stopping=True, hidden_layer_sizes=(25, 20, 40),
+                                 solver='lbfgs', max_iter=100,)
         regressor.fit(x_train, y_train)
 
     r2_prediction = regressor.predict(x_test)
@@ -192,7 +153,7 @@ def target_predict_mlp(target, recalibrate=False, count=0):
         r2_pred = r2_prediction.reshape(-1, 1)
         r2 = metrics.r2_score(y_true, r2_pred)
 
-    return prediction, r2, make_some_graphs()
+    return prediction, r2
 
 
 def target_predict_linear(target, recalibrate=False, count=0):
@@ -227,21 +188,7 @@ def target_predict_linear(target, recalibrate=False, count=0):
         r2_pred = r2_prediction.reshape(-1, 1)
         r2 = metrics.r2_score(y_true, r2_pred)
 
-    return prediction, r2, make_some_graphs()
-
-
-def make_some_graphs():
-    graphs = []
-    count = 1
-    for feature in list(dth.Data.dataframe):
-
-        if feature != 'years in vivo':
-            graphs.append(graph.generate_graph(dth.Data.dataframe['years in vivo'], dth.Data.dataframe[feature],
-                                               'years in vivo', feature, 'Relation between longevity and ' + feature,
-                                               'graph' + str(count) + '.png'))
-            count += 1
-
-    return graphs
+    return prediction, r2
 
 
 def leave_one_out(twenty=False):
@@ -260,9 +207,8 @@ def leave_one_out(twenty=False):
         x_train, x_test = dataset[train], dataset[test]
         y_train, y_test = targets[train], targets[test]
 
-        regressor = DecisionTreeRegressor(criterion='friedman_mse', max_depth=12, min_samples_split=13,
-                                          splitter='random', max_leaf_nodes=18, min_impurity_decrease=0.08,
-                                          presort=False, random_state=13)
+        regressor = DecisionTreeRegressor(criterion='mae', max_depth=3, min_samples_split=21, splitter='best',
+                                          max_leaf_nodes=4, min_impurity_decrease=0.0, presort=True)
         regressor.fit(x_train, y_train)
         prediction = regressor.predict(x_test)
 
@@ -282,22 +228,13 @@ def multiple_regression_analysis(twenty=False):
     else:
         data = dth.prune_features(dth.Data.dataframe)
 
-    list_of_features = []
-    for header in list(data):
-        if header in dth.Features.original_dataset_features:
-            if header not in dth.Features.drop_features_regression:
-                if header not in dth.Features.initially_deactivated:
-                    list_of_features.append(header)
-
-    X = data[[feature for feature in list_of_features]]
+    x = data.drop('years in vivo', axis=1)
     y = data['years in vivo']
-    print(list(X))
 
-    model = sm.OLS(y, X).fit()
-    predictions = model.predict(X)
+    regressor = LinearRegression()
+    regressor.fit(x, y)
 
+    test = np.reshape(dth.load_dataframe('test.csv'), (-1, 1))
+    prediction = regressor.predict(test)
 
-    # graphs = [graph.generate_graph(X, y, 'Linear Wear', 'Years in Vivo', 'Yikes', 'mlr_graph.png')]
-
-    print(model.summary())
-    return "hello beb"
+    return prediction

@@ -174,6 +174,15 @@ $(document).ready(function () {
         }
     });
 
+    $('#graphsbutton').click(function() {
+        if ($(this).hasClass('buttonClicked')) {
+            $(this).removeClass('buttonClicked');
+        } else {
+            $(this).addClass('buttonClicked');
+        }
+        $('.graphImage, #statsFiller').slideToggle();
+    });
+
     // TODO: This function works almost as intended - when using system straight it takes user back to input (from
     // TODO: loading prediction - funky). Does weird things with select feature thing.
     $('#back').click(function() {
@@ -305,12 +314,12 @@ var displayResults = function() {
 function displayImage(images) {
     for(var image in images) {
         var img = document.createElement('img');
-        img.setAttribute('src', '../static/img/' + images[image]);
+        img.setAttribute('src', '../static/img/graphs/' + images[image]);
         img.setAttribute('class', 'graphImage');
         document.getElementById('graphs').appendChild(img);
     }
-
-    $('#graphFiller').fadeIn();
+    $('.graphImage').hide();
+    $('#graphFiller').slideDown();
     systemStatusGood();
 }
 
@@ -321,6 +330,11 @@ function updateTable(json) {
     systemStatusGood();
     if ('r2' in json) {
         $('#r2info').text('This prediction has an R2 score of ' + parseFloat(json.r2).toFixed(4));
+    }
+    if ('stats' in json) {
+        $.each(json.stats, function(index, item) {
+            $('#statsFiller').append('<p class="statistics">' + item + '</p>');
+        });
     }
     $.each(json.result, function (index, item) {
         $('#results_table').append('<tr><td id="p">Predicted implant longevity:</td></tr><tr class="result_element">' +
@@ -376,13 +390,13 @@ function hideAllElements() {
 
 // For when system is initiated
 function hideMostElements() {
-    $('.help, .hideContent, #data, #patientInfoForm, #graphFiller, #graphs, #status, .feature, #loadinggif, #r2info, ' +
+    $('.help, .hideContent, #data, #patientInfoForm, #graphFiller, #statsFiller, #graphs, #status, .feature, #loadinggif, #r2info, ' +
         '#r2button, #input, #input button, .input, .input button, .optional').hide();
 }
 
 function clearTable() {
     $('#resultheader').text('');
     $('#resultcontext').text('');
-    $('.result_element, .graphImage').remove();
+    $('.result_element, .graphImage, .statistics').remove();
     $('#features').empty();
 }

@@ -2,7 +2,7 @@ import statistics
 import pandas as pd
 import time
 from flask import Flask, render_template, request
-from modules import datahandler, ml
+from modules import datahandler, ml, graph_factory
 import json
 
 # Module related variables
@@ -70,7 +70,7 @@ def loocv():
 
 # TODO temporary method
 @app.route('/loocv20', methods=['GET'])
-def lin20():
+def loocv20():
     start_time = time.time()
     prediction_result = leave_one_out(True)
     end_time = (time.time() - start_time)
@@ -155,25 +155,25 @@ def dt_target_prediction():
     # FOR ACTUAL USE
     if not Data.recalibrate:
         for x in range(20):
-            prediction_result, r2, graphs = ml.target_predict_decision_tree(target, Data.recalibrate)
+            prediction_result, r2 = ml.target_predict_decision_tree(target, Data.recalibrate)
             r2 = float(r2)
             prediction_results_list.append(float(prediction_result))
             if Data.stop_process:
                 print('Process stopped, system made ', len(prediction_results_list), ' predictions')
                 break
 
+        graphs = graph_factory.make_some_graphs()
         prediction = pd.DataFrame(
             {'Actual': target['years in vivo'], 'Predicted': statistics.mean(prediction_results_list)})
         r2_list.append(r2)
-        result = format_results_to_html(prediction, statistics.mean(r2_list), graphs)
-        get_processed_list_of_predictions(prediction_results_list)
+        stats = get_processed_list_of_predictions(prediction_results_list)
+        result = format_results_to_html(prediction, statistics.mean(r2_list), graphs, stats)
 
     # FOR TESTING
     else:
-        prediction_result, r2, _ = ml.target_predict_decision_tree(target, Data.recalibrate)
+        prediction_result, r2 = ml.target_predict_decision_tree(target, Data.recalibrate)
         prediction = pd.DataFrame({'Actual': target['years in vivo'], 'Predicted': prediction_result})
         result = format_results_to_html(prediction, r2)
-
     return result
 
 
@@ -193,19 +193,20 @@ def mlp_target_prediction():
     # FOR ACTUAL USE
     if not Data.recalibrate:
         for x in range(50):
-            prediction_result, r2, graphs = ml.target_predict_mlp(target, Data.recalibrate)
+            prediction_result, r2 = ml.target_predict_mlp(target, Data.recalibrate)
             r2 = float(r2)
             prediction_results_list.append(float(prediction_result))
 
         prediction = pd.DataFrame(
             {'Actual': target['years in vivo'], 'Predicted': statistics.mean(prediction_results_list)})
         r2_list.append(r2)
+        graphs = graph_factory.make_some_graphs()
         result = format_results_to_html(prediction, statistics.mean(r2_list), graphs)
         get_processed_list_of_predictions(prediction_results_list)
 
     # FOR TESTING
     else:
-        prediction_result, r2, _ = ml.target_predict_mlp(target, Data.recalibrate)
+        prediction_result, r2 = ml.target_predict_mlp(target, Data.recalibrate)
         prediction = pd.DataFrame({'Actual': target['years in vivo'], 'Predicted': prediction_result})
         result = format_results_to_html(prediction, r2)
 
@@ -239,6 +240,8 @@ def get_processed_list_of_predictions(results):
     print('Maximum years: ', max(results))
     print('Minimum years: ', min(results))
     print('Average years: ', statistics.mean(results))
+    return ['Standard deviation: ' + str(round(statistics.stdev(results), 5)), 'Maximum years: ' +
+            str(round(max(results), 5)), 'Minimum years: ' + str(round(min(results), 5))]
 
 
 # Populates a HTML page with a list of checkboxes containing the features (columns) from the dataset.
@@ -278,12 +281,13 @@ def update_features(features):
 
 # Dataframe, R2 score and a list of graphs are passed and the function returns a dict formatted into a proper JSON
 # string.
-def format_results_to_html(dataframe, r2score=None, graphs=list()):
+def format_results_to_html(dataframe, r2score=None, graphs=list(), stats=list()):
     json_result = {}
     if r2score is not None:
         json_result['r2'] = r2score
 
     json_result['graphs'] = graphs
+    json_result['stats'] = stats
 
     print(graphs)
 

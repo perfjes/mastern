@@ -387,9 +387,6 @@ body {
             -ms-flex: 1;
                 flex: 1;
     background-color: white;
-    height: -webkit-fit-content;
-    height: -moz-fit-content;
-    height: fit-content;
     min-height: 100%;
     width: 100%;
     margin: 0;
@@ -457,7 +454,7 @@ body {
     height: -moz-fit-content;
     height: fit-content;
     padding: 10px;
-    margin: 20px auto 30px auto;
+    margin: 25% auto;
 }
 
 #results_table td {
@@ -470,6 +467,12 @@ body {
     height: fit-content;
     margin: auto;
     font-family: 'Roboto', sans-serif;
+}
+
+#statsFiller {
+    width: fit-content;
+    height: fit-content;
+    margin: 15px auto;
 }
 
 #savestatus, #success, #fname {
@@ -543,6 +546,10 @@ body {
     display: block;
 }
 
+#graphsbutton {
+    margin: 120px auto 30px auto;
+}
+
 /****************************** PATIENT INFO BOX ******************************/
 
 #patInfoDisplayButton {
@@ -590,7 +597,6 @@ body {
 
 .buttonClicked {
     background-color: #ff7e1a !important;
-    color: black;
 }
 
 .patinfodesc {

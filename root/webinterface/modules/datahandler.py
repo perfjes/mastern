@@ -7,6 +7,7 @@ ROOT_DIRECTORY = dirname(dirname(dirname(abspath(__file__))))
 
 
 class Path:
+    img = '%s%s' % (ROOT_DIRECTORY, r'/webinterface/static/img/')
     path = '%s%s' % (ROOT_DIRECTORY, r'/data/')
     result_json = '%s/data/test-results/' % ROOT_DIRECTORY
     pickle_data = '%s%s' % (ROOT_DIRECTORY, r'/data/data.pkl')
@@ -179,7 +180,7 @@ def generate_dataframe_from_html(input_list):
 
 
 def prune_features(df):
-    for feature in Features.drop_features_regression:
+    for feature in Features.drop_features_regression + Features.initially_deactivated:
         if feature in df:
             df = df.drop(feature, axis=1)
     return df
