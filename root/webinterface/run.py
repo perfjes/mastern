@@ -20,8 +20,8 @@ prediction_results_list = []
 
 
 class Data:
-    original_features = list(dth.Data.dataframe)
-    selected_features = [feature for feature in original_features if feature not in dth.Features.initially_deactivated]
+    selected_features = [feature for feature in dth.Features.original_dataset_features if feature not in
+                         dth.Features.initially_deactivated]
     recalibrate = False
     stop_process = False
     target_dataframe = pd.DataFrame()
@@ -251,8 +251,8 @@ def get_processed_list_of_predictions(results):
 # Populates a HTML page with a list of checkboxes containing the features (columns) from the dataset.
 def feature_selector():
     html_list = ['<form name="feats" action="/features">']
-    for feature in Data.original_features:
-        if feature != 'case' and feature != 'years in vivo':
+    for feature in dth.Features.original_dataset_features:
+        if feature != 'years in vivo':
             if feature in Data.selected_features:
                 html_list.append(
                     '<li class="featureSelector"><input type="checkbox" name="ff" class="feat" value="' + feature +
@@ -271,10 +271,11 @@ def feature_selector():
 def update_features(features):
     Data.selected_features = features
 
-    for feature in Data.original_features:
+    for feature in dth.Features.original_dataset_features:
         if feature in Data.selected_features and feature in dth.Features.drop_features_regression:
             dth.Features.drop_features_regression.remove(feature)
-        if feature != 'years in vivo' and feature != 'case':
+
+        if feature != 'years in vivo':
             if feature not in Data.selected_features and feature not in dth.Features.drop_features_regression:
                 dth.Features.drop_features_regression.append(feature)
 

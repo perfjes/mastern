@@ -46,6 +46,7 @@ $(document).ready(function () {
 
     $('#featurebtn').click(function() {
         hideMostElements();
+        $('#features').empty();
         systemStatusBad();
         $.get('/features', function(input) {
             featureSelection(input);
@@ -55,8 +56,7 @@ $(document).ready(function () {
 
         // TODO DOESN'T WORK!
         $('.featureSelector').on('click', function() {
-            console.log('lo0l');
-            var checked = $(this).prop('checked');
+            let checked = $(this).prop('checked');
             if (checked) {
                 $(this).prop('checked', false);
             } else {
@@ -129,11 +129,11 @@ $(document).ready(function () {
                 $('#patInfoSheet tr').remove();
             }
 
-            for(var item in patientInfo) {
+            for(let item in patientInfo) {
                 console.log(item.search('Has the implant'));
                 if (item == 'Has the implant been removed?' || item == 'Was the cup loose? (if it was removed)' ||
                     item == 'Was the stem loose? (if it was removed)') {
-                    var whetherOrNot = 'Yes';
+                    let whetherOrNot = 'Yes';
                     if (patientInfo[item] == 0) {
                         whetherOrNot = 'No';
                     }
@@ -190,12 +190,12 @@ $(document).ready(function () {
         stopProcess();
         hideMostElements();
 
-        for (var thing in currentWindow) {
+        for (let thing in currentWindow) {
             console.log(currentWindow[thing]);
         }
 
         if (currentWindow.length > 1) {
-            var previousWindow = currentWindow[currentWindow.length - 2];
+            let previousWindow = currentWindow[currentWindow.length - 2];
             if (systemLoading) {
                 previousWindow = currentWindow[currentWindow.length - 1];
                 currentWindow.pop();
