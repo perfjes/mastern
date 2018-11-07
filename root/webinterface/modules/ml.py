@@ -17,6 +17,7 @@ class Data:
     dt_regressor = dth.load_file('dt-regressor.sav')
     mlp_regressor = dth.load_file('mlp-regressor.sav')
     recalibrate = False
+    decision_tree_hyperparameters = {}
 
 
 # Splits the dataset into two parts - one for training, one for testing, with a split of 65% of the dataset used for
@@ -77,7 +78,7 @@ def target_predict_decision_tree(target, recalibrate=False, count=0):
         parameters = {
             'criterion': ('mse', 'friedman_mse', 'mae'),
             'splitter': ('best', 'random'),
-            'max_depth': (3, 5, 8, 12, 16, 18, 22, 35),
+            'max_depth': (2, 3, 5, 8, 12, 16, 18, 22, 35),
             'min_samples_split': (2, 3, 4, 5, 6, 9, 11, 16, 21, 25, 38),
             'max_leaf_nodes': range(4, 15),
             'min_impurity_decrease': (0.0, 0.01, 0.02, 0.03, 0.05, 0.08, 0.12, 0.16, 0.2, 0.28, 0.4, 0.8),
@@ -85,7 +86,7 @@ def target_predict_decision_tree(target, recalibrate=False, count=0):
             # 'random_state': range(0, 101)
         }
 
-        regressor = GridSearchCV(DecisionTreeRegressor(random_state=83), parameters, n_jobs=-1)
+        regressor = GridSearchCV(DecisionTreeRegressor(random_state=55), parameters, n_jobs=-1)
 
         regressor.fit(x_train, y_train)
         print(regressor.best_params_)
@@ -226,13 +227,25 @@ def multiple_regression_analysis(control_group=False):
     else:
         data = dth.prune_features(dth.Data.dataframe)
 
-    x = data.drop('years in vivo', axis=1)
-    y = data['years in vivo']
+    targets = np.array(data['years in vivo'])
+    dataset = np.array(data.drop('years in vivo', axis=1))
 
-    regressor = LinearRegression()
-    regressor.fit(x, y)
+    loo = LeaveOneOut()
+    ytests, ypreds, r2yt, r2yp = [], [], [], []
 
-    test = np.reshape(dth.load_dataframe('test.csv'), (-1, 1))
-    prediction = regressor.predict(test)
+    for train, test in loo.split(dataset):
+        x_train, x_test = dataset[train], dataset[test]
+        y_train, y_test = targets[train], targets[test]
 
-    return prediction
+        regressor = LinearRegression()
+        regressor.fit(x_train, y_train)
+        print(regressor.coef_)
+        prediction = regressor.predict(x_test)
+
+        r2yt.append(y_test)
+        r2yp.append(prediction)
+        ytests.append(float(y_test))
+        ypreds.append(float(prediction))
+
+    r2 = metrics.r2_score(r2yt, r2yp)
+    return ytests, ypreds, r2

@@ -1,6 +1,7 @@
 import glob
 import os
-from os.path import dirname
+import numpy as np
+from statistics import mean
 from modules import datahandler as dth
 import matplotlib.pyplot as plt
 
@@ -15,26 +16,19 @@ def clean_up_graph_folder():
 # TODO stop programming python like it's Java
 def generate_graph(x_data, y_data, x_label, y_label, title, filename):
     file = '%s%s' % (dth.Path.img + '/graphs/', filename)
+    m, b = best_fit_slope_and_intercept(x_data, y_data)
+    regression_line = []
+    for x in x_data:
+        regression_line.append((m*x) + b)
+
     plt.scatter(x_data, y_data, color='#b23000')
+    plt.plot(x_data, regression_line, color='#ba7f04')
     plt.xlabel(x_label)
     plt.ylabel(y_label)
     plt.title(title)
     plt.savefig(file)
     plt.clf()
     return filename
-
-
-def generate_line_plot_confidence_intervals(x_data, y_data, x_label, y_label, title):
-    _, ax = plt.subplots()
-    ax.plot(x_data, y_data, lw=2, color='#b23000', alpha=1)
-
-    # Label the axes and provide a title
-    ax.set_title(title)
-    ax.set_xlabel(x_label)
-    ax.set_ylabel(y_label)
-
-    plt.savefig(ax)
-    plt.clf()  # Clears figure
 
 
 def make_some_graphs():
@@ -53,7 +47,16 @@ def histogram_of_results(list_of_results):
     path = '%s%s' % (dth.Path.img + '/graphs/', 'histogram.png')
     plt.xlabel('Predicted years of longevity')
     plt.ylabel('Number of predictions')
-    plt.hist(list_of_results, color='#b23000')
+    bins = range(0, 20)
+    plt.hist(list_of_results, bins=bins, rwidth=0.8, color='#b23000')
     plt.savefig(path)
     plt.clf()
     return ['histogram.png']
+
+
+def best_fit_slope_and_intercept(xs, ys):
+    m = (((mean(xs) * mean(ys)) - mean(xs * ys)) /
+         ((mean(xs) * mean(xs)) - mean(xs * xs)))
+
+    b = mean(ys) - m * mean(xs)
+    return m, b

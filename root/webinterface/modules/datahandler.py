@@ -191,4 +191,5 @@ class Data:
     dataframe = load_dataframe('db')
     split = load_split_value_from_pickle()
     unprocessed_target = pd.DataFrame()
+    unprocessed_dataframe = pd.DataFrame()
     target = pd.DataFrame()

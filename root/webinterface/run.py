@@ -10,9 +10,11 @@ dth = datahandler
 dth.Data.split = dth.load_split_value_from_pickle()
 path = dth.ROOT_DIRECTORY + r'/data/'
 dth.Data.dataframe = dth.load_dataframe(path)
+dth.Data.unprocessed_dataframe = dth.Data.dataframe
 
 # Web app
 app = Flask(__name__)
+
 
 # Testing
 r2results = []
@@ -167,6 +169,7 @@ def dt_target_prediction():
         more_graphs = graph_factory.make_some_graphs()
         for every in more_graphs:
             graphs.append(every)
+
         prediction = pd.DataFrame(
             {'Actual': target['years in vivo'], 'Predicted': statistics.mean(prediction_results_list)})
         r2_list.append(r2)
@@ -217,8 +220,8 @@ def mlp_target_prediction():
     return result
 
 
-def leave_one_out(twenty=False):
-    actual, prediction, r2 = ml.leave_one_out(twenty)
+def leave_one_out(control_group=False):
+    actual, prediction, r2 = ml.leave_one_out(control_group)
     avg_actual = sum(actual) / len(actual)
     avg_prediction = sum(prediction) / len(prediction)
 
@@ -232,9 +235,23 @@ def leave_one_out(twenty=False):
     return result
 
 
-def multiple_linear_regression(twenty=False):
-    result = ml.multiple_regression_analysis(twenty)
+def multiple_linear_regression(control_group=False):
+    actual, prediction, r2 = ml.multiple_regression_analysis(control_group)
+    avg_actual = sum(actual) / len(actual)
+    avg_prediction = sum(prediction) / len(prediction)
 
+    stats = ['R^2 score: %.4f' % float(r2), 'Average actual longevity: %.4f' % float(avg_actual),
+             'Average predicted longevity: %.4f' % float(avg_prediction)]
+
+    actual = [round(val, 2) for val in actual]
+    prediction = [round(val, 2) for val in prediction]
+
+    count = 1
+    for x in actual:
+        print (count, '&', x, '&', prediction[count-1], '\\\\ \\hline')
+        count += 1
+
+    result = format_results_to_html(pd.DataFrame({'Actual': list(actual), 'Predicted': list(prediction)}), stats)
     return result
 
 
@@ -271,8 +288,8 @@ def feature_selector():
 def update_features(features):
     Data.selected_features = features
 
-    for feature in dth.Features.original_dataset_features:
-        if feature in Data.selected_features and feature in dth.Features.drop_features_regression:
+    for feature in features:
+        if feature in dth.Features.original_dataset_features and feature in dth.Features.drop_features_regression:
             dth.Features.drop_features_regression.remove(feature)
 
         if feature != 'years in vivo':
@@ -280,6 +297,7 @@ def update_features(features):
                 dth.Features.drop_features_regression.append(feature)
 
     dth.Data.target = dth.prune_features(dth.Data.unprocessed_target)
+    dth.Data.dataframe = dth.prune_features(dth.Data.unprocessed_dataframe)
 
     return "yes"
 

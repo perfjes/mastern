@@ -32,7 +32,6 @@ $(document).ready(function () {
                 if (!cancelled) {
                     updateTable(data);
                     displayImage(data['graphs']);
-                    displayImage(data['graphs']);
                     displayResults();
                 }
             }).fail(function() {
