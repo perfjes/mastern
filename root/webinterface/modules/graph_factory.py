@@ -47,7 +47,7 @@ def histogram_of_results(list_of_results):
     path = '%s%s' % (dth.Path.img + '/graphs/', 'histogram.png')
     plt.xlabel('Predicted years of longevity')
     plt.ylabel('Number of predictions')
-    bins = range(0, 20)
+    bins = range(int(min(list_of_results) - 1), int(max(list_of_results) + 1))
     plt.hist(list_of_results, bins=bins, rwidth=0.8, color='#b23000')
     plt.savefig(path)
     plt.clf()

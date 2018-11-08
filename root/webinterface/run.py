@@ -157,7 +157,8 @@ def dt_target_prediction():
     # FOR ACTUAL USE
     if not Data.recalibrate:
         for x in range(2000):
-            prediction_result, r2 = ml.target_predict_decision_tree(target, Data.recalibrate)
+            # prediction_result, r2 = ml.target_predict_decision_tree(target, Data.recalibrate)
+            prediction_result, r2 = ml.target_predict_linear(target, Data.recalibrate)
             r2 = float(r2)
             prediction_results_list.append(float(prediction_result))
             if Data.stop_process:

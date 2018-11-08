@@ -163,8 +163,7 @@ def target_predict_linear(target, recalibrate=False, count=0):
     if recalibrate:
         parameters = {
             'fit_intercept': (True, False),
-            'normalize': (True, False),
-            'copy_X': (True, False)
+            'normalize': (True, False)
         }
 
         regressor = GridSearchCV(LinearRegression(), parameters, n_jobs=-1)
