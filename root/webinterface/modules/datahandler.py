@@ -21,7 +21,8 @@ class Features:
         'id', 'case', 'cuploose', 'stemloose', 'years in vivo', 'cr', 'co', 'zr', 'ni', 'mb', 'linwear', 'linwearrate', 
         'volwear', 'volwearrate', 'inc', 'ant', 'cupx', 'cupy', 'male', 'female'
     """
-    initially_deactivated = ['case', 'cuploose', 'stemloose', 'zr', 'ni', 'mb', 'cupx', 'cupy']
+    initially_deactivated = ['case', 'cuploose', 'stemloose', 'zr', 'ni', 'mb',
+        'volwear', 'volwearrate', 'cupx', 'cupy']
     original_dataset_features = []
 
 

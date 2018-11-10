@@ -1,7 +1,9 @@
+import pandas as pd
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.linear_model import LinearRegression
 from sklearn.neural_network.multilayer_perceptron import MLPRegressor
-from sklearn.model_selection import train_test_split, GridSearchCV, LeaveOneOut
+from sklearn.model_selection import train_test_split, GridSearchCV, LeaveOneOut, cross_val_score
+from sklearn.preprocessing import MinMaxScaler
 from sklearn import metrics
 from modules import datahandler, graph_factory
 import numpy as np
@@ -9,6 +11,7 @@ import numpy as np
 
 dth = datahandler
 graph = graph_factory
+scaler = MinMaxScaler()
 
 
 class Data:
@@ -30,9 +33,9 @@ def split_dataset_into_train_test(dataframe, column, recalibrate=False):
     # Create a training/testing split
     if recalibrate:
         print('recalibrate is turned on')
-        x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.35, random_state=33)
+        x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.20, random_state=33)
     else:
-        x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.35)
+        x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.20)
 
     """
     # TODO might not be necessary - just in case there's too little or too much of control cases in the
@@ -157,9 +160,15 @@ def target_predict_mlp(target, recalibrate=False, count=0):
 
 
 def target_predict_linear(target, recalibrate=False, count=0):
+    vivo_scaler = MinMaxScaler()
+    df = dth.Data.dataframe
+    df[list(df)] = scaler.fit_transform(df[list(df)])
+    vivo_scaler.fit(target['years in vivo'].values.reshape(-1, 1))
+    target[list(target)] = scaler.transform(target[list(target)])
+
+    x_train, x_test, y_train, y_test = split_dataset_into_train_test(df, 'years in vivo', recalibrate=False)
     target_pred = target.drop('years in vivo', axis=1)
-    x_train, x_test, y_train, y_test = split_dataset_into_train_test(dth.prune_features(dth.Data.dataframe),
-                                                                     'years in vivo', recalibrate=False)
+
     if recalibrate:
         parameters = {
             'fit_intercept': (True, False),
@@ -177,7 +186,8 @@ def target_predict_linear(target, recalibrate=False, count=0):
         regressor.fit(x_train, y_train)
 
     r2_prediction = regressor.predict(x_test)
-    prediction = regressor.predict(target_pred)
+    prediction = np.array(regressor.predict(target_pred))
+    prediction = vivo_scaler.inverse_transform(prediction.reshape(1, -1))
 
     if recalibrate:
         dth.TestData.result_dt[str(count)] = {"R2": str(regressor.best_score_), "prediction": str(prediction[0]),
@@ -238,8 +248,7 @@ def multiple_regression_analysis(control_group=False):
 
         regressor = LinearRegression()
         regressor.fit(x_train, y_train)
-        print(regressor.coef_)
-        prediction = regressor.predict(x_test)
+        prediction = regressor.predict(X=x_test)
 
         r2yt.append(y_test)
         r2yp.append(prediction)

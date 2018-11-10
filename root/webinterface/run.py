@@ -156,7 +156,7 @@ def dt_target_prediction():
 
     # FOR ACTUAL USE
     if not Data.recalibrate:
-        for x in range(2000):
+        for x in range(1000):
             # prediction_result, r2 = ml.target_predict_decision_tree(target, Data.recalibrate)
             prediction_result, r2 = ml.target_predict_linear(target, Data.recalibrate)
             r2 = float(r2)
@@ -164,6 +164,7 @@ def dt_target_prediction():
             if Data.stop_process:
                 print('Process stopped, system made ', len(prediction_results_list), ' predictions')
                 break
+            r2_list.append(r2)
 
         graph_factory.clean_up_graph_folder()
         graphs = graph_factory.histogram_of_results(prediction_results_list)
@@ -172,16 +173,20 @@ def dt_target_prediction():
             graphs.append(every)
 
         prediction = pd.DataFrame(
-            {'Actual': target['years in vivo'], 'Predicted': statistics.mean(prediction_results_list)})
-        r2_list.append(r2)
+            {'Actual': target['years in vivo'], 'Predicted': prediction_results_list[r2_list.index(max(r2_list))]})
+
         stats = get_processed_list_of_predictions(prediction_results_list)
-        result = format_results_to_html(prediction, statistics.mean(r2_list), graphs, stats)
+        result = format_results_to_html(prediction, max(r2_list), graphs, stats)
+
 
     # FOR TESTING
     else:
         prediction_result, r2 = ml.target_predict_decision_tree(target, Data.recalibrate)
         prediction = pd.DataFrame({'Actual': target['years in vivo'], 'Predicted': prediction_result})
         result = format_results_to_html(prediction, r2)
+
+    print(max(r2_list))
+
     return result
 
 
@@ -247,10 +252,12 @@ def multiple_linear_regression(control_group=False):
     actual = [round(val, 2) for val in actual]
     prediction = [round(val, 2) for val in prediction]
 
+    """
     count = 1
     for x in actual:
         print (count, '&', x, '&', prediction[count-1], '\\\\ \\hline')
         count += 1
+    """
 
     result = format_results_to_html(pd.DataFrame({'Actual': list(actual), 'Predicted': list(prediction)}), stats)
     return result
