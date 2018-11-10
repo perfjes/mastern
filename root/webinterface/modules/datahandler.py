@@ -1,4 +1,5 @@
 from os.path import dirname, abspath
+from sklearn.preprocessing import MinMaxScaler
 import pandas as pd
 import os
 import _pickle as pickle
@@ -102,7 +103,7 @@ def save_results(filename, data):
 # TODO cont. this has been avoided due to tiny dataset with no affordance to remove rows available.
 # TODO cont. Implement error handling on file not found / wrong file type
 # TODO - This has become quite messy, but the error handling has improved significantly. Maybe clean it up later.
-def load_dataframe(path):
+def load_dataframe(path, standardize=False):
     default = 'db.csv'
     if not path == Path.path:
         if len(path.split('/')) <= 1:
@@ -140,6 +141,9 @@ def load_dataframe(path):
     # Fill in the blanks (with mean values for the mean time)
     if data.isnull().values.any():
         filled = data.fillna(data.mean(skipna=True))
+        if standardize:
+            for feature in list(filled):
+                print(filled[feature])
         return filled
     else:
         return data

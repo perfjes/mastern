@@ -9,7 +9,7 @@ import json
 dth = datahandler
 dth.Data.split = dth.load_split_value_from_pickle()
 path = dth.ROOT_DIRECTORY + r'/data/'
-dth.Data.dataframe = dth.load_dataframe(path)
+dth.Data.dataframe = dth.load_dataframe(path, True)
 dth.Data.unprocessed_dataframe = dth.Data.dataframe
 
 # Web app
