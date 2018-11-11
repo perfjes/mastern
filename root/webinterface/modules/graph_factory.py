@@ -48,6 +48,8 @@ def histogram_of_results(list_of_results):
     plt.xlabel('Predicted years of longevity')
     plt.ylabel('Number of predictions')
     bins = range(int(min(list_of_results) - 1), int(max(list_of_results) + 1))
+    if len(list(bins)) < 5:
+        bins = range(-5, 10)
     plt.hist(list_of_results, bins=bins, rwidth=0.8, color='#b23000')
     plt.savefig(path)
     plt.clf()

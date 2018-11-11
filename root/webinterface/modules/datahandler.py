@@ -103,7 +103,7 @@ def save_results(filename, data):
 # TODO cont. this has been avoided due to tiny dataset with no affordance to remove rows available.
 # TODO cont. Implement error handling on file not found / wrong file type
 # TODO - This has become quite messy, but the error handling has improved significantly. Maybe clean it up later.
-def load_dataframe(path, standardize=False):
+def load_dataframe(path):
     default = 'db.csv'
     if not path == Path.path:
         if len(path.split('/')) <= 1:
@@ -141,9 +141,6 @@ def load_dataframe(path, standardize=False):
     # Fill in the blanks (with mean values for the mean time)
     if data.isnull().values.any():
         filled = data.fillna(data.mean(skipna=True))
-        if standardize:
-            for feature in list(filled):
-                print(filled[feature])
         return filled
     else:
         return data
@@ -178,6 +175,10 @@ def load_file(file):
 
 def generate_dataframe_from_html(input_list):
     columns = Features.original_dataset_features
+    if 'volwear' in columns:
+        columns.remove('volwear')
+    if 'volwearrate' in columns:
+        columns.remove('volwearrate')
     target_dataframe = pd.DataFrame([input_list], columns=columns)
     if len(list(target_dataframe)) < 5:
         return None

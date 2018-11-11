@@ -9,7 +9,7 @@ import json
 dth = datahandler
 dth.Data.split = dth.load_split_value_from_pickle()
 path = dth.ROOT_DIRECTORY + r'/data/'
-dth.Data.dataframe = dth.load_dataframe(path, True)
+dth.Data.dataframe = dth.load_dataframe(path)
 dth.Data.unprocessed_dataframe = dth.Data.dataframe
 
 # Web app
@@ -70,7 +70,6 @@ def loocv():
     return prediction_result
 
 
-# TODO temporary method
 @app.route('/loocv20', methods=['GET'])
 def loocv20():
     start_time = time.time()
@@ -160,11 +159,15 @@ def dt_target_prediction():
             # prediction_result, r2 = ml.target_predict_decision_tree(target, Data.recalibrate)
             prediction_result, r2 = ml.target_predict_linear(target, Data.recalibrate)
             r2 = float(r2)
+            if r2_list:
+                if r2 > max(r2_list):
+                    print(r2)
+            r2_list.append(r2)
             prediction_results_list.append(float(prediction_result))
             if Data.stop_process:
                 print('Process stopped, system made ', len(prediction_results_list), ' predictions')
                 break
-            r2_list.append(r2)
+
 
         graph_factory.clean_up_graph_folder()
         graphs = graph_factory.histogram_of_results(prediction_results_list)
@@ -176,6 +179,8 @@ def dt_target_prediction():
             {'Actual': target['years in vivo'], 'Predicted': prediction_results_list[r2_list.index(max(r2_list))]})
 
         stats = get_processed_list_of_predictions(prediction_results_list)
+        
+        _ = ml.feature_significance(dth.prune_features(dth.Data.dataframe), target, len(list(target)))
         result = format_results_to_html(prediction, max(r2_list), graphs, stats)
 
 

@@ -1,13 +1,12 @@
-import pandas as pd
+from sklearn.feature_selection import f_regression, SelectKBest
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.linear_model import LinearRegression
 from sklearn.neural_network.multilayer_perceptron import MLPRegressor
-from sklearn.model_selection import train_test_split, GridSearchCV, LeaveOneOut, cross_val_score
+from sklearn.model_selection import train_test_split, GridSearchCV, LeaveOneOut
 from sklearn.preprocessing import MinMaxScaler
 from sklearn import metrics
 from modules import datahandler, graph_factory
 import numpy as np
-# statsmodels needs patsy
 
 dth = datahandler
 graph = graph_factory
@@ -35,7 +34,7 @@ def split_dataset_into_train_test(dataframe, column, recalibrate=False):
         print('recalibrate is turned on')
         x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.20, random_state=33)
     else:
-        x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.20)
+        x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.15)
 
     """
     # TODO might not be necessary - just in case there's too little or too much of control cases in the
@@ -257,3 +256,10 @@ def multiple_regression_analysis(control_group=False):
 
     r2 = metrics.r2_score(r2yt, r2yp)
     return ytests, ypreds, r2
+
+
+def feature_significance(df, target, k=6):
+    feature_selector = SelectKBest(f_regression, k=k)
+    item = feature_selector.fit(df.drop(target, axis=1), df[target])
+    print(item)
+    return feature_selector.pvalues_

@@ -31,8 +31,8 @@ $(document).ready(function () {
                 }
                 if (!cancelled) {
                     updateTable(data);
-                    displayImage(data['graphs']);
                     displayResults();
+                    displayImage(data['graphs']);
                 }
             }).fail(function() {
                 console.log('JSON request was terminated');
@@ -161,6 +161,8 @@ $(document).ready(function () {
     $('#cancel').click(function() {
         stopProcess();
         hideAllElements();
+        clearTable();
+        $('#graphsbutton').removeClass('buttonClicked');
         start();
     });
 
@@ -187,6 +189,8 @@ $(document).ready(function () {
     // TODO: loading prediction - funky). Does weird things with select feature thing.
     $('#back').click(function() {
         stopProcess();
+        clearTable();
+        $('#graphsbutton').removeClass('buttonClicked');
         hideMostElements();
 
         for (let thing in currentWindow) {
@@ -313,6 +317,7 @@ var displayResults = function() {
 
 function displayImage(images) {
     for(var image in images) {
+        console.log(images[image]);
         var img = document.createElement('img');
         img.setAttribute('src', '../static/img/graphs/' + images[image]);
         img.setAttribute('class', 'graphImage');
