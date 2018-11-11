@@ -258,8 +258,11 @@ def multiple_regression_analysis(control_group=False):
     return ytests, ypreds, r2
 
 
-def feature_significance(df, target, k=6):
-    feature_selector = SelectKBest(f_regression, k=k)
-    item = feature_selector.fit(df.drop(target, axis=1), df[target])
-    print(item)
-    return feature_selector.pvalues_
+def feature_significance(df, target_column):
+    feature_p = {}
+    for feature in list(df):
+        if feature != target_column:
+            feature_selector = SelectKBest(score_func=f_regression, k='all')
+            feature_selector.fit(df[feature].values.reshape(-1, 1), df[target_column])
+            feature_p[feature] = feature_selector.pvalues_
+    return feature_p

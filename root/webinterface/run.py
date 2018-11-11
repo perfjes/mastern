@@ -153,6 +153,11 @@ def dt_target_prediction():
             print('Target features are too few, what is going on')
             return 'none'
 
+    print('YEARS IN VIVO (longevity) P values of significance per feature:',ml.feature_significance(dth.prune_features(dth.Data.dataframe), 'years in vivo'))
+    print('LINWEAR (linear wear of the plastic in the cup) P values of significance per feature:',
+          ml.feature_significance(dth.prune_features(dth.Data.dataframe), 'linwear'))
+
+
     # FOR ACTUAL USE
     if not Data.recalibrate:
         for x in range(1000):
@@ -168,7 +173,6 @@ def dt_target_prediction():
                 print('Process stopped, system made ', len(prediction_results_list), ' predictions')
                 break
 
-
         graph_factory.clean_up_graph_folder()
         graphs = graph_factory.histogram_of_results(prediction_results_list)
         more_graphs = graph_factory.make_some_graphs()
@@ -179,10 +183,7 @@ def dt_target_prediction():
             {'Actual': target['years in vivo'], 'Predicted': prediction_results_list[r2_list.index(max(r2_list))]})
 
         stats = get_processed_list_of_predictions(prediction_results_list)
-        
-        _ = ml.feature_significance(dth.prune_features(dth.Data.dataframe), target, len(list(target)))
         result = format_results_to_html(prediction, max(r2_list), graphs, stats)
-
 
     # FOR TESTING
     else:
