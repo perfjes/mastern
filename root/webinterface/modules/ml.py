@@ -262,7 +262,5 @@ def feature_significance(df, target_column):
     feature_p = {}
     for feature in list(df):
         if feature != target_column:
-            feature_selector = SelectKBest(score_func=f_regression, k='all')
-            feature_selector.fit(df[feature].values.reshape(-1, 1), df[target_column])
-            feature_p[feature] = feature_selector.pvalues_
+            _, feature_p[feature] = f_regression(df[feature].values.reshape(-1, 1), df[target_column])
     return feature_p
