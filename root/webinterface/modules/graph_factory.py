@@ -4,6 +4,10 @@ import numpy as np
 from statistics import mean
 from modules import datahandler as dth
 import matplotlib.pyplot as plt
+from sklearn import cross_validation
+from sklearn.linear_model import LinearRegression
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import PolynomialFeatures
 
 
 def clean_up_graph_folder():
@@ -43,22 +47,39 @@ def make_some_graphs():
     return graphs
 
 
-def histogram_of_results(list_of_results):
+def histogram_of_results(list_of_results, runs=1):
     path = '%s%s' % (dth.Path.img + '/graphs/', 'histogram.png')
+    plt.title('Histogram of %i predictions and the resulting longevity values.' % runs)
     plt.xlabel('Predicted years of longevity')
     plt.ylabel('Number of predictions')
-    bins = range(int(min(list_of_results) - 1), int(max(list_of_results) + 1))
-    if len(list(bins)) < 5:
-        bins = range(-5, 10)
+    bins = range(-2, 20)
+    if min(list_of_results) > -9999 and max(list_of_results) < 9999:
+        bins = range(int(min(list_of_results) - 1), int(max(list_of_results) + 1))
+    else:
+        if len(list(bins)) < 5:
+            bins = range(-2, 6)
     plt.hist(list_of_results, bins=bins, rwidth=0.8, color='#b23000')
     plt.savefig(path)
     plt.clf()
     return ['histogram.png']
 
 
-def best_fit_slope_and_intercept(xs, ys):
-    m = (((mean(xs) * mean(ys)) - mean(xs * ys)) /
-         ((mean(xs) * mean(xs)) - mean(xs * xs)))
-
-    b = mean(ys) - m * mean(xs)
+def best_fit_slope_and_intercept(x, y):
+    m = (((mean(x) * mean(y)) - mean(x * y)) / ((mean(x) * mean(x)) - mean(x * x)))
+    b = mean(y) - m * mean(x)
     return m, b
+
+
+def confidence_interval(x, y):
+    z = np.polyfit(x, y, 1)
+    p = np.poly1d(z)
+    fit = p(x)
+
+    x_coord, y_coord = [np.min(x), np.max(x)], [np.min(fit), np.max(fit)]
+
+
+    path = '%s%s' % (dth.Path.img + '/graphs/', 'confidence.png')
+    plt.xlabel('Predicted longevity (years in vivo)')
+    plt.ylabel('Actual longevity (years in vivo)')
+    plt.title('Confidence interval of regression model')
+    return ['confidence.png']

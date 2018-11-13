@@ -91,7 +91,7 @@ $(document).ready(function () {
     });
 
     $('#saveTarget').click(function() {
-        var formValid = true;
+        let formValid = true;
         $('#patientInfoForm form input, #patientInfoForm form select').each(function() {
             if ($(this).val() === "") {
                 formValid = false;
@@ -129,17 +129,15 @@ $(document).ready(function () {
             }
 
             for(let item in patientInfo) {
-                console.log(item.search('Has the implant'));
-                if (item == 'Has the implant been removed?' || item == 'Was the cup loose? (if it was removed)' ||
-                    item == 'Was the stem loose? (if it was removed)') {
+                if (item.toLowerCase().search('removed') >= 0) {
                     let whetherOrNot = 'Yes';
                     if (patientInfo[item] == 0) {
                         whetherOrNot = 'No';
                     }
                     $('#patInfoSheet').append('<tr><td class="patinfodesc">' + item + '</td><td class="patinfoval">' +
                         whetherOrNot + '</td></tr>');
-                } else if (patientInfo[item] == 'Sex / Gender ') {
-                    var gender = 'Undefined';
+                } else if (item.toLowerCase().search('gender') >= 0) {
+                    let gender = 'Undefined';
                     if (patientInfo[item] == 1) {
                         gender = 'Male';
                     } else if (patientInfo[item] == 2) {
@@ -190,12 +188,8 @@ $(document).ready(function () {
     $('#back').click(function() {
         stopProcess();
         clearTable();
-        $('#graphsbutton').removeClass('buttonClicked');
         hideMostElements();
-
-        for (let thing in currentWindow) {
-            console.log(currentWindow[thing]);
-        }
+        $('#graphsbutton').removeClass('buttonClicked');
 
         if (currentWindow.length > 1) {
             let previousWindow = currentWindow[currentWindow.length - 2];
@@ -203,7 +197,6 @@ $(document).ready(function () {
                 previousWindow = currentWindow[currentWindow.length - 1];
                 currentWindow.pop();
             } else {
-                console.log('skrrt');
                 currentWindow.pop();
                 currentWindow.pop();
             }
@@ -223,8 +216,9 @@ function loading() {
     clearTable();
     $('#title h1').text('Loading...');
     $('#title p').text('We\'re doing some heavy lifting. This shouldn\'t take more than a minute or a few.').append('' +
-        '<br/><br/>').append('If the loading takes more than a few minutes, please check if the status bar below is ' +
-        'loading as well. If it is, your computer is slow and there\'s not an awul lot to do about that.');
+        '<br><br>').append('If the loading takes more than a few minutes, please check if the status bar below is ' +
+        'loading as well. If it is, your computer or the network might be slow and there\'s not an awful lot to do ' +
+        'about that.');
     $('#loadinggif, #cancel, #back, #data').fadeIn();
     $('#centercontent').slideDown();
 }
@@ -245,7 +239,6 @@ function loadPage() {
 
 var start = function () {
     currentWindow.push(start);
-    console.log('run');
     doneLoading();
     $('#start').hide();
     slide = 'down';
@@ -263,8 +256,10 @@ var enterPatientInfo = function () {
     doneLoading();
     clearTable();
     $('#title h1').text('Patient information form');
-    $('#title p').text('We need you to enter all the information on your patient here. If you\'re missing some ' +
-        'data, please enter -1.');
+    $('#title p').text('This is the patient information form. The left column shows the categories of information ' +
+        'we need to do an estimation of how long an implant will last in a patient.').append('<br><br>' + 'We need ' +
+        'you to enter all the information on your patient here. All fields need to be filled in before you continue. ' +
+        'If you don\'t have the information on a specific category, just enter 0.');
     $('#patientInfoForm, #patientInfoForm form, .input, #data').slideDown();
     systemStatusGood();
     if (slide) {
@@ -280,9 +275,10 @@ var nextStep = function () {
     hideMostElements();
     systemStatusGood();
     $('#title h1').text('One last thing...');
-    $('#title p').text('We\'re ready to start predicting! The prediction usually takes a minute to run, but that ' +
-        'depends on how beefy your computer processor is. It might take longer. If you want, you can specify which ' +
-        'parts of the patient information will be taken into consideration.');
+    $('#title p').text('We\'re ready to start the process of predicting. If you want to start this process, click the ' +
+        'big orange button with \"Run prediction\" written all over it.').append('<br><br>There is an option to ' +
+        'change which features (categories in the information sheet) should be included in the prediction process - ' +
+        'please note however that the default setting has been recommended by an expert in medicinal statistics.');
     $('.input, .input button, #data, .navigation, #patInfoDisplay').slideDown();
 };
 
@@ -293,10 +289,11 @@ var featureSelection = function(input) {
     $('#features').append(input);
     $('#title h1').text('Dataset features');
     $('#title p').text('These are the features (or columns) of the dataset - also known as the ' +
-        'categories of information gathered from each patient.').append("<br /><br />").append('The ' +
-        'checkboxes indicate whether or not a feature will be included when the system predicts how long ' +
-        'an implant will last in the given patient, by checking a box you include that feature in the ' +
-        'prediction.');
+        'categories of information gathered from each patient.').append('<br><br> The checkboxes indicate whether ' +
+        'or not a feature (information sheet category) will be included when the system predicts how long an implant ' +
+        'will last in the given patient.').append('<br><br>By clicking the checkbox for any given feature, you will' +
+        'include that feature in the prediction process.<br><br>Default set of features is CR, CO, LINWEAR, ' +
+        'LINWEARRATE, INC, ANT, MALE, FEMALE.');
     $('#features, .feature, .feature button, #data, .navigation').show();
     systemStatusGood();
 };
@@ -306,9 +303,10 @@ var displayResults = function() {
         currentWindow.push(displayResults);
         doneLoading();
         $('#title h1').text('Results');
-        $('#title p').text('Displayed in the center of the page is the results from predicting the longevity of the ' +
-        'patients implant, given the information you provided in the patient information form.' + '</br></br>' +
-        'This is a work in progress. Please do not accept the results as conclusive.');
+        $('#title p').text('The center page displays the estimated longevity of the implant (in years). This ' +
+            'estimation is based on the values in the patient informaton form. A goodness-of-fit metric for the ' +
+            'estimation model is available by clicking the R2 button, more statistical information is available by ' +
+            'clicking the button below the estimation.');
         $('#results_table, #graphFiller, #graphs, #r2button').fadeIn();
     } else {
         console.log('process terminated');
@@ -316,9 +314,8 @@ var displayResults = function() {
 }
 
 function displayImage(images) {
-    for(var image in images) {
-        console.log(images[image]);
-        var img = document.createElement('img');
+    for(let image in images) {
+        let img = document.createElement('img');
         img.setAttribute('src', '../static/img/graphs/' + images[image]);
         img.setAttribute('class', 'graphImage');
         document.getElementById('graphs').appendChild(img);
@@ -329,12 +326,9 @@ function displayImage(images) {
 }
 
 function updateTable(json) {
-    $.each(json, function(index, item) {
-        console.log(item);
-    });
     systemStatusGood();
     if ('r2' in json) {
-        $('#r2info').text('This prediction has an R2 score of ' + parseFloat(json.r2).toFixed(4));
+        $('#r2info').text('This prediction has an R2 score of ' + parseFloat(json.r2).toFixed(4).replace('.', ','));
     }
     if ('stats' in json) {
         $.each(json.stats, function(index, item) {
@@ -343,7 +337,7 @@ function updateTable(json) {
     }
     $.each(json.result, function (index, item) {
         $('#results_table').append('<tr><td id="p">Predicted implant longevity:</td></tr><tr class="result_element">' +
-            '<td id="prediction">' + parseFloat(item['Predicted']).toFixed(3) + ' years.</td></tr>');
+            '<td id="prediction">' + parseFloat(item['Predicted']).toFixed(2).replace('.', ',') + ' years.</td></tr>');
     });
 }
 
@@ -372,7 +366,7 @@ function systemStatusGood() {
 
 function systemStatusLoading() {
     systemLoading = true;
-    var status = $('#status');
+    let status = $('#status');
     if (!status.is(':visible')) {
         status.fadeIn();
     }
@@ -380,7 +374,7 @@ function systemStatusLoading() {
 }
 
 function systemStatusBad() {
-    var status = $('#status');
+    let status = $('#status');
     if (!status.is(':visible')) {
         status.fadeIn();
     }

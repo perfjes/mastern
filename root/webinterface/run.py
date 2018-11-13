@@ -39,7 +39,7 @@ def index():
 def decision_tree_regressor():
     Data.stop_process = False
     start_time = time.time()
-    prediction_result = dt_target_prediction()
+    prediction_result = single_target_prediction()
     end_time = (time.time() - start_time)
     print('Runtime is: ' + str(end_time))
 
@@ -139,9 +139,10 @@ def cancel():
 
 
 # Decision tree
-def dt_target_prediction():
+def single_target_prediction():
     r2_list = []
     prediction_results_list.clear()
+    graph_factory.clean_up_graph_folder()
 
     print('Are we testing?', Data.recalibrate)
 
@@ -160,7 +161,9 @@ def dt_target_prediction():
 
     # FOR ACTUAL USE
     if not Data.recalibrate:
-        for x in range(1000):
+        counter, r2 = 0, 0.0
+
+        for x in range(1500):
             # prediction_result, r2 = ml.target_predict_decision_tree(target, Data.recalibrate)
             prediction_result, r2 = ml.target_predict_linear(target, Data.recalibrate)
             r2 = float(r2)
@@ -169,15 +172,15 @@ def dt_target_prediction():
                     print(r2)
             r2_list.append(r2)
             prediction_results_list.append(float(prediction_result))
+            counter += 1
             if Data.stop_process:
                 print('Process stopped, system made ', len(prediction_results_list), ' predictions')
                 break
 
-        graph_factory.clean_up_graph_folder()
-        graphs = graph_factory.histogram_of_results(prediction_results_list)
-        more_graphs = graph_factory.make_some_graphs()
-        for every in more_graphs:
-            graphs.append(every)
+        graphs = graph_factory.histogram_of_results(prediction_results_list, counter)
+        # more_graphs = graph_factory.make_some_graphs()
+        # for every in more_graphs:
+        #     graphs.append(every)
 
         prediction = pd.DataFrame(
             {'Actual': target['years in vivo'], 'Predicted': prediction_results_list[r2_list.index(max(r2_list))]})
@@ -190,8 +193,6 @@ def dt_target_prediction():
         prediction_result, r2 = ml.target_predict_decision_tree(target, Data.recalibrate)
         prediction = pd.DataFrame({'Actual': target['years in vivo'], 'Predicted': prediction_result})
         result = format_results_to_html(prediction, r2)
-
-    print(max(r2_list))
 
     return result
 
@@ -211,6 +212,7 @@ def mlp_target_prediction():
 
     # FOR ACTUAL USE
     if not Data.recalibrate:
+        r2 = 0.0
         for x in range(50):
             prediction_result, r2 = ml.target_predict_mlp(target, Data.recalibrate)
             r2 = float(r2)
@@ -257,6 +259,8 @@ def multiple_linear_regression(control_group=False):
 
     actual = [round(val, 2) for val in actual]
     prediction = [round(val, 2) for val in prediction]
+
+
 
     """
     count = 1

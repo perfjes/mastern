@@ -3,7 +3,7 @@ from sklearn.tree import DecisionTreeRegressor
 from sklearn.linear_model import LinearRegression
 from sklearn.neural_network.multilayer_perceptron import MLPRegressor
 from sklearn.model_selection import train_test_split, GridSearchCV, LeaveOneOut
-from sklearn.preprocessing import MinMaxScaler
+from sklearn.preprocessing import MinMaxScaler, PolynomialFeatures
 from sklearn import metrics
 from modules import datahandler, graph_factory
 import numpy as np
@@ -75,6 +75,7 @@ def target_predict_decision_tree(target, recalibrate=False, count=0):
         return False, False, False
 
     target_pred = target.drop('years in vivo', axis=1)
+    r2 = 0.0
 
     if recalibrate:
         parameters = {
@@ -120,6 +121,7 @@ def target_predict_mlp(target, recalibrate=False, count=0):
                                                                      'years in vivo', recalibrate=False)
     target_pred = target
     target_pred = target_pred.drop('years in vivo', axis=1)
+    r2 = 0.0
 
     if recalibrate:
         parameters = {
@@ -161,12 +163,14 @@ def target_predict_mlp(target, recalibrate=False, count=0):
 def target_predict_linear(target, recalibrate=False, count=0):
     vivo_scaler = MinMaxScaler()
     df = dth.Data.dataframe
+    tgt = target
     df[list(df)] = scaler.fit_transform(df[list(df)])
-    vivo_scaler.fit(target['years in vivo'].values.reshape(-1, 1))
-    target[list(target)] = scaler.transform(target[list(target)])
+    vivo_scaler.fit(tgt['years in vivo'].values.reshape(-1, 1))
+    tgt[list(tgt)] = scaler.transform(tgt[list(tgt)])
 
     x_train, x_test, y_train, y_test = split_dataset_into_train_test(df, 'years in vivo', recalibrate=False)
     target_pred = target.drop('years in vivo', axis=1)
+    r2 = 0.0
 
     if recalibrate:
         parameters = {
