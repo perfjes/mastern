@@ -163,7 +163,7 @@ def single_target_prediction():
     if not Data.recalibrate:
         counter, r2 = 0, 0.0
 
-        for x in range(1500):
+        for x in range(2300):
             # prediction_result, r2 = ml.target_predict_decision_tree(target, Data.recalibrate)
             prediction_result, r2 = ml.target_predict_linear(target, Data.recalibrate)
             r2 = float(r2)
@@ -260,9 +260,7 @@ def multiple_linear_regression(control_group=False):
     actual = [round(val, 2) for val in actual]
     prediction = [round(val, 2) for val in prediction]
 
-
-
-    """
+    """ Prints out results directly to LaTeX tabular format so I don't have to press as many keys on my keyboard.
     count = 1
     for x in actual:
         print (count, '&', x, '&', prediction[count-1], '\\\\ \\hline')
@@ -275,10 +273,6 @@ def multiple_linear_regression(control_group=False):
 
 # Prints statistics from predictions.
 def get_processed_list_of_predictions(results):
-    print('Standard deviation: ', statistics.stdev(results))
-    print('Maximum years: ', max(results))
-    print('Minimum years: ', min(results))
-    print('Average years: ', statistics.mean(results))
     return ['Standard deviation: ' + str(round(statistics.stdev(results), 5)), 'Maximum years: ' +
             str(round(max(results), 5)), 'Minimum years: ' + str(round(min(results), 5))]
 

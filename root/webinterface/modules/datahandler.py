@@ -16,7 +16,7 @@ class Path:
 
 
 class Features:
-    drop_features_regression = ['id', 'volwear', 'volwearrate']
+    drop_features_regression = ['id']
     """
         List of all features in the dataset
         'id', 'case', 'cuploose', 'stemloose', 'years in vivo', 'cr', 'co', 'zr', 'ni', 'mb', 'linwear', 'linwearrate', 

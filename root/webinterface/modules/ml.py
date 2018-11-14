@@ -185,7 +185,7 @@ def target_predict_linear(target, recalibrate=False, count=0):
         dth.save_file('LinearRegressionBestParams.sav', regressor.best_params_)
         r2 = regressor.best_score_
     else:
-        regressor = LinearRegression()
+        regressor = LinearRegression(fit_intercept=True)
         regressor.fit(x_train, y_train)
 
     r2_prediction = regressor.predict(x_test)
