@@ -162,9 +162,7 @@ def target_predict_mlp(target, recalibrate=False, count=0):
 
 def target_predict_linear(target, recalibrate=False, count=0):
     vivo_scaler = MinMaxScaler()
-    print('unprocessed', dth.Data.unprocessed_dataframe)
     df = dth.prune_features(dth.Data.unprocessed_dataframe)
-    print(list(df))
     tgt = target
     # df[list(df)] = scaler.fit_transform(df[list(df)])
     # vivo_scaler.fit(tgt['years in vivo'].values.reshape(-1, 1))

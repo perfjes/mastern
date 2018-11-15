@@ -10,9 +10,11 @@ dth = datahandler
 dth.Data.split = dth.load_split_value_from_pickle()
 path = dth.ROOT_DIRECTORY + r'/data/'
 dth.Data.dataframe = dth.load_dataframe(path)
-complete_dataset = dth.Data.dataframe
+dth.Data.unprocessed_dataframe = dth.Data.dataframe
 
-print('complete', list(complete_dataset))
+
+print('complete', list(dth.Data.unprocessed_dataframe))
+print('ass', list(dth.Data.dataframe))
 
 # Web app
 app = Flask(__name__)
@@ -314,7 +316,7 @@ def update_features(desired_features):
     Data.selected_features = [feature for feature in Data.all_features if feature not in dth.Features.deactivated]
     Data.all_features = [feature for feature in dth.Features.original_dataset_features]
     dth.Data.target = dth.prune_features(dth.Data.unprocessed_target)
-    dth.Data.dataframe = dth.prune_features(complete_dataset)
+    dth.Data.dataframe = dth.prune_features(dth.Data.unprocessed_dataframe)
     return "yes"
 
 
