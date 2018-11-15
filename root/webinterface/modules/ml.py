@@ -162,11 +162,13 @@ def target_predict_mlp(target, recalibrate=False, count=0):
 
 def target_predict_linear(target, recalibrate=False, count=0):
     vivo_scaler = MinMaxScaler()
-    df = dth.Data.dataframe
+    print('unprocessed', dth.Data.unprocessed_dataframe)
+    df = dth.prune_features(dth.Data.unprocessed_dataframe)
+    print(list(df))
     tgt = target
-    df[list(df)] = scaler.fit_transform(df[list(df)])
-    vivo_scaler.fit(tgt['years in vivo'].values.reshape(-1, 1))
-    tgt[list(tgt)] = scaler.transform(tgt[list(tgt)])
+    # df[list(df)] = scaler.fit_transform(df[list(df)])
+    # vivo_scaler.fit(tgt['years in vivo'].values.reshape(-1, 1))
+    # tgt[list(tgt)] = scaler.transform(tgt[list(tgt)])
 
     x_train, x_test, y_train, y_test = split_dataset_into_train_test(df, 'years in vivo', recalibrate=False)
     target_pred = target.drop('years in vivo', axis=1)
@@ -189,8 +191,9 @@ def target_predict_linear(target, recalibrate=False, count=0):
         regressor.fit(x_train, y_train)
 
     r2_prediction = regressor.predict(x_test)
-    prediction = np.array(regressor.predict(target_pred))
-    prediction = vivo_scaler.inverse_transform(prediction.reshape(1, -1))
+    prediction = regressor.predict(target_pred)
+    # prediction = np.array(regressor.predict(target_pred))
+    # prediction = vivo_scaler.inverse_transform(prediction.reshape(1, -1))
 
     if recalibrate:
         dth.TestData.result_dt[str(count)] = {"R2": str(regressor.best_score_), "prediction": str(prediction[0]),
@@ -200,7 +203,8 @@ def target_predict_linear(target, recalibrate=False, count=0):
         r2_pred = r2_prediction.reshape(-1, 1)
         r2 = metrics.r2_score(y_true, r2_pred)
 
-    return prediction, r2
+    adjusted_r_squared = 1 - (1 - r2) * (len(y_train) - 1) / (len(y_train) - x_train.shape[1] - 1)
+    return prediction, adjusted_r_squared
 
 
 def leave_one_out(control_group=False):
@@ -264,7 +268,12 @@ def multiple_regression_analysis(control_group=False):
 
 def feature_significance(df, target_column):
     feature_p = {}
-    for feature in list(df):
-        if feature != target_column:
-            _, feature_p[feature] = f_regression(df[feature].values.reshape(-1, 1), df[target_column])
+
+    """ This stopped working, and I can't for the life of me figure out why.
+    
+    if target_column in df:
+        for feature in list(df):
+            if feature != target_column:
+                _, feature_p[feature] = f_regression(df[feature].values.reshape(-1, 1), df[target_column])
+                """
     return feature_p

@@ -16,14 +16,12 @@ class Path:
 
 
 class Features:
-    drop_features_regression = ['id']
     """
         List of all features in the dataset
         'id', 'case', 'cuploose', 'stemloose', 'years in vivo', 'cr', 'co', 'zr', 'ni', 'mb', 'linwear', 'linwearrate', 
         'volwear', 'volwearrate', 'inc', 'ant', 'cupx', 'cupy', 'male', 'female'
     """
-    initially_deactivated = ['case', 'cuploose', 'stemloose', 'zr', 'ni', 'mb',
-        'volwear', 'volwearrate', 'cupx', 'cupy']
+    deactivated = ['case', 'cuploose', 'stemloose', 'zr', 'ni', 'mb', 'cupx', 'cupy']
     original_dataset_features = []
 
 
@@ -99,11 +97,8 @@ def save_results(filename, data):
 
 # Loads file from path, reads it as CSV and returns the result as a pandas dataframe (or series).
 # This will also automatically fill all missing data with the mean value of each column.
-# TODO implement optional filling of missing data (remove rows where data is missing)
-# TODO cont. this has been avoided due to tiny dataset with no affordance to remove rows available.
-# TODO cont. Implement error handling on file not found / wrong file type
-# TODO - This has become quite messy, but the error handling has improved significantly. Maybe clean it up later.
 def load_dataframe(path):
+    useless = ['volwear', 'volwearrate', 'id']
     default = 'db.csv'
     if not path == Path.path:
         if len(path.split('/')) <= 1:
@@ -130,13 +125,12 @@ def load_dataframe(path):
         data = data.drop('sex', axis=1)
         data = pd.concat([data, refactored_columns], axis=1)
 
-    if 'id' in data:
-        data = data.drop('id', axis=1)
+    for cols in useless:
+        if cols in list(data):
+            data = data.drop(cols, axis=1)
 
     if path != 'test.csv':
         Features.original_dataset_features = list(data)
-
-    data = prune_features(data)
 
     # Fill in the blanks (with mean values for the mean time)
     if data.isnull().values.any():
@@ -180,16 +174,16 @@ def generate_dataframe_from_html(input_list):
     if 'volwearrate' in columns:
         columns.remove('volwearrate')
     target_dataframe = pd.DataFrame([input_list], columns=columns)
-    if len(list(target_dataframe)) < 5:
-        return None
+    print('target saved:', list(target_dataframe))
     return target_dataframe
 
 
 def prune_features(df):
-    for feature in Features.drop_features_regression + Features.initially_deactivated:
-        if feature in df:
-            df = df.drop(feature, axis=1)
-    return df
+    new_df = df
+    for feature in Features.deactivated:
+        if feature in df and feature != 'years in vivo':
+            new_df = new_df.drop(feature, axis=1)
+    return new_df
 
 
 # Class variables allow for mutation

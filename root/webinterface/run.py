@@ -10,7 +10,9 @@ dth = datahandler
 dth.Data.split = dth.load_split_value_from_pickle()
 path = dth.ROOT_DIRECTORY + r'/data/'
 dth.Data.dataframe = dth.load_dataframe(path)
-dth.Data.unprocessed_dataframe = dth.Data.dataframe
+complete_dataset = dth.Data.dataframe
+
+print('complete', list(complete_dataset))
 
 # Web app
 app = Flask(__name__)
@@ -23,10 +25,11 @@ prediction_results_list = []
 
 class Data:
     selected_features = [feature for feature in dth.Features.original_dataset_features if feature not in
-                         dth.Features.initially_deactivated]
+                         dth.Features.deactivated]
     recalibrate = False
     stop_process = False
     target_dataframe = pd.DataFrame()
+    all_features = [feature for feature in dth.Features.original_dataset_features]
 
 
 @app.route('/')
@@ -150,13 +153,14 @@ def single_target_prediction():
         target = dth.load_dataframe('test.csv')
     else:
         target = dth.prune_features(dth.Data.unprocessed_target)
+        print('target columns:', list(target))
         if target is None:
             print('Target features are too few, what is going on')
             return 'none'
 
-    print('YEARS IN VIVO (longevity) P values of significance per feature:',ml.feature_significance(dth.prune_features(dth.Data.dataframe), 'years in vivo'))
+    print('YEARS IN VIVO (longevity) P values of significance per feature:', ml.feature_significance(dth.prune_features(dth.Data.dataframe), 'years in vivo'))
     print('LINWEAR (linear wear of the plastic in the cup) P values of significance per feature:',
-          ml.feature_significance(dth.prune_features(dth.Data.dataframe), 'linwear'))
+          ml.feature_significance(dth.prune_features(dth.Data.unprocessed_target), 'linwear'))
 
 
     # FOR ACTUAL USE
@@ -280,9 +284,11 @@ def get_processed_list_of_predictions(results):
 # Populates a HTML page with a list of checkboxes containing the features (columns) from the dataset.
 def feature_selector():
     html_list = ['<form name="feats" action="/features">']
-    for feature in dth.Features.original_dataset_features:
+    print('Original features:', list(dth.Features.original_dataset_features))
+    print('new original, all_features:', Data.all_features)
+    for feature in Data.all_features:
         if feature != 'years in vivo':
-            if feature in Data.selected_features:
+            if feature not in dth.Features.deactivated:
                 html_list.append(
                     '<li class="featureSelector"><input type="checkbox" name="ff" class="feat" value="' + feature +
                     '" checked="checked"/>' + feature + '</li>')
@@ -297,20 +303,18 @@ def feature_selector():
 
 # Gets all features from the feature selection page, filters out the deselected features (on the page) from the dataset.
 
-def update_features(features):
-    Data.selected_features = features
-
-    for feature in features:
-        if feature in dth.Features.original_dataset_features and feature in dth.Features.drop_features_regression:
-            dth.Features.drop_features_regression.remove(feature)
-
+def update_features(desired_features):
+    for feature in Data.all_features:
         if feature != 'years in vivo':
-            if feature not in Data.selected_features and feature not in dth.Features.drop_features_regression:
-                dth.Features.drop_features_regression.append(feature)
+            if feature in desired_features and feature in dth.Features.deactivated:
+                dth.Features.deactivated.remove(feature)
+            if feature not in desired_features and feature not in dth.Features.deactivated:
+                dth.Features.deactivated.append(feature)
 
+    Data.selected_features = [feature for feature in Data.all_features if feature not in dth.Features.deactivated]
+    Data.all_features = [feature for feature in dth.Features.original_dataset_features]
     dth.Data.target = dth.prune_features(dth.Data.unprocessed_target)
-    dth.Data.dataframe = dth.prune_features(dth.Data.unprocessed_dataframe)
-
+    dth.Data.dataframe = dth.prune_features(complete_dataset)
     return "yes"
 
 
