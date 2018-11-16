@@ -10,7 +10,7 @@ import numpy as np
 
 dth = datahandler
 graph = graph_factory
-scaler = MinMaxScaler()
+
 
 
 class Data:
@@ -161,14 +161,17 @@ def target_predict_mlp(target, recalibrate=False, count=0):
 
 
 def target_predict_linear(target, recalibrate=False, count=0):
-    vivo_scaler = MinMaxScaler()
+    # Commented out lines are data preprocessing using minmaxscaler to align all values in the dataframe as they can
+    # differ quite a lot.
+    # vivo_scaler, scaler = MinMaxScaler(), MinMaxScaler()
     df = dth.prune_features(dth.Data.unprocessed_dataframe)
-    tgt = target
+    # tgt = target
     # df[list(df)] = scaler.fit_transform(df[list(df)])
     # vivo_scaler.fit(tgt['years in vivo'].values.reshape(-1, 1))
     # tgt[list(tgt)] = scaler.transform(tgt[list(tgt)])
 
     x_train, x_test, y_train, y_test = split_dataset_into_train_test(df, 'years in vivo', recalibrate=False)
+    # target_pred = tgt.drop('years in vivo', axis=1)
     target_pred = target.drop('years in vivo', axis=1)
     r2 = 0.0
 
@@ -202,7 +205,13 @@ def target_predict_linear(target, recalibrate=False, count=0):
         r2 = metrics.r2_score(y_true, r2_pred)
 
     adjusted_r_squared = 1 - (1 - r2) * (len(y_train) - 1) / (len(y_train) - x_train.shape[1] - 1)
-    return prediction, adjusted_r_squared
+
+    equation = [regressor.intercept_]
+    for x, reg in enumerate(x_train.columns):
+        equation.append({'regressor': reg})
+        equation.append({'coefficient': regressor.coef_[x]})
+
+    return prediction, adjusted_r_squared, equation
 
 
 def leave_one_out(control_group=False):

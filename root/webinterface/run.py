@@ -164,14 +164,13 @@ def single_target_prediction():
     print('LINWEAR (linear wear of the plastic in the cup) P values of significance per feature:',
           ml.feature_significance(dth.prune_features(dth.Data.unprocessed_target), 'linwear'))
 
+    counter, r2, equation_list = 0, 0.0, {}
 
     # FOR ACTUAL USE
     if not Data.recalibrate:
-        counter, r2 = 0, 0.0
-
         for x in range(2300):
             # prediction_result, r2 = ml.target_predict_decision_tree(target, Data.recalibrate)
-            prediction_result, r2 = ml.target_predict_linear(target, Data.recalibrate)
+            prediction_result, r2, equation = ml.target_predict_linear(target, Data.recalibrate)
             r2 = float(r2)
             if r2_list:
                 if r2 > max(r2_list):
@@ -179,6 +178,7 @@ def single_target_prediction():
             r2_list.append(r2)
             prediction_results_list.append(float(prediction_result))
             counter += 1
+            equation_list[r2] = equation
             if Data.stop_process:
                 print('Process stopped, system made ', len(prediction_results_list), ' predictions')
                 break
@@ -199,6 +199,16 @@ def single_target_prediction():
         prediction_result, r2 = ml.target_predict_decision_tree(target, Data.recalibrate)
         prediction = pd.DataFrame({'Actual': target['years in vivo'], 'Predicted': prediction_result})
         result = format_results_to_html(prediction, r2)
+
+    """  Prints the multiple regression equation (at least the coefficients), need to add values of regressors as well.
+    print(equation_list)
+    linear_equation = 'Y = '
+    for var in equation_list[max(r2_list)]:
+        if 'coefficient' in var:
+            linear_equation += ' + %.2f' % var['coefficient'] + ' x '
+        if 'regressor' in var:
+            linear_equation += var['regressor']
+    """
 
     return result
 
