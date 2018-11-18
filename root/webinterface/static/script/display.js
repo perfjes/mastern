@@ -160,7 +160,7 @@ $(document).ready(function () {
         stopProcess();
         hideAllElements();
         clearTable();
-        $('#moreInfoButton').removeClass('buttonClicked');
+        $('#moreInfoButton').removeClass('buttonClicked').text('More information');
         start();
     });
 
@@ -176,9 +176,9 @@ $(document).ready(function () {
 
     $('#moreInfoButton').click(function() {
         if ($(this).hasClass('buttonClicked')) {
-            $(this).removeClass('buttonClicked');
+            $(this).removeClass('buttonClicked').text('More information');
         } else {
-            $(this).addClass('buttonClicked');
+            $(this).addClass('buttonClicked').text('Less information');
         }
         $('.graphImage, #statsFiller').slideToggle();
     });
@@ -300,9 +300,9 @@ var displayResults = function() {
         doneLoading();
         $('#title h1').text('Results');
         $('#title p').text('The center page displays the estimated longevity of the implant (in years). This ' +
-            'estimation is based on the values in the patient informaton form. A goodness-of-fit metric for the ' +
-            'estimation model is available by clicking the R2 button, more statistical information is available by ' +
-            'clicking the button below the estimation.');
+            'estimation is based on the values in the patient informaton form.').append('<br><br>More statistical ' +
+            'information about the predictions and the model estimating these predictions is available by clicking ' +
+            'the "More information" button below the result.');
         $('#results_table, #graphFiller, #graphs').fadeIn();
     } else {
         console.log('process terminated');

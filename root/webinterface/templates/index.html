@@ -14,9 +14,6 @@
     <body>
         <section id="gridwrapper">
             <section id='menu'>
-                <div id="menuHelp"  class="help">
-
-                </div>
                 <section id="title">
                     <h1>Hip Arthroplasty Longevity Estimation System</h1>
                     <p>Welcome!<br><br>This is a system designed to provide predictions of longevity in a hip arthroplasty implant.
@@ -36,11 +33,6 @@
             <section id="centercontent">
                 <section id="data" class="hideContent">
                     <section id="centerNav">
-                        <div id="navigationHelp" class="help">
-                            <p>The buttons on the top left and top right of the center panel are the navigation buttons.
-                                The left button takes you to the previous page (or step, if you will). The Right button
-                                takes you all the way back to the start, regardless of where you are in the process.</p>
-                        </div>
                         <div id="back" class="navigation">
                             <img id="backimg" src="../static/img/back.png">
                             Back
@@ -53,9 +45,6 @@
                     <h1 id="resultheader"></h1>
 
                     <section class="input">
-                        <div id="nextStepHelp"  class="help">
-                            <p></p>
-                        </div>
                         <button id="featurebtn" class="button optional"> ( Optional ) <br/> Select dataset features </button>
                         <button id="dt" class="button"> Run prediction </button>
                     </section>
@@ -65,12 +54,6 @@
                     <table id="results_table" class="hideContent"></table>
 
                     <section id="patientInfoForm" class="hideContent">
-                        <div id="infoFormHelp"  class="help">
-                            <p>This is the patient information form. The labels on the left hand side of the list detail
-                            what information is required, while the boxes on the right hand side are input fields. Click
-                            an input field to enter the information required - either you choose between two or more
-                            options in a small menu, or else you type in your information as a number.</p>
-                        </div>
                         <form action="/updatetarget">
                                 <div>
                                     <label for="case"> Has the implant been removed? </label>
@@ -172,17 +155,11 @@
                     </section>
 
                     <section id="featureWrapper" class="feature hideContent">
-                        <div id="featureHelp"  class="help">
-
-                        </div>
                         <ul id="features" class="feature"></ul>
                         <button type="button" id="saveFeatures" class="button feature"> Save </button>
                     </section>
 
                     <section id="graphFiller" class="hideContent">
-                        <div id="graphHelp"  class="help">
-
-                        </div>
                         <button id="moreInfoButton" class="button"> More information </button>
                         <table id="statsFiller"></table>
                         <div id="graphs"></div>
@@ -202,10 +179,6 @@
             <form action="/science">
                 <button id="scienceToggle" class="button guitoggle">Science</button>
             </form>
-
-            <section id="help">
-                <img id="helpButton" src="">
-            </section>
         </section>
     </body>
 </html>

@@ -54,7 +54,7 @@ def histogram_of_results(list_of_results, runs=1):
     plt.ylabel('Number of predictions')
     bins = range(-2, 20)
     if min(list_of_results) > -9999 and max(list_of_results) < 9999:
-        bins = range(int(min(list_of_results) - 1), int(max(list_of_results) + 1))
+        bins = range(int(min(list_of_results) - 5), int(max(list_of_results) + 5))
     else:
         if len(list(bins)) < 5:
             bins = range(-2, 6)
