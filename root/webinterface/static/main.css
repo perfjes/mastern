@@ -471,57 +471,20 @@ body {
 #statsFiller {
     width: fit-content;
     height: fit-content;
-    margin: 15px auto;
+    margin: auto;
+}
+
+#statsFiller td {
+    padding: 7px;
+}
+
+.statnum {
+    color: #b23000;
+    font-weight: bold;
 }
 
 #savestatus, #success, #fname {
     display:none
-}
-
-/****************************** R2 SCORE ******************************/
-
-#r2button {
-    width: 100px;
-    padding: 8px;
-    margin: 27px 0;
-    border-radius: 9px;
-    font-family: 'Roboto Condensed', sans-serif;
-    color: white;
-    font-size: 16px;
-    background: #b23000;
-    border: none;
-    text-decoration: none;
-    -webkit-transition: 0.4s ease;
-    -o-transition: 0.4s ease;
-    transition: 0.4s ease;
-    position: absolute;
-    right: 50%;
-    top: 0;
-    transform: translateX(50%);
-}
-
-#r2button:hover {
-    color: black;
-    background: #ffc7b2;
-    cursor: pointer;
-}
-
-#r2info {
-    position: absolute;
-    top: 80px;
-    right: 50%;
-    z-index: 10;
-    padding: 20px;
-    width: 150px;
-    height: -webkit-fit-content;
-    height: -moz-fit-content;
-    height: fit-content;
-    background-color: white;
-    border-radius: 5px;
-    font-size: 1.2em;
-    -webkit-box-shadow: 0 4px 6px 1px #b23000;
-            box-shadow: 0 4px 6px 1px #b23000;
-    transform: translateX(50%);
 }
 
 /****************************** GRAPH IMAGES ******************************/
@@ -619,8 +582,3 @@ body {
 #patInfoSheet tr, #patInfoSheet td {
     background-color: #fff4ed;
 }
-
-#help {
-    display: none;
-}
-

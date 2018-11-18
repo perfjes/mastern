@@ -160,7 +160,7 @@ $(document).ready(function () {
         stopProcess();
         hideAllElements();
         clearTable();
-        $('#graphsbutton').removeClass('buttonClicked');
+        $('#moreInfoButton').removeClass('buttonClicked');
         start();
     });
 
@@ -174,7 +174,7 @@ $(document).ready(function () {
         }
     });
 
-    $('#graphsbutton').click(function() {
+    $('#moreInfoButton').click(function() {
         if ($(this).hasClass('buttonClicked')) {
             $(this).removeClass('buttonClicked');
         } else {
@@ -189,7 +189,7 @@ $(document).ready(function () {
         stopProcess();
         clearTable();
         hideMostElements();
-        $('#graphsbutton').removeClass('buttonClicked');
+        $('#moreInfoButton').removeClass('buttonClicked');
 
         if (currentWindow.length > 1) {
             let previousWindow = currentWindow[currentWindow.length - 2];
@@ -204,10 +204,6 @@ $(document).ready(function () {
         } else {
             start();
         }
-    });
-
-    $('#r2button').click(function() {
-        $('#r2info').slideToggle();
     });
 });
 
@@ -307,7 +303,7 @@ var displayResults = function() {
             'estimation is based on the values in the patient informaton form. A goodness-of-fit metric for the ' +
             'estimation model is available by clicking the R2 button, more statistical information is available by ' +
             'clicking the button below the estimation.');
-        $('#results_table, #graphFiller, #graphs, #r2button').fadeIn();
+        $('#results_table, #graphFiller, #graphs').fadeIn();
     } else {
         console.log('process terminated');
     }
@@ -328,13 +324,19 @@ function displayImage(images) {
 function updateTable(json) {
     systemStatusGood();
     if ('r2' in json) {
-        $('#r2info').text('This prediction has an R2 score of ' + parseFloat(json.r2).toFixed(4).replace('.', ','));
+        $('#statsFiller').append('<tr class="statistics"><td>Adjusted R<sup>2</sup> score of estimator used for this prediction</td><td class="statnum">' + parseFloat(json.r2).toFixed(4).replace('.', ',') + '</td></tr>');
     }
+
+    if ('rmse' in json) {
+        $('#statsFiller').append('<tr class="statistics"><p class="statistics"><td>Root Mean Squared Error of estimator for this prediction</td><td class="statnum">' + parseFloat(json.rmse).toFixed(4).replace('.', ',')+ '</td></tr>');
+    }
+
     if ('stats' in json) {
-        $.each(json.stats, function(index, item) {
-            $('#statsFiller').append('<p class="statistics">' + item + '</p>');
-        });
+        $('#statsFiller').append('<tr class="statistics"><td>Standard deviation of total predictions</td><td class="statnum">' + json.stats[0].replace('.', ',') + '</td></tr>');
+        $('#statsFiller').append('<tr class="statistics"><td>Longest years of longevity predicted</td><td class="statnum">' + json.stats[1].replace('.', ',') + '</td></tr>');
+        $('#statsFiller').append('<tr class="statistics"><td>Shortest years of longevity predicted</td><td class="statnum">' + json.stats[2].replace('.', ',') + '</td></tr>');
     }
+
     $.each(json.result, function (index, item) {
         $('#results_table').append('<tr><td id="p">Predicted implant longevity:</td></tr><tr class="result_element">' +
             '<td id="prediction">' + parseFloat(item['Predicted']).toFixed(2).replace('.', ',') + ' years.</td></tr>');
@@ -384,13 +386,13 @@ function systemStatusBad() {
 function hideAllElements() {
     // todo , #patInfoDisplayButton, add this
     $('.help, .hideContent, #centercontent, #data, #patientInfoForm, #graphFiller, #graphs, #status, .feature, #loadinggif, #r2info, ' +
-        '#r2button, #input, #input button, .input, .input button, .optional').hide();
+        '#input, #input button, .input, .input button, .optional').hide();
 }
 
 // For when system is initiated
 function hideMostElements() {
     $('.help, .hideContent, #data, #patientInfoForm, #graphFiller, #statsFiller, #graphs, #status, .feature, #loadinggif, #r2info, ' +
-        '#r2button, #input, #input button, .input, .input button, .optional').hide();
+        '#input, #input button, .input, .input button, .optional').hide();
 }
 
 function clearTable() {

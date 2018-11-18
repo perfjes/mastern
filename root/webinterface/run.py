@@ -12,13 +12,8 @@ path = dth.ROOT_DIRECTORY + r'/data/'
 dth.Data.dataframe = dth.load_dataframe(path)
 dth.Data.unprocessed_dataframe = dth.Data.dataframe
 
-
-print('complete', list(dth.Data.unprocessed_dataframe))
-print('ass', list(dth.Data.dataframe))
-
 # Web app
 app = Flask(__name__)
-
 
 # Testing
 r2results = []
@@ -145,7 +140,7 @@ def cancel():
 
 # Decision tree
 def single_target_prediction():
-    r2_list = []
+    r2_list, rmse_list = [], []
     prediction_results_list.clear()
     graph_factory.clean_up_graph_folder()
 
@@ -170,8 +165,9 @@ def single_target_prediction():
     if not Data.recalibrate:
         for x in range(2300):
             # prediction_result, r2 = ml.target_predict_decision_tree(target, Data.recalibrate)
-            prediction_result, r2, equation = ml.target_predict_linear(target, Data.recalibrate)
-            r2 = float(r2)
+            prediction_result, eval_metrics, equation = ml.target_predict_linear(target, Data.recalibrate)
+            r2 = float(eval_metrics['r2'])
+            rmse_list.append(float(eval_metrics['rmse']))
             if r2_list:
                 if r2 > max(r2_list):
                     print(r2)
@@ -192,7 +188,7 @@ def single_target_prediction():
             {'Actual': target['years in vivo'], 'Predicted': prediction_results_list[r2_list.index(max(r2_list))]})
 
         stats = get_processed_list_of_predictions(prediction_results_list)
-        result = format_results_to_html(prediction, max(r2_list), graphs, stats)
+        result = format_results_to_html(prediction, [max(r2_list), rmse_list[r2_list.index(max(r2_list))]], graphs, stats)
 
     # FOR TESTING
     else:
@@ -289,8 +285,7 @@ def multiple_linear_regression(control_group=False):
 
 # Prints statistics from predictions.
 def get_processed_list_of_predictions(results):
-    return ['Standard deviation: ' + str(round(statistics.stdev(results), 5)), 'Maximum years: ' +
-            str(round(max(results), 5)), 'Minimum years: ' + str(round(min(results), 5))]
+    return [str(round(statistics.stdev(results), 5)), str(round(max(results), 5)), str(round(min(results), 5))]
 
 
 # Populates a HTML page with a list of checkboxes containing the features (columns) from the dataset.
@@ -332,10 +327,11 @@ def update_features(desired_features):
 
 # Dataframe, R2 score and a list of graphs are passed and the function returns a dict formatted into a proper JSON
 # string.
-def format_results_to_html(dataframe, r2score=None, graphs=list(), stats=list()):
+def format_results_to_html(dataframe, eval_metrics=None, graphs=list(), stats=list()):
     json_result = {}
-    if r2score is not None:
-        json_result['r2'] = r2score
+    if eval_metrics is not None:
+        json_result['r2'] = eval_metrics[0]
+        json_result['rmse'] = eval_metrics[1]
 
     json_result['graphs'] = graphs
     json_result['stats'] = stats

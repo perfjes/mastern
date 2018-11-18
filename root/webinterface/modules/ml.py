@@ -1,4 +1,7 @@
+from math import sqrt
+
 from sklearn.feature_selection import f_regression, SelectKBest
+from sklearn.metrics import mean_squared_error
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.linear_model import LinearRegression
 from sklearn.neural_network.multilayer_perceptron import MLPRegressor
@@ -199,19 +202,19 @@ def target_predict_linear(target, recalibrate=False, count=0):
     if recalibrate:
         dth.TestData.result_dt[str(count)] = {"R2": str(regressor.best_score_), "prediction": str(prediction[0]),
                                               "parameters": regressor.best_params_}
-    else:
-        y_true = y_test.values.reshape(-1, 1)
-        r2_pred = r2_prediction.reshape(-1, 1)
-        r2 = metrics.r2_score(y_true, r2_pred)
+    y_true = y_test.values.reshape(-1, 1)
+    r2_pred = r2_prediction.reshape(-1, 1)
+    r2 = metrics.r2_score(y_true, r2_pred)
 
-    adjusted_r_squared = 1 - (1 - r2) * (len(y_train) - 1) / (len(y_train) - x_train.shape[1] - 1)
+    eval_metrics = {'r2': 1 - (1 - r2) * (len(y_train) - 1) / (len(y_train) - x_train.shape[1] - 1),
+                    'rmse': sqrt(mean_squared_error(y_true, r2_pred))}
 
     equation = [regressor.intercept_]
     for x, reg in enumerate(x_train.columns):
         equation.append({'regressor': reg})
         equation.append({'coefficient': regressor.coef_[x]})
 
-    return prediction, adjusted_r_squared, equation
+    return prediction, eval_metrics, equation
 
 
 def leave_one_out(control_group=False):
