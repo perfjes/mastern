@@ -1,5 +1,4 @@
 from os.path import dirname, abspath
-from sklearn.preprocessing import MinMaxScaler
 import pandas as pd
 import os
 import _pickle as pickle

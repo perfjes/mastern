@@ -1,12 +1,9 @@
 from math import sqrt
-
-from sklearn.feature_selection import f_regression, SelectKBest
 from sklearn.metrics import mean_squared_error
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.linear_model import LinearRegression
 from sklearn.neural_network.multilayer_perceptron import MLPRegressor
 from sklearn.model_selection import train_test_split, GridSearchCV, LeaveOneOut
-from sklearn.preprocessing import MinMaxScaler, PolynomialFeatures
 from sklearn import metrics
 from modules import datahandler, graph_factory
 import numpy as np

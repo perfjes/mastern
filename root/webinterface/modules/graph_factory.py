@@ -4,10 +4,6 @@ import numpy as np
 from statistics import mean
 from modules import datahandler as dth
 import matplotlib.pyplot as plt
-from sklearn import cross_validation
-from sklearn.linear_model import LinearRegression
-from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import PolynomialFeatures
 
 
 def clean_up_graph_folder():
