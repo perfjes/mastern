@@ -9,7 +9,7 @@ from modules import datahandler, graph_factory
 import numpy as np
 
 dth = datahandler
-graph = graph_factory
+graph = graph_factoryp
 
 
 
