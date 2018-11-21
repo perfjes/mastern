@@ -9,15 +9,14 @@ from modules import datahandler, graph_factory
 import numpy as np
 
 dth = datahandler
-graph = graph_factoryp
-
+graph = graph_factory
 
 
 class Data:
     arthroplasty_dataset = list(dth.load_dataframe('db.csv'))  # the original file TODO probs useless
     dataset_features = list(dth.Data.dataframe)
-    dt_regressor = dth.load_file('dt-regressor.sav')
-    mlp_regressor = dth.load_file('mlp-regressor.sav')
+    # dt_regressor = dth.load_file('dt-regressor.sav')
+    # mlp_regressor = dth.load_file('mlp-regressor.sav')
     recalibrate = False
     decision_tree_hyperparameters = {}
 
