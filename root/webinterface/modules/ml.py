@@ -8,11 +8,16 @@ from sklearn import metrics
 from modules import datahandler, graph_factory
 import numpy as np
 
+
+# Abbreviations of external modules
 dth = datahandler
 graph = graph_factory
 
 
 class Data:
+    """
+    Class datatype allows for mutatable variables
+    """
     arthroplasty_dataset = list(dth.load_dataframe('db.csv'))  # the original file TODO probs useless
     dataset_features = list(dth.Data.dataframe)
     # dt_regressor = dth.load_file('dt-regressor.sav')
@@ -25,6 +30,10 @@ class Data:
 # training and the remaining 35% for testing. Returns training and testing data to be fitted by the model.
 # In order to ensure that a certain amont of test case subjects from the dataset (the first 20 or so) are evenly split
 def split_dataset_into_train_test(dataframe, column, recalibrate=False):
+    """
+    Incorporates scikit-learns train_test_split method. The column parameter is a string representing the column name that 
+    the split will be based on.
+    """
     x = dataframe.drop(column, axis=1)
     y = dataframe[column]
 
@@ -36,8 +45,8 @@ def split_dataset_into_train_test(dataframe, column, recalibrate=False):
         x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.15)
 
     """
-    # TODO might not be necessary - just in case there's too little or too much of control cases in the
-    # TODO training/testing subset. Not optimal by any means, just a temporary solution.
+    # This is a method specific to PARETO dataset that should (in theory) make sure that at least some (and not too many)
+    # of the control group samples are included in the split
     while (len(x.loc[x['case'] == 0].index) / 2.2) > len(x_train.loc[x_train['case'] == 0].index) > \
             len(x.loc[x['case'] == 0].index) / 1.5:
         print('\n', 'RECALIBRATING', '\n')
@@ -49,6 +58,9 @@ def split_dataset_into_train_test(dataframe, column, recalibrate=False):
 
 
 def float_test():
+    """
+    Generates a list containing numbers ranging from 0.01 to 0.99, was used for hyperparameter tuning of MLP model.
+    """
     float_list = []
     x = 0.01
     y = 1.0
@@ -59,23 +71,38 @@ def float_test():
 
 
 def split_dataset_loocv(dataframe, column):
+    """
+    Doesn't actually return anything. It was solved manually, so this can be disregarded (or expanded upon).
+    """
     x = dataframe.drop(column, axis=1)
     y = dataframe[column]
     loo = LeaveOneOut()
     loo.get_n_splits(x)
 
 
-# Function for predicting the longevity of a single sample - given the training/testing dataset and a new CSV file
-# containing the exact same features as the training/testing set.
 def target_predict_decision_tree(target, recalibrate=False, count=0):
+    """
+    Function for predicting the longevity of a single sample - given the training/testing dataset and a new CSV file
+    containing the exact same features as the training/testing set.
+    
+    Target is a pandas dataframe. Make sure it has the same columns as the training/testing dataset.
+    """
+    
+    # split dataset into training and testing (based on yearsinvivo)
     x_train, x_test, y_train, y_test = split_dataset_into_train_test(dth.prune_features(dth.Data.dataframe),
                                                                      'years in vivo', recalibrate)
+    
+    # if yearsinvivo is absent - major malfunction. Stop everything.
     if 'years in vivo' not in target:
         return False, False, False
 
+    # Adjust the target prediction to same format as training data
     target_pred = target.drop('years in vivo', axis=1)
     r2 = 0.0
 
+    # Used for calibration of hyperparameters. Tuning can take ages - each parameters value is cross-validated
+    # against all other parameters so runtime can become immense. Runtime is calculated as the number of values in
+    # parameter X, times the number of values in parameter Y, times ... values in parameter N.
     if recalibrate:
         parameters = {
             'criterion': ('mse', 'friedman_mse', 'mae'),
@@ -87,9 +114,10 @@ def target_predict_decision_tree(target, recalibrate=False, count=0):
             'presort': (True, False)
             # 'random_state': range(0, 101)
         }
-
         regressor = GridSearchCV(DecisionTreeRegressor(random_state=55), parameters, n_jobs=-1)
-
+        
+        # Fit model to data using the best regression model from GridSearchCV, print the optimal parameters, save it
+        # to file and save parameters to file.
         regressor.fit(x_train, y_train)
         print(regressor.best_params_)
         print('R2 is: ' + str(regressor.best_score_))
@@ -97,6 +125,7 @@ def target_predict_decision_tree(target, recalibrate=False, count=0):
         r2 = str(regressor.best_score_)
 
     else:
+        # Use the best parameters found during testing. These are the best according to testing done in october 2018.
         regressor = DecisionTreeRegressor(criterion='mae', max_depth=3, min_samples_split=21, splitter='best',
                                           max_leaf_nodes=4, min_impurity_decrease=0.0, presort=True)
         regressor.fit(x_train, y_train)
@@ -105,9 +134,11 @@ def target_predict_decision_tree(target, recalibrate=False, count=0):
     prediction = regressor.predict(target_pred)
 
     if recalibrate:
+        # Save results of calibration as a variable.
         dth.TestData.result_dt[str(count)] = {"R2": str(regressor.best_score_), "prediction": str(prediction[0]),
                                                "parameters": regressor.best_params_}
     else:
+        # Calculate R2 score.
         y_true = y_test.values.reshape(-1, 1)
         r2_pred = r2_prediction.reshape(-1, 1)
         r2 = metrics.r2_score(y_true, r2_pred)
@@ -116,6 +147,9 @@ def target_predict_decision_tree(target, recalibrate=False, count=0):
 
 
 def target_predict_mlp(target, recalibrate=False, count=0):
+    """
+    Very similar to above method, uses Multi-Layer Perceptron instead of decision trees.
+    """
     x_train, x_test, y_train, y_test = split_dataset_into_train_test(dth.prune_features(dth.Data.dataframe),
                                                                      'years in vivo', recalibrate=False)
     target_pred = target
@@ -160,6 +194,12 @@ def target_predict_mlp(target, recalibrate=False, count=0):
 
 
 def target_predict_linear(target, recalibrate=False, count=0):
+    """
+    This function is used by the user system, and is the primary prediction module for the entire system.
+    Target is a dataframe object, recalibrate triggers parameter tuning (unneccessary) and count is for
+    keeping track of multiple runs.
+    """
+    
     # Commented out lines are data preprocessing using minmaxscaler to align all values in the dataframe as they can
     # differ quite a lot.
     # vivo_scaler, scaler = MinMaxScaler(), MinMaxScaler()
@@ -169,11 +209,13 @@ def target_predict_linear(target, recalibrate=False, count=0):
     # vivo_scaler.fit(tgt['years in vivo'].values.reshape(-1, 1))
     # tgt[list(tgt)] = scaler.transform(tgt[list(tgt)])
 
+    # Split data into training and testing, based on years in vivo.
     x_train, x_test, y_train, y_test = split_dataset_into_train_test(df, 'years in vivo', recalibrate=False)
     # target_pred = tgt.drop('years in vivo', axis=1)
     target_pred = target.drop('years in vivo', axis=1)
     r2 = 0.0
 
+    # Disregard this whole block :)
     if recalibrate:
         parameters = {
             'fit_intercept': (True, False),
@@ -189,22 +231,28 @@ def target_predict_linear(target, recalibrate=False, count=0):
     else:
         regressor = LinearRegression(fit_intercept=True)
         regressor.fit(x_train, y_train)
-
+        
+    # The magic prediction calling!
     r2_prediction = regressor.predict(x_test)
     prediction = regressor.predict(target_pred)
     # prediction = np.array(regressor.predict(target_pred))
     # prediction = vivo_scaler.inverse_transform(prediction.reshape(1, -1))
 
+    # Saves parameters from tuning to variable
     if recalibrate:
         dth.TestData.result_dt[str(count)] = {"R2": str(regressor.best_score_), "prediction": str(prediction[0]),
                                               "parameters": regressor.best_params_}
+        
+    # Calculates R2 for prediction, reshapes the values of testing and prediction dataframes to 2d numpy array
     y_true = y_test.values.reshape(-1, 1)
     r2_pred = r2_prediction.reshape(-1, 1)
     r2 = metrics.r2_score(y_true, r2_pred)
 
+    # All metrics available - Adjusted R2 ('r2') is calculated first. RMSE is added as well :)
     eval_metrics = {'r2': 1 - (1 - r2) * (len(y_train) - 1) / (len(y_train) - x_train.shape[1] - 1),
                     'rmse': sqrt(mean_squared_error(y_true, r2_pred))}
 
+    # Calculates the equation for linear regression.
     equation = [regressor.intercept_]
     for x, reg in enumerate(x_train.columns):
         equation.append({'regressor': reg})
@@ -214,6 +262,11 @@ def target_predict_linear(target, recalibrate=False, count=0):
 
 
 def leave_one_out(control_group=False):
+    """
+    Function for testing leave one out dataset splitting on the dataset, running predictions for each sample 
+    using decision tree regression and calculating the resulting R2 score by passing the true values and 
+    predicted values to scikit-learns R2 calculation function
+    """
     if control_group:
         data = dth.prune_features(dth.Data.dataframe.head(17))
     else:
@@ -244,6 +297,9 @@ def leave_one_out(control_group=False):
 
 
 def multiple_regression_analysis(control_group=False):
+    """
+    Leave one out function using Multiple Linear Regression instead of decision trees.
+    """
     if control_group:
         data = dth.prune_features(dth.Data.dataframe.head(17))
     else:
